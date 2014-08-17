@@ -1,0 +1,39 @@
+package at.xer0.GUI;
+
+import at.xer0.Support.SObject;
+import at.xer0.Support.Vars;
+
+public class GUIEvents {
+	
+	public static void startStop()
+	{
+		Vars.isActive = !Vars.isActive;
+
+		if(Vars.isActive)
+		{
+			System.out.println("Simulation: Started");
+		}else
+		{
+			System.out.println("Simulation: Stopped");
+
+		}
+	}
+	
+	public static void clearSimulation()
+	{
+		Vars.isActive = false;
+		Vars.sObjects.clear();
+		Vars.timeStep = 0.000001;
+		Vars.time = 0;
+		
+		System.out.println("Simulation cleared!");
+	}
+	
+	public static void addObject(int x, int y)
+	{
+		
+		Vars.sObjects.add(new SObject(x,y,Vars.currentMassPreset,Vars.currentxVelocityPreset,Vars.currentyVelocityPreset,Vars.time));
+		System.out.println("Added Object at " + x+ "/" + y);
+	}
+
+}
