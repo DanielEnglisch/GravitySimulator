@@ -53,16 +53,16 @@ public class MainFrame extends JFrame implements Runnable {
 		l_newObject.setBounds(10, 397, 178, 14);
 		
 		t_mass = new JTextField();
-		t_mass.setText("0");
+		t_mass.setText(Vars.defMassPreset);
 		t_mass.setBounds(85, 422, 103, 20);
 		t_mass.setColumns(10);
 
 		t_xVelocity = new JTextField();
-		t_xVelocity.setText("0");
+		t_xVelocity.setText(Vars.defxVelocityPreset);
 		t_xVelocity.setBounds(85, 453, 103, 20);
 		
 		t_yVelocity = new JTextField();
-		t_yVelocity.setText("0");
+		t_yVelocity.setText(Vars.defyVelocityPreset);
 		t_yVelocity.setBounds(85, 484, 103, 20);
 		t_yVelocity.setColumns(10);
 		
@@ -93,9 +93,9 @@ public class MainFrame extends JFrame implements Runnable {
 				catch(Exception e)
 				{
 					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
-					Vars.currentxVelocityPreset = 0;
-					Vars.currentyVelocityPreset = 0;
-					Vars.currentMassPreset = 0;
+					Vars.currentxVelocityPreset = Double.parseDouble(Vars.defxVelocityPreset);
+					Vars.currentyVelocityPreset = Double.parseDouble(Vars.defyVelocityPreset);
+					Vars.currentMassPreset = Double.parseDouble(Vars.defMassPreset);
 				}
 				
 				
