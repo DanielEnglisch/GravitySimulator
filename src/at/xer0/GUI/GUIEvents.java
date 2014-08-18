@@ -11,11 +11,12 @@ public class GUIEvents {
 
 		if(Vars.isActive)
 		{
+			Vars.mainFrame.b_StartStop.setText("Stop Simulation");
 			System.out.println("Simulation: Started");
 		}else
 		{
+			Vars.mainFrame.b_StartStop.setText("Start Simulation");
 			System.out.println("Simulation: Stopped");
-
 		}
 	}
 	
@@ -31,8 +32,25 @@ public class GUIEvents {
 	
 	public static void addObject(int x, int y)
 	{
-		Vars.sObjects.add(new SObject(x-(Vars.currentMassPreset/2),y-(Vars.currentMassPreset/2),Vars.currentMassPreset,Vars.currentxVelocityPreset,Vars.currentyVelocityPreset,Vars.time));
+		Vars.sObjects.add(new SObject(x-(Vars.currentMassPreset/2),y-(Vars.currentMassPreset/2),Vars.currentMassPreset,Vars.currentxVelocityPreset,Vars.currentyVelocityPreset,Vars.time,Vars.currentSObjectColorPreset));
 		System.out.println("Added Object at " + x+ "/" + y);
+	}
+	
+	public static void reverseTime()
+	{
+		Vars.isTimeReversed = !Vars.isTimeReversed;
+		
+		
+		if(Vars.isTimeReversed)
+		{
+			Vars.mainFrame.b_ReverseTime.setText("Normalize Time");
+			System.out.println("Reversed Time!");
+		}else
+		{
+			Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
+			System.out.println("Normalized Time!");
+		}
+		
 	}
 
 }

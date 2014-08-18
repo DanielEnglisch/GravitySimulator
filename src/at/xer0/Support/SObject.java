@@ -1,5 +1,6 @@
 package at.xer0.Support;
 
+
 public class SObject {
 	
 	private double xPos;
@@ -12,12 +13,17 @@ public class SObject {
 	private double initTime;
 	private double initxPos;
 	private double inityPos;
+	
+	private SObjectColor color;
 
 	
 	
 	
 
-	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime) {
+
+
+
+	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime, SObjectColor c) {
 		super();
 		this.xPos = initxPos;
 		this.yPos = inityPos;
@@ -27,6 +33,7 @@ public class SObject {
 		this.initTime = initTime;
 		this.initxPos = initxPos;
 		this.inityPos = inityPos;
+		this.color = c;
 	}
 
 	
@@ -82,6 +89,14 @@ public class SObject {
 		return initTime;
 	}
 
+	public SObjectColor getColor() {
+		return color;
+	}
+
+
+	public void setColor(SObjectColor color) {
+		this.color = color;
+	}
 	
 
 

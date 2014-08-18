@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,6 +18,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import at.xer0.Support.SObjectColor;
 import at.xer0.Support.Vars;
 
 public class MainFrame extends JFrame implements Runnable {
@@ -31,14 +34,17 @@ public class MainFrame extends JFrame implements Runnable {
 	public  JPanel renderPanel;
 	public JLabel l_Time;
 	public JLabel l_Objects;
+	public JButton b_StartStop;
+	public JButton b_ReverseTime;
 	//
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public MainFrame()
 	{
 
 
-		JButton b_StartStop = new JButton("Start/Stop");
-		b_StartStop.setToolTipText("Starts/Stops the simulation");
+		b_StartStop = new JButton("Start Simulation");
+		b_StartStop.setToolTipText("Start");
 		b_StartStop.setBounds(10, 11, 178, 35);
 		b_StartStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -50,30 +56,35 @@ public class MainFrame extends JFrame implements Runnable {
 		
 		JLabel l_newObject = new JLabel("New Object:");
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
-		l_newObject.setBounds(10, 397, 178, 14);
+		l_newObject.setBounds(10, 441, 178, 14);
 		
 		t_mass = new JTextField();
 		t_mass.setText(Vars.defMassPreset);
-		t_mass.setBounds(85, 422, 103, 20);
+		t_mass.setBounds(85, 466, 103, 20);
 		t_mass.setColumns(10);
 
 		t_xVelocity = new JTextField();
 		t_xVelocity.setText(Vars.defxVelocityPreset);
-		t_xVelocity.setBounds(85, 453, 103, 20);
+		t_xVelocity.setBounds(85, 497, 103, 20);
 		
 		t_yVelocity = new JTextField();
 		t_yVelocity.setText(Vars.defyVelocityPreset);
-		t_yVelocity.setBounds(85, 484, 103, 20);
+		t_yVelocity.setBounds(85, 528, 103, 20);
 		t_yVelocity.setColumns(10);
 		
 		JLabel l_mass = new JLabel("Mass:");
-		l_mass.setBounds(10, 425, 65, 14);
+		l_mass.setBounds(10, 469, 65, 14);
 		
 		JLabel l_xVelocity = new JLabel("x Velocity:");
-		l_xVelocity.setBounds(10, 456, 65, 14);
+		l_xVelocity.setBounds(10, 500, 65, 14);
 		
 		JLabel l_yVelocity = new JLabel("y Velocity:");
-		l_yVelocity.setBounds(10, 487, 65, 14);
+		l_yVelocity.setBounds(10, 531, 65, 14);
+		
+		
+		final JComboBox<?> comboBox = new JComboBox<>();
+		comboBox.setModel(new DefaultComboBoxModel(SObjectColor.values()));
+		comboBox.setBounds(10, 584, 178, 20);
 		
 		JButton b_ApplyObject = new JButton("Apply");
 		b_ApplyObject.addActionListener(new ActionListener() {
@@ -88,6 +99,8 @@ public class MainFrame extends JFrame implements Runnable {
 					Vars.currentxVelocityPreset = xVel;
 					Vars.currentyVelocityPreset = yVel;
 					Vars.currentMassPreset = mass;
+					
+					Vars.currentSObjectColorPreset = (SObjectColor)comboBox.getSelectedItem();
 
 				}
 				catch(Exception e)
@@ -105,7 +118,7 @@ public class MainFrame extends JFrame implements Runnable {
 				System.out.println("Preset set!");
 			}
 		});
-		b_ApplyObject.setBounds(10, 515, 178, 23);
+		b_ApplyObject.setBounds(10, 615, 178, 23);
 		
 		JButton b_EditFormula = new JButton("Edit Formula");
 		b_EditFormula.setEnabled(false);
@@ -121,17 +134,17 @@ public class MainFrame extends JFrame implements Runnable {
 		lblTimestep.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTimestep.setBounds(10, 103, 65, 14);
 		
-		JButton btnNewButton = new JButton("Reverse Time");
-		btnNewButton.setEnabled(false);
-		btnNewButton.setBounds(10, 57, 178, 35);
+		b_ReverseTime = new JButton("Reverse Time");
+		b_ReverseTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GUIEvents.reverseTime();
+			}
+		});
+		b_ReverseTime.setBounds(10, 57, 178, 35);
 		
 		JButton btnNewButton_1 = new JButton("Select Output File");
 		btnNewButton_1.setEnabled(false);
 		btnNewButton_1.setBounds(10, 211, 178, 35);
-		
-		JButton b_DrawPath = new JButton("Draw Path");
-		b_DrawPath.setEnabled(false);
-		b_DrawPath.setBounds(10, 289, 178, 35);
 		
 		JSlider slider_1 = new JSlider();
 		slider_1.setEnabled(false);
@@ -158,11 +171,11 @@ public class MainFrame extends JFrame implements Runnable {
 				GUIEvents.addObject(arg0.getX(), arg0.getY());
 			}
 		});
-		renderPanel.setBounds(218, 11, 600, 549);
+		renderPanel.setBounds(218, 11, 666, 649);
 		
 		controlPanel = new JPanel();
 		controlPanel.setBackground(Color.WHITE);
-		controlPanel.setBounds(10, 11, 198, 549);
+		controlPanel.setBounds(10, 11, 198, 649);
 		controlPanel.setLayout(null);
 		controlPanel.add(b_StartStop);
 		controlPanel.add(l_newObject);
@@ -176,18 +189,27 @@ public class MainFrame extends JFrame implements Runnable {
 		controlPanel.add(b_EditFormula);
 		controlPanel.add(slider);
 		controlPanel.add(lblTimestep);
-		controlPanel.add(btnNewButton);
-		controlPanel.add(b_DrawPath);
+		controlPanel.add(b_ReverseTime);
 		controlPanel.add(slider_1);
 		controlPanel.add(btnNewButton_1);
 		controlPanel.add(lblZoomLevel);
 		controlPanel.add(b_Clear);
+		controlPanel.add(comboBox);
+
 		
 		masterPanel = new JPanel();
 		masterPanel.setBackground(new Color(238, 232, 170));
 		masterPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		masterPanel.setLayout(null);
 		masterPanel.add(controlPanel);
+		
+	
+		
+	
+		
+		JLabel lblColor = new JLabel("Color:");
+		lblColor.setBounds(10, 559, 46, 14);
+		controlPanel.add(lblColor);
 		masterPanel.add(renderPanel);
 		
 		l_Time = new JLabel("Time: " + Vars.time);
@@ -203,7 +225,7 @@ public class MainFrame extends JFrame implements Runnable {
 		setResizable(false);
 		setTitle("x0 Gravity Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 835, 600);
+		setBounds(100, 100, 900, 700);
 		setContentPane(masterPanel);
 		
 	}
