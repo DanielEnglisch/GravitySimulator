@@ -14,6 +14,7 @@ public class Core {
 	public static void main(String[] args) throws InterruptedException
 	{
 		Vars.mainFrame = new MainFrame();
+		System.out.println("MainFrame initialized!");
 		new Thread(Vars.mainFrame).start();
 						
 		while(true)
@@ -112,11 +113,17 @@ public class Core {
 				case Blue: g.setColor(Color.BLUE);
 				break;
 				
-			default: g.setColor(Color.MAGENTA);
+			default: g.setColor(Color.ORANGE);
 				break;
 			}
 			
 			g.fillOval((int)obj.getxPos(), (int)obj.getyPos(), (int)obj.getMass(), (int)obj.getMass());
+			
+			if(Vars.mainFrame.cb_speedVec.isSelected())
+			{
+				g.setColor(Color.BLACK);
+				g.drawLine((int)obj.getxPos() + (int)(obj.getMass()/2), (int)obj.getyPos() + (int)(obj.getMass()/2), (int)obj.getxPos() + (int)(obj.getMass()/2) + (int)obj.getxVelocity(), (int)obj.getyPos() + (int)(obj.getMass()/2) + (int)obj.getyVelocity());
+			}
 		}
 	}
 		

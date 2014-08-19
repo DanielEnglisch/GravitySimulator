@@ -52,5 +52,39 @@ public class GUIEvents {
 		}
 		
 	}
+	
+	public static void updateTimestep(int timestepfactor)
+	{
+			
+		switch(timestepfactor)
+		{
+		case 0: {Vars.timeStep = 1;}
+			break;
+		case 1: {Vars.timeStep = 0.1;}
+			break;
+		case 2: {Vars.timeStep = 0.01;}
+			break;
+		case 3: {Vars.timeStep = 0.001;}
+			break;
+		case 4: {Vars.timeStep = 0.0001;}
+			break;
+		case 5: {Vars.timeStep = 0.00001;}
+			break;
+		case 6: {Vars.timeStep = 0.000001;}
+			break;
+		case 7: {Vars.timeStep = 0.0000001;}
+			break;
+		case 8: {Vars.timeStep = 0.00000001;}
+			break;
+		case 9: {Vars.timeStep = 0.000000001;}
+			break;
+		case 10: {Vars.timeStep = 0.0000000001;}
+			break;
+			
+		}
+		
+		Vars.mainFrame.l_timestep.setText("" + String.format("%." + timestepfactor +"f", Vars.timeStep));
+		
+	}
 
 }

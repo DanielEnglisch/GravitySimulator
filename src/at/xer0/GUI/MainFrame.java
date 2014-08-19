@@ -20,6 +20,9 @@ import javax.swing.border.EmptyBorder;
 
 import at.xer0.Support.SObjectColor;
 import at.xer0.Support.Vars;
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class MainFrame extends JFrame implements Runnable {
 
@@ -36,6 +39,9 @@ public class MainFrame extends JFrame implements Runnable {
 	public JLabel l_Objects;
 	public JButton b_StartStop;
 	public JButton b_ReverseTime;
+	public JCheckBox cb_speedVec;
+	public JCheckBox cb_drawPath;
+	public JLabel l_timestep;
 	//
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -53,7 +59,8 @@ public class MainFrame extends JFrame implements Runnable {
 		});
 		
 		
-		
+		l_timestep = new JLabel("0.00001");
+
 		JLabel l_newObject = new JLabel("New Object:");
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
 		l_newObject.setBounds(10, 441, 178, 14);
@@ -124,13 +131,9 @@ public class MainFrame extends JFrame implements Runnable {
 		b_EditFormula.setEnabled(false);
 		b_EditFormula.setBounds(10, 165, 178, 35);
 		
-		JSlider slider = new JSlider();
-		slider.setEnabled(false);
-		slider.setBackground(Color.WHITE);
-		slider.setBounds(10, 128, 178, 26);
+		
 		
 		JLabel lblTimestep = new JLabel("Timestep:");
-		lblTimestep.setEnabled(false);
 		lblTimestep.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTimestep.setBounds(10, 103, 65, 14);
 		
@@ -149,12 +152,12 @@ public class MainFrame extends JFrame implements Runnable {
 		JSlider slider_1 = new JSlider();
 		slider_1.setEnabled(false);
 		slider_1.setBackground(Color.WHITE);
-		slider_1.setBounds(10, 360, 178, 26);
+		slider_1.setBounds(10, 314, 178, 26);
 		
 		JLabel lblZoomLevel = new JLabel("Zoom Level:");
 		lblZoomLevel.setEnabled(false);
 		lblZoomLevel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblZoomLevel.setBounds(10, 335, 103, 14);
+		lblZoomLevel.setBounds(10, 289, 103, 14);
 		
 		JButton b_Clear = new JButton("Clear Simulator");
 		b_Clear.setBounds(10, 255, 178, 23);
@@ -177,6 +180,30 @@ public class MainFrame extends JFrame implements Runnable {
 		controlPanel.setBackground(Color.WHITE);
 		controlPanel.setBounds(10, 11, 198, 649);
 		controlPanel.setLayout(null);
+		
+		l_timestep.setBounds(85, 103, 103, 14);
+		controlPanel.add(l_timestep);
+		
+		
+		
+		final JSlider slider = new JSlider();
+		slider.setSnapToTicks(true);
+		slider.setPaintTicks(true);
+		slider.setMajorTickSpacing(1);
+		slider.setMinorTickSpacing(1);
+		slider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				
+				if(Vars.mainFrame != null)
+				GUIEvents.updateTimestep(slider.getValue());
+				
+			}
+		});
+		slider.setValue(5);
+		slider.setMaximum(10);
+		slider.setBackground(Color.WHITE);
+		slider.setBounds(10, 128, 178, 26);
+		
 		controlPanel.add(b_StartStop);
 		controlPanel.add(l_newObject);
 		controlPanel.add(t_mass);
@@ -202,15 +229,25 @@ public class MainFrame extends JFrame implements Runnable {
 		masterPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		masterPanel.setLayout(null);
 		masterPanel.add(controlPanel);
-		
-	
-		
-	
+		masterPanel.add(renderPanel);
+
 		
 		JLabel lblColor = new JLabel("Color:");
 		lblColor.setBounds(10, 559, 46, 14);
 		controlPanel.add(lblColor);
-		masterPanel.add(renderPanel);
+		
+		cb_drawPath = new JCheckBox("Draw Path");
+		cb_drawPath.setEnabled(false);
+		cb_drawPath.setBackground(Color.WHITE);
+		cb_drawPath.setBounds(10, 347, 178, 23);
+		controlPanel.add(cb_drawPath);
+		
+		cb_speedVec = new JCheckBox("Draw Velocity Vector");
+		cb_speedVec.setBackground(Color.WHITE);
+		cb_speedVec.setBounds(10, 373, 178, 23);
+		controlPanel.add(cb_speedVec);
+		
+		
 		
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setBounds(10, 11, 130, 14);
@@ -223,7 +260,7 @@ public class MainFrame extends JFrame implements Runnable {
 		//JFrame:
 		setBackground(Color.BLACK);
 		setResizable(false);
-		setTitle("x0 Gravity Simulator");
+		setTitle("x0 Gravity Simulator v" + Vars.version);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 700);
 		setContentPane(masterPanel);
