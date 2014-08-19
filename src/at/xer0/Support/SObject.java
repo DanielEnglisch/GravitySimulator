@@ -1,29 +1,24 @@
+
 package at.xer0.Support;
 
+public class SObject
+{
 
-public class SObject {
-	
 	private double xPos;
 	private double yPos;
 
 	private double mass;
 	private double xVelocity;
 	private double yVelocity;
-	
+
 	private double initTime;
 	private double initxPos;
 	private double inityPos;
-	
+
 	private SObjectColor color;
 
-	
-	
-	
-
-
-
-
-	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime, SObjectColor c) {
+	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime, SObjectColor c)
+	{
 		super();
 		this.xPos = initxPos;
 		this.yPos = inityPos;
@@ -36,69 +31,79 @@ public class SObject {
 		this.color = c;
 	}
 
-	
-	public double getInitxPos() {
+	public double getInitxPos()
+	{
 		return initxPos;
 	}
 
-	public double getInityPos() {
+	public double getInityPos()
+	{
 		return inityPos;
 	}
-	
-	public double getxPos() {
+
+	public double getxPos()
+	{
 		return xPos;
 	}
 
-	public void setxPos(double xPos) {
+	public void setxPos(double xPos)
+	{
 		this.xPos = xPos;
 	}
 
-	public double getyPos() {
+	public double getyPos()
+	{
 		return yPos;
 	}
 
-	public void setyPos(double yPos) {
+	public void setyPos(double yPos)
+	{
 		this.yPos = yPos;
 	}
 
-	public double getMass() {
+	public double getMass()
+	{
 		return mass;
 	}
 
-	public void setMass(double mass) {
+	public void setMass(double mass)
+	{
 		this.mass = mass;
 	}
 
-	public double getxVelocity() {
+	public double getxVelocity()
+	{
 		return xVelocity;
 	}
 
-	public void setVx(double vx) {
+	public void setVx(double vx)
+	{
 		xVelocity = vx;
 	}
 
-	public double getyVelocity() {
+	public double getyVelocity()
+	{
 		return yVelocity;
 	}
 
-	public void setVy(double vy) {
+	public void setVy(double vy)
+	{
 		yVelocity = vy;
 	}
 
-	public double getInitTime() {
+	public double getInitTime()
+	{
 		return initTime;
 	}
 
-	public SObjectColor getColor() {
+	public SObjectColor getColor()
+	{
 		return color;
 	}
 
-
-	public void setColor(SObjectColor color) {
+	public void setColor(SObjectColor color)
+	{
 		this.color = color;
 	}
-	
-
-
 
 }

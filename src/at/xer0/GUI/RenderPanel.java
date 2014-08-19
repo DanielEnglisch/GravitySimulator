@@ -1,3 +1,4 @@
+
 package at.xer0.GUI;
 
 import java.awt.Color;
@@ -7,10 +8,11 @@ import javax.swing.JPanel;
 
 import at.xer0.Simulator.Core;
 
-public class RenderPanel extends JPanel {
+public class RenderPanel extends JPanel
+{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public RenderPanel()
 	{
 		setForeground(Color.WHITE);
@@ -21,7 +23,7 @@ public class RenderPanel extends JPanel {
 
 	public void paintComponent(Graphics g)
 	{
-		
+
 		super.paintComponent(g);
 		Core.render(g);
 

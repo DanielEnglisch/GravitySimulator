@@ -1,3 +1,4 @@
+
 package at.xer0.Simulator;
 
 import java.awt.Color;
@@ -7,36 +8,31 @@ import at.xer0.GUI.MainFrame;
 import at.xer0.Support.SObject;
 import at.xer0.Support.Vars;
 
-
-
-public class Core {
+public class Core
+{
 
 	public static void main(String[] args) throws InterruptedException
 	{
 		Vars.mainFrame = new MainFrame();
 		System.out.println("MainFrame initialized!");
 		new Thread(Vars.mainFrame).start();
-						
-		while(true)
+
+		while (true)
 		{
-			if(Vars.isActive)
+			if (Vars.isActive)
 			{
-			
-				
-				
-				if(Vars.isTimeReversed)
+
+				if (Vars.isTimeReversed)
 				{
 					Vars.time -= Vars.timeStep;
-				}
-				else
+				} else
 				{
 					Vars.time += Vars.timeStep;
 				}
-				
+
 				logic();
-				
-				
-				if(Vars.time <= 0)
+
+				if (Vars.time <= 0)
 				{
 					Vars.isTimeReversed = false;
 					Vars.isActive = false;
@@ -45,89 +41,101 @@ public class Core {
 
 				}
 			}
-			
-			//Render:
+
+			// Render:
 			Vars.mainFrame.renderPanel.repaint();
 			//
-			
-			//GuiVars
+
+			// GuiVars
 			updateGUIVars();
 
 		}
-				
-		
+
 	}
-	
-	public static  void logic()
+
+	public static void logic()
 	{
-		for(SObject o : Vars.sObjects)
+		for (SObject o : Vars.sObjects)
 		{
-		
-			//Moves Object
+
+			// Moves Object
 			double deltaT = Vars.time - o.getInitTime();
 			o.setxPos(o.getInitxPos() + (o.getxVelocity() * deltaT));
 			o.setyPos(o.getInityPos() + (o.getyVelocity() * deltaT));
 
 		}
 	}
-	
+
 	public static void updateGUIVars()
 	{
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.sObjects.size());
 	}
-	
+
 	public static void render(Graphics g)
 	{
-		//Actual Render Logic
-		
-		
-		for(SObject obj : Vars.sObjects)
-		{
-			//	Magenta,Light_Gray,Gray,Dark_Gray,Black,Red,Pink,Orange,Yellow,Green,Cyan,Blue
+		// Actual Render Logic
 
-			switch(obj.getColor())
+		for (SObject obj : Vars.sObjects)
+		{
+			// Magenta,Light_Gray,Gray,Dark_Gray,Black,Red,Pink,Orange,Yellow,Green,Cyan,Blue
+
+			switch (obj.getColor())
 			{
-				case Magenta: g.setColor(Color.MAGENTA);
-				break; 
-				case Light_Gray: g.setColor(Color.LIGHT_GRAY);
+			case Magenta:
+				g.setColor(Color.MAGENTA);
 				break;
-				case Gray: g.setColor(Color.GRAY);
+			case Light_Gray:
+				g.setColor(Color.LIGHT_GRAY);
 				break;
-				case Dark_Gray: g.setColor(Color.DARK_GRAY);
+			case Gray:
+				g.setColor(Color.GRAY);
 				break;
-				case Black: g.setColor(Color.BLACK);
+			case Dark_Gray:
+				g.setColor(Color.DARK_GRAY);
 				break;
-				case Red: g.setColor(Color.RED);
+			case Black:
+				g.setColor(Color.BLACK);
 				break;
-				case Pink: g.setColor(Color.PINK);
+			case Red:
+				g.setColor(Color.RED);
 				break;
-				case Orange: g.setColor(Color.ORANGE);
+			case Pink:
+				g.setColor(Color.PINK);
 				break;
-				case Yellow: g.setColor(Color.YELLOW);
+			case Orange:
+				g.setColor(Color.ORANGE);
 				break;
-				case Green: g.setColor(Color.GREEN);
+			case Yellow:
+				g.setColor(Color.YELLOW);
 				break;
-				case Cyan: g.setColor(Color.CYAN);
+			case Green:
+				g.setColor(Color.GREEN);
 				break;
-				case Blue: g.setColor(Color.BLUE);
+			case Cyan:
+				g.setColor(Color.CYAN);
 				break;
-				
-			default: g.setColor(Color.ORANGE);
+			case Blue:
+				g.setColor(Color.BLUE);
+				break;
+
+			default:
+				g.setColor(Color.ORANGE);
 				break;
 			}
-			
-			g.fillOval((int)obj.getxPos(), (int)obj.getyPos(), (int)obj.getMass(), (int)obj.getMass());
-			
-			if(Vars.mainFrame.cb_speedVec.isSelected())
+
+			g.fillOval((int) obj.getxPos(), (int) obj.getyPos(), (int) obj.getMass(), (int) obj.getMass());
+
+			if (Vars.mainFrame.cb_speedVec.isSelected())
 			{
 				g.setColor(Color.BLACK);
-				g.drawLine((int)obj.getxPos() + (int)(obj.getMass()/2), (int)obj.getyPos() + (int)(obj.getMass()/2), (int)obj.getxPos() + (int)(obj.getMass()/2) + (int)obj.getxVelocity(), (int)obj.getyPos() + (int)(obj.getMass()/2) + (int)obj.getyVelocity());
+				g.drawLine((int) obj.getxPos() + (int) (obj.getMass() / 2), (int) obj.getyPos() + (int) (obj.getMass() / 2), (int) obj.getxPos() + (int) (obj.getMass() / 2) + (int) obj.getxVelocity(), (int) obj.getyPos() + (int) (obj.getMass() / 2) + (int) obj.getyVelocity());
 			}
 		}
 	}
-		
-	public static int randInt(int min, int max) {
+
+	public static int randInt(int min, int max)
+	{
 		java.util.Random r = new java.util.Random();
 		int i1 = r.nextInt(max - min + 1) + min;
 		return i1;
