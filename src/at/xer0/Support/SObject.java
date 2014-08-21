@@ -1,6 +1,8 @@
 
 package at.xer0.Support;
 
+import java.awt.Color;
+
 public class SObject
 {
 
@@ -15,9 +17,9 @@ public class SObject
 	private double initxPos;
 	private double inityPos;
 
-	private SObjectColor color;
+	private Color color;
 
-	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime, SObjectColor c)
+	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime, Color c)
 	{
 		super();
 		this.xPos = initxPos;
@@ -29,6 +31,13 @@ public class SObject
 		this.initxPos = initxPos;
 		this.inityPos = inityPos;
 		this.color = c;
+	}
+
+	public double distanceTo(SObject obj)
+	{
+		double dx = xPos - obj.xPos;
+		double dy = yPos - obj.yPos;
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 
 	public double getInitxPos()
@@ -96,12 +105,12 @@ public class SObject
 		return initTime;
 	}
 
-	public SObjectColor getColor()
+	public Color getColor()
 	{
 		return color;
 	}
 
-	public void setColor(SObjectColor color)
+	public void setColor(Color color)
 	{
 		this.color = color;
 	}

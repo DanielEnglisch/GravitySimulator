@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,12 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import at.xer0.Support.SObjectColor;
-import at.xer0.Support.Vars;
-import javax.swing.JCheckBox;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import at.xer0.Support.ColorEnum;
+import at.xer0.Support.Vars;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -94,7 +94,7 @@ public class MainFrame extends JFrame implements Runnable
 		l_yVelocity.setBounds(10, 531, 65, 14);
 
 		final JComboBox<?> comboBox = new JComboBox<>();
-		comboBox.setModel(new DefaultComboBoxModel(SObjectColor.values()));
+		comboBox.setModel(new DefaultComboBoxModel(ColorEnum.values()));
 		comboBox.setBounds(10, 584, 178, 20);
 
 		JButton b_ApplyObject = new JButton("Apply");
@@ -114,7 +114,7 @@ public class MainFrame extends JFrame implements Runnable
 					Vars.currentyVelocityPreset = yVel;
 					Vars.currentMassPreset = mass;
 
-					Vars.currentSObjectColorPreset = (SObjectColor) comboBox.getSelectedItem();
+					Vars.currentColorPreset = ColorEnum.getAWTColor((ColorEnum)comboBox.getSelectedItem());
 
 				} catch (Exception e)
 				{

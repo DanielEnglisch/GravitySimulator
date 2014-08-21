@@ -1,6 +1,7 @@
 
 package at.xer0.Support;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import at.xer0.GUI.MainFrame;
@@ -12,7 +13,7 @@ public class Vars
 	public static String defxVelocityPreset = "47.42";
 	public static String defyVelocityPreset = "29.128";
 	public static String defMassPreset = "45";
-	public static SObjectColor defSObjectColorPreset = SObjectColor.Orange;
+	public static Color defColorPreset = Color.ORANGE;
 	//
 
 	public static MainFrame mainFrame = null;
@@ -29,6 +30,6 @@ public class Vars
 	public static double currentxVelocityPreset = Double.parseDouble(defxVelocityPreset);
 	public static double currentyVelocityPreset = Double.parseDouble(defyVelocityPreset);
 	public static double currentMassPreset = Double.parseDouble(defMassPreset);
-	public static SObjectColor currentSObjectColorPreset = defSObjectColorPreset;
+	public static Color currentColorPreset = defColorPreset;
 
 }

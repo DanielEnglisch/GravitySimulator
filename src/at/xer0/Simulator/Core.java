@@ -78,58 +78,24 @@ public class Core
 
 		for (SObject obj : Vars.sObjects)
 		{
-			// Magenta,Light_Gray,Gray,Dark_Gray,Black,Red,Pink,Orange,Yellow,Green,Cyan,Blue
+			g.setColor(obj.getColor());
 
-			switch (obj.getColor())
-			{
-			case Magenta:
-				g.setColor(Color.MAGENTA);
-				break;
-			case Light_Gray:
-				g.setColor(Color.LIGHT_GRAY);
-				break;
-			case Gray:
-				g.setColor(Color.GRAY);
-				break;
-			case Dark_Gray:
-				g.setColor(Color.DARK_GRAY);
-				break;
-			case Black:
-				g.setColor(Color.BLACK);
-				break;
-			case Red:
-				g.setColor(Color.RED);
-				break;
-			case Pink:
-				g.setColor(Color.PINK);
-				break;
-			case Orange:
-				g.setColor(Color.ORANGE);
-				break;
-			case Yellow:
-				g.setColor(Color.YELLOW);
-				break;
-			case Green:
-				g.setColor(Color.GREEN);
-				break;
-			case Cyan:
-				g.setColor(Color.CYAN);
-				break;
-			case Blue:
-				g.setColor(Color.BLUE);
-				break;
+			int x = (int)obj.getxPos();
+			int y = (int)obj.getyPos();
+			
+			int radius = (int)obj.getMass()/10;
+			int r_x = (int)obj.getxPos() - (radius/2);
+			int r_y = (int)obj.getyPos() - (radius/2);
+			int r_xVel = (int)obj.getxVelocity()/10;
+			int r_yVel = (int)obj.getyVelocity()/10;
 
-			default:
-				g.setColor(Color.ORANGE);
-				break;
-			}
-
-			g.fillOval((int) obj.getxPos(), (int) obj.getyPos(), (int) obj.getMass(), (int) obj.getMass());
+			
+			g.fillOval(r_x,r_y, radius,radius);
 
 			if (Vars.mainFrame.cb_speedVec.isSelected())
 			{
 				g.setColor(Color.BLACK);
-				g.drawLine((int) obj.getxPos() + (int) (obj.getMass() / 2), (int) obj.getyPos() + (int) (obj.getMass() / 2), (int) obj.getxPos() + (int) (obj.getMass() / 2) + (int) obj.getxVelocity(), (int) obj.getyPos() + (int) (obj.getMass() / 2) + (int) obj.getyVelocity());
+				g.drawLine(x,y,x + r_xVel, y + r_yVel);
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public class GUIEvents
 
 	public static void addObject(int x, int y)
 	{
-		Vars.sObjects.add(new SObject(x - (Vars.currentMassPreset / 2), y - (Vars.currentMassPreset / 2), Vars.currentMassPreset, Vars.currentxVelocityPreset, Vars.currentyVelocityPreset, Vars.time, Vars.currentSObjectColorPreset));
+		Vars.sObjects.add(new SObject(x, y , Vars.currentMassPreset, Vars.currentxVelocityPreset, Vars.currentyVelocityPreset, Vars.time, Vars.currentColorPreset));
 		System.out.println("Added Object at " + x + "/" + y);
 	}
 
