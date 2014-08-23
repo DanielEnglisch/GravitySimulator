@@ -6,138 +6,86 @@ import java.awt.Color;
 public class SObject
 {
 
-	private double xPos;
-	private double yPos;
+	private SVector2D initPosition;
+	private SVector2D position;
+	private SVector2D initVelocity;
+	private SVector2D velocity;
 
 	private double mass;
-	
-	private double xVelocity;
-	private double yVelocity;
-	
-	private double xAcceleration;
-	private double yAcceleration;
 
 	private double initTime;
-	private double initxPos;
-	private double inityPos;
+
+	private SVector2D acceleration = new SVector2D(0, 0);
 
 	private Color color;
 
-	
-	/**
-	 * @param initxPos Initial x position.
-	 * @param inityPos Initial y position.
-	 * @param mass Initial mass.
-	 * @param xVelocity Initial x velocity.
-	 * @param yVelocity Initial y velocity.
-	 * @param initTime Initialisazion time.
-	 * @param color Color of the SObject.
-	 */
-	
-	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime, Color c)
+	public SObject(SVector2D iPos, SVector2D iVel, double mass, double itime, Color c)
 	{
 		super();
-		this.xPos = initxPos;
-		this.yPos = inityPos;
+
+		this.initPosition = iPos;
+		this.position = this.initPosition;
+
+		this.initVelocity = iVel;
+		this.velocity = this.initVelocity;
+
+		this.initTime = itime;
+
 		this.mass = mass;
-		xVelocity = vx;
-		yVelocity = vy;
-		this.initTime = initTime;
-		this.initxPos = initxPos;
-		this.inityPos = inityPos;
+
 		this.color = c;
+
 	}
 
-	public double distanceTo(SObject obj)
+	@Override
+	public String toString()
 	{
-		double dx = xPos - obj.xPos;
-		double dy = yPos - obj.yPos;
-		return Math.sqrt(dx * dx + dy * dy);
-	}
-	
-	
-	public double getxAcceleration()
-	{
-		return xAcceleration;
+		return "SObject [initPosition=" + initPosition + ", position=" + position + ", initVelocity=" + initVelocity + ", velocity=" + velocity + ", mass=" + mass + ", initTime=" + initTime + ", acceleration=" + acceleration + ", color=" + color + "]";
 	}
 
-	
-	public void setxAcceleration(double xAcceleration)
+	public SVector2D getPosition()
 	{
-		this.xAcceleration = xAcceleration;
+		return position;
 	}
 
-	
-	public double getyAcceleration()
+	public void setPosition(SVector2D position)
 	{
-		return yAcceleration;
+		this.position = position;
 	}
 
-	
-	public void setyAcceleration(double yAcceleration)
+	public SVector2D getVelocity()
 	{
-		this.yAcceleration = yAcceleration;
-	}
-	
-
-	public double getInitxPos()
-	{
-		return initxPos;
+		return velocity;
 	}
 
-	public double getInityPos()
+	public void setVelocity(SVector2D velocity)
 	{
-		return inityPos;
+		this.velocity = velocity;
 	}
 
-	public double getxPos()
+	public SVector2D getAcceleration()
 	{
-		return xPos;
+		return acceleration;
 	}
 
-	public void setxPos(double xPos)
+	public void setAcceleration(SVector2D acceleration)
 	{
-		this.xPos = xPos;
+		this.acceleration = acceleration;
 	}
 
-	public double getyPos()
+	public SVector2D getInitPosition()
 	{
-		return yPos;
+		return initPosition;
 	}
 
-	public void setyPos(double yPos)
+	public SVector2D getInitVelocity()
 	{
-		this.yPos = yPos;
+		return initVelocity;
 	}
 
 	public double getMass()
 	{
 		return mass;
-	}
-
-	public void setMass(double mass)
-	{
-		this.mass = mass;
-	}
-
-	public double getxVelocity()
-	{
-		return xVelocity;
-	}
-
-	public void setxVelocity(double vx)
-	{
-		xVelocity = vx;
-	}
-
-	public double getyVelocity()
-	{
-		return yVelocity;
-	}
-
-	public void setyVelocity(double vy)
-	{
-		yVelocity = vy;
 	}
 
 	public double getInitTime()
@@ -148,11 +96,6 @@ public class SObject
 	public Color getColor()
 	{
 		return color;
-	}
-
-	public void setColor(Color color)
-	{
-		this.color = color;
 	}
 
 }

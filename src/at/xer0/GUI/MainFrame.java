@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import at.xer0.Support.ColorEnum;
+import at.xer0.Support.SVector2D;
 import at.xer0.Support.Vars;
 
 public class MainFrame extends JFrame implements Runnable
@@ -110,17 +111,15 @@ public class MainFrame extends JFrame implements Runnable
 					double yVel = Double.parseDouble(t_yVelocity.getText());
 					double mass = Double.parseDouble(t_mass.getText());
 
-					Vars.currentxVelocityPreset = xVel;
-					Vars.currentyVelocityPreset = yVel;
+					Vars.currentVelocityPreset = new SVector2D(xVel, yVel);
 					Vars.currentMassPreset = mass;
 
-					Vars.currentColorPreset = ColorEnum.getAWTColor((ColorEnum)comboBox.getSelectedItem());
+					Vars.currentColorPreset = ColorEnum.getAWTColor((ColorEnum) comboBox.getSelectedItem());
 
 				} catch (Exception e)
 				{
 					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
-					Vars.currentxVelocityPreset = Double.parseDouble(Vars.defxVelocityPreset);
-					Vars.currentyVelocityPreset = Double.parseDouble(Vars.defyVelocityPreset);
+					Vars.currentVelocityPreset = new SVector2D(Double.parseDouble(Vars.defxVelocityPreset), Double.parseDouble(Vars.defyVelocityPreset));
 					Vars.currentMassPreset = Double.parseDouble(Vars.defMassPreset);
 				}
 

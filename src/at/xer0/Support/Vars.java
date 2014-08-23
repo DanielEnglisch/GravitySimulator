@@ -27,9 +27,10 @@ public class Vars
 	public static double time = 0;
 	public static double timeStep = 0.00001;
 
-	public static double currentxVelocityPreset = Double.parseDouble(defxVelocityPreset);
-	public static double currentyVelocityPreset = Double.parseDouble(defyVelocityPreset);
+	public static SVector2D currentVelocityPreset = new SVector2D(Double.parseDouble(defxVelocityPreset), Double.parseDouble(defyVelocityPreset));
 	public static double currentMassPreset = Double.parseDouble(defMassPreset);
 	public static Color currentColorPreset = defColorPreset;
+
+	public static double G = 6.673e-11;
 
 }

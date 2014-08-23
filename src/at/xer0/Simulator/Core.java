@@ -22,12 +22,12 @@ public class Core
 		{
 			if (Vars.isActive)
 			{
-				
+
 				if (Vars.isTimeReversed)
 				{
 					Vars.time -= Vars.timeStep;
 				}
-				
+
 				else
 				{
 					Vars.time += Vars.timeStep;
@@ -52,22 +52,14 @@ public class Core
 			// GuiVars
 			updateGUIVars();
 			//
-			
+
 		}
 
 	}
 
 	public static void logic()
 	{
-		for (SObject o : Vars.sObjects)
-		{
-
-			// Moves Object
-			double deltaT = Vars.time - o.getInitTime();
-			o.setxPos(o.getInitxPos() + (o.getxVelocity() * deltaT));
-			o.setyPos(o.getInityPos() + (o.getyVelocity() * deltaT));
-
-		}
+		return;
 	}
 
 	public static void updateGUIVars()
@@ -84,23 +76,22 @@ public class Core
 		{
 			g.setColor(obj.getColor());
 
-			int x = (int)obj.getxPos();
-			int y = (int)obj.getyPos();
-			
-			int radius = (int)obj.getMass()/10;
-			int r_x = (int)obj.getxPos() - (radius/2);
-			int r_y = (int)obj.getyPos() - (radius/2);
-			int r_xVel = (int)obj.getxVelocity()/10;
-			int r_yVel = (int)obj.getyVelocity()/10;
+			int x = (int) obj.getPosition().getX();
+			int y = (int) obj.getPosition().getY();
 
-			
-			g.fillOval(r_x,r_y, radius,radius);
+			int radius = (int) obj.getMass() / 10;
+			int r_x = x - (radius / 2);
+			int r_y = y - (radius / 2);
+			int r_xVel = (int) obj.getVelocity().getX() / 10;
+			int r_yVel = (int) obj.getVelocity().getY() / 10;
+
+			g.fillOval(r_x, r_y, radius, radius);
 
 			if (Vars.mainFrame.cb_speedVec.isSelected())
 			{
 				g.setColor(Color.BLACK);
-				g.drawLine(x,y,x + r_xVel, y + r_yVel);
-				
+				g.drawLine(x, y, x + r_xVel, y + r_yVel);
+
 			}
 		}
 	}

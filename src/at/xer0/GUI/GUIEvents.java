@@ -2,6 +2,7 @@
 package at.xer0.GUI;
 
 import at.xer0.Support.SObject;
+import at.xer0.Support.SVector2D;
 import at.xer0.Support.Vars;
 
 public class GUIEvents
@@ -34,8 +35,10 @@ public class GUIEvents
 
 	public static void addObject(int x, int y)
 	{
-		Vars.sObjects.add(new SObject(x, y , Vars.currentMassPreset, Vars.currentxVelocityPreset, Vars.currentyVelocityPreset, Vars.time, Vars.currentColorPreset));
-		System.out.println("Added Object at " + x + "/" + y);
+		SObject o = new SObject(new SVector2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.time, Vars.currentColorPreset);
+		Vars.sObjects.add(o);
+
+		System.out.println("Added Object: " + o.toString());
 	}
 
 	public static void reverseTime()
