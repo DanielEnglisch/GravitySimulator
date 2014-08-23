@@ -10,15 +10,15 @@ public class Vars
 {
 
 	// Standart Wertks
-	public static String defxVelocityPreset = "47.42";
-	public static String defyVelocityPreset = "29.128";
-	public static String defMassPreset = "45";
+	public static String defxVelocityPreset = "10.32";
+	public static String defyVelocityPreset = "-24.3";
+	public static String defMassPreset = "523";
 	public static Color defColorPreset = Color.ORANGE;
 	//
 
 	public static MainFrame mainFrame = null;
 
-	public static String version = "0.2a";
+	public static String version = "0.4a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;

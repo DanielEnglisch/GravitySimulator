@@ -10,8 +10,12 @@ public class SObject
 	private double yPos;
 
 	private double mass;
+	
 	private double xVelocity;
 	private double yVelocity;
+	
+	private double xAcceleration;
+	private double yAcceleration;
 
 	private double initTime;
 	private double initxPos;
@@ -19,6 +23,17 @@ public class SObject
 
 	private Color color;
 
+	
+	/**
+	 * @param initxPos Initial x position.
+	 * @param inityPos Initial y position.
+	 * @param mass Initial mass.
+	 * @param xVelocity Initial x velocity.
+	 * @param yVelocity Initial y velocity.
+	 * @param initTime Initialisazion time.
+	 * @param color Color of the SObject.
+	 */
+	
 	public SObject(double initxPos, double inityPos, double mass, double vx, double vy, double initTime, Color c)
 	{
 		super();
@@ -39,6 +54,31 @@ public class SObject
 		double dy = yPos - obj.yPos;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
+	
+	
+	public double getxAcceleration()
+	{
+		return xAcceleration;
+	}
+
+	
+	public void setxAcceleration(double xAcceleration)
+	{
+		this.xAcceleration = xAcceleration;
+	}
+
+	
+	public double getyAcceleration()
+	{
+		return yAcceleration;
+	}
+
+	
+	public void setyAcceleration(double yAcceleration)
+	{
+		this.yAcceleration = yAcceleration;
+	}
+	
 
 	public double getInitxPos()
 	{
@@ -85,7 +125,7 @@ public class SObject
 		return xVelocity;
 	}
 
-	public void setVx(double vx)
+	public void setxVelocity(double vx)
 	{
 		xVelocity = vx;
 	}
@@ -95,7 +135,7 @@ public class SObject
 		return yVelocity;
 	}
 
-	public void setVy(double vy)
+	public void setyVelocity(double vy)
 	{
 		yVelocity = vy;
 	}

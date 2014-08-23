@@ -3,6 +3,7 @@ package at.xer0.Simulator;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 import at.xer0.GUI.MainFrame;
 import at.xer0.Support.SObject;
@@ -21,11 +22,13 @@ public class Core
 		{
 			if (Vars.isActive)
 			{
-
+				
 				if (Vars.isTimeReversed)
 				{
 					Vars.time -= Vars.timeStep;
-				} else
+				}
+				
+				else
 				{
 					Vars.time += Vars.timeStep;
 				}
@@ -48,7 +51,8 @@ public class Core
 
 			// GuiVars
 			updateGUIVars();
-
+			//
+			
 		}
 
 	}
@@ -96,13 +100,14 @@ public class Core
 			{
 				g.setColor(Color.BLACK);
 				g.drawLine(x,y,x + r_xVel, y + r_yVel);
+				
 			}
 		}
 	}
 
 	public static int randInt(int min, int max)
 	{
-		java.util.Random r = new java.util.Random();
+		Random r = new java.util.Random();
 		int i1 = r.nextInt(max - min + 1) + min;
 		return i1;
 	}

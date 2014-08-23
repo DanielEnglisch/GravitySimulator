@@ -97,7 +97,7 @@ public class MainFrame extends JFrame implements Runnable
 		comboBox.setModel(new DefaultComboBoxModel(ColorEnum.values()));
 		comboBox.setBounds(10, 584, 178, 20);
 
-		JButton b_ApplyObject = new JButton("Apply");
+		JButton b_ApplyObject = new JButton("Apply Preset");
 		b_ApplyObject.addActionListener(new ActionListener()
 		{
 
