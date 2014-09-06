@@ -227,20 +227,30 @@ public class MainFrame extends JFrame implements Runnable
 		cb_speedVec.setBackground(Color.WHITE);
 		cb_speedVec.setBounds(10, 195, 178, 23);
 		controlPanel.add(cb_speedVec);
-		
+
 		b_previousStep = new JButton("<");
-		b_previousStep.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
+		b_previousStep.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+
 				int s = 1;
-				
+
 				try
 				{
 					s = Integer.parseInt(t_steps.getText());
+				} catch (Exception esx)
+				{
+					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
+					return;
 				}
-				catch(Exception esx){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
-				
-				if(s <= 0){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
+
+				if (s <= 0)
+				{
+					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
+					return;
+				}
 
 				Vars.steps = s;
 				Vars.previousStep = true;
@@ -249,23 +259,31 @@ public class MainFrame extends JFrame implements Runnable
 		b_previousStep.setFont(new Font("Tahoma", Font.BOLD, 14));
 		b_previousStep.setBounds(10, 225, 76, 50);
 		controlPanel.add(b_previousStep);
-		
+
 		b_nextStep = new JButton(">");
-		b_nextStep.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
+		b_nextStep.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent arg0)
+			{
 
 				int s = 1;
-				
+
 				try
 				{
 					s = Integer.parseInt(t_steps.getText());
+				} catch (Exception esx)
+				{
+					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
+					return;
 				}
-				catch(Exception esx){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
-				
-				if(s <= 0){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
-				
-				
+
+				if (s <= 0)
+				{
+					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
+					return;
+				}
+
 				Vars.steps = s;
 				Vars.nextStep = true;
 			}
@@ -273,13 +291,13 @@ public class MainFrame extends JFrame implements Runnable
 		b_nextStep.setFont(new Font("Tahoma", Font.BOLD, 14));
 		b_nextStep.setBounds(112, 225, 76, 50);
 		controlPanel.add(b_nextStep);
-		
+
 		t_steps = new JTextField();
 		t_steps.setText("1");
 		t_steps.setBounds(10, 311, 178, 20);
 		controlPanel.add(t_steps);
 		t_steps.setColumns(10);
-		
+
 		JLabel lblStepsPerClick = new JLabel("Steps per click:");
 		lblStepsPerClick.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblStepsPerClick.setBounds(10, 286, 178, 14);
@@ -308,7 +326,9 @@ public class MainFrame extends JFrame implements Runnable
 	{
 		setVisible(true);
 	}
-	public JTextField t_steps() {
+
+	public JTextField t_steps()
+	{
 		return t_steps;
 	}
 }

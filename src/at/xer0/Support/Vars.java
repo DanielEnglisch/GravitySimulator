@@ -24,10 +24,9 @@ public class Vars
 	public static boolean isTimeReversed = false;
 	public static boolean nextStep = false;
 	public static boolean previousStep = false;
-	
+
 	public static int steps = 10;
 
-	
 	public static ArrayList<Obj> sObjects = new ArrayList<Obj>();
 	public static double time = 0;
 	public static double timeStep = 0.00001;

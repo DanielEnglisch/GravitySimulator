@@ -27,7 +27,7 @@ public class Core
 			{
 
 				logic();
-				
+
 				if (Vars.isTimeReversed)
 				{
 					Vars.time -= Vars.timeStep;
@@ -38,8 +38,6 @@ public class Core
 					Vars.time += Vars.timeStep;
 				}
 
-				
-
 				if (Vars.time <= 0)
 				{
 					Vars.isTimeReversed = false;
@@ -48,41 +46,34 @@ public class Core
 					Vars.time = 0;
 
 				}
-			} 
-			else 
-				
-				
-				if (Vars.time <= 0)
-				{
-					Vars.time = 0;
-					Vars.previousStep = false;
-				}
-			
-			
-			if(Vars.nextStep)
+			} else
+
+			if (Vars.time <= 0)
 			{
-				for(int i = 0;i<Vars.steps;i++)
+				Vars.time = 0;
+				Vars.previousStep = false;
+			}
+
+			if (Vars.nextStep)
+			{
+				for (int i = 0; i < Vars.steps; i++)
 				{
 					Vars.time += Vars.timeStep;
 					logic();
 				}
-				
+
 				Vars.nextStep = false;
 
-	
-			}
-			else if(Vars.previousStep)
+			} else if (Vars.previousStep)
 			{
-				for(int i = 0;i<Vars.steps;i++)
+				for (int i = 0; i < Vars.steps; i++)
 				{
 					Vars.time -= Vars.timeStep;
 					logic();
 				}
-				
+
 				Vars.previousStep = false;
 			}
-			
-			
 
 			// Render:
 			Vars.mainFrame.renderPanel.repaint();

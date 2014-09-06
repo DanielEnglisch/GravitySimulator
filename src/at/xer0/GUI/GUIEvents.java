@@ -16,18 +16,17 @@ public class GUIEvents
 		{
 			Vars.mainFrame.b_StartStop.setText("Stop Simulation");
 			System.out.println("Simulation: Started");
-			
-		
-			//DisableStepMode:
+
+			// DisableStepMode:
 			Vars.mainFrame.b_nextStep.setEnabled(false);
 			Vars.mainFrame.b_previousStep.setEnabled(false);
-			
+
 		} else
 		{
 			Vars.mainFrame.b_StartStop.setText("Start Simulation");
 			System.out.println("Simulation: Stopped");
-			
-			//EnableStepMode:
+
+			// EnableStepMode:
 			Vars.mainFrame.b_nextStep.setEnabled(true);
 			Vars.mainFrame.b_previousStep.setEnabled(true);
 

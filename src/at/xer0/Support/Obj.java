@@ -10,7 +10,6 @@ public class Obj
 	private Vec2D initVelocity;
 	private double initTime;
 
-	
 	private Vec2D position;
 	private Vec2D velocity;
 	private Vec2D acceleration = new Vec2D(0, 0);
