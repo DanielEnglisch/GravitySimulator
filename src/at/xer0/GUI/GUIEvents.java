@@ -1,8 +1,8 @@
 
 package at.xer0.GUI;
 
-import at.xer0.Support.SObject;
-import at.xer0.Support.SVector2D;
+import at.xer0.Support.Obj;
+import at.xer0.Support.Vec2D;
 import at.xer0.Support.Vars;
 
 public class GUIEvents
@@ -16,18 +16,27 @@ public class GUIEvents
 		{
 			Vars.mainFrame.b_StartStop.setText("Stop Simulation");
 			System.out.println("Simulation: Started");
+			
+		
+			//DisableStepMode:
+			Vars.mainFrame.b_nextStep.setEnabled(false);
+			Vars.mainFrame.b_previousStep.setEnabled(false);
+			
 		} else
 		{
 			Vars.mainFrame.b_StartStop.setText("Start Simulation");
 			System.out.println("Simulation: Stopped");
+			
+			//EnableStepMode:
+			Vars.mainFrame.b_nextStep.setEnabled(true);
+			Vars.mainFrame.b_previousStep.setEnabled(true);
+
 		}
 	}
 
 	public static void clearSimulation()
 	{
-		Vars.isActive = false;
 		Vars.sObjects.clear();
-		Vars.timeStep = 0.000001;
 		Vars.time = 0;
 
 		System.out.println("Simulation cleared!");
@@ -35,7 +44,7 @@ public class GUIEvents
 
 	public static void addObject(int x, int y)
 	{
-		SObject o = new SObject(new SVector2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.time, Vars.currentColorPreset);
+		Obj o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.time, Vars.currentColorPreset);
 		Vars.sObjects.add(o);
 
 		System.out.println("Added Object: " + o.toString());

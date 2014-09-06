@@ -1,7 +1,7 @@
 
 package at.xer0.Support;
 
-public class SVector2D
+public class Vec2D
 {
 
 	private double x;
@@ -12,7 +12,7 @@ public class SVector2D
 	 * @param yComponent
 	 *            yComponent of SVector2D
 	 */
-	public SVector2D(double xComponent, double yComponent)
+	public Vec2D(double xComponent, double yComponent)
 	{
 		super();
 		this.x = xComponent;

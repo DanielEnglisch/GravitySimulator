@@ -26,7 +26,7 @@ import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
 
-public class MainFrame extends JFrame implements Runnable
+public class MainFrame_bckp extends JFrame implements Runnable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -43,16 +43,14 @@ public class MainFrame extends JFrame implements Runnable
 	public JButton b_StartStop;
 	public JButton b_ReverseTime;
 	public JCheckBox cb_speedVec;
+	public JCheckBox cb_drawPath;
 	public JLabel l_timestep;
-	public JButton b_previousStep;
-	public JButton b_nextStep;
-	private JTextField t_steps;
 
 	//
 
 	@SuppressWarnings(
 	{ "unchecked", "rawtypes" })
-	public MainFrame()
+	public MainFrame_bckp()
 	{
 
 		b_StartStop = new JButton("Start Simulation");
@@ -130,6 +128,10 @@ public class MainFrame extends JFrame implements Runnable
 		});
 		b_ApplyObject.setBounds(10, 615, 178, 23);
 
+		JButton b_EditFormula = new JButton("Edit Formula");
+		b_EditFormula.setEnabled(false);
+		b_EditFormula.setBounds(10, 165, 178, 35);
+
 		JLabel lblTimestep = new JLabel("Timestep:");
 		lblTimestep.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTimestep.setBounds(10, 103, 65, 14);
@@ -145,8 +147,22 @@ public class MainFrame extends JFrame implements Runnable
 		});
 		b_ReverseTime.setBounds(10, 57, 178, 35);
 
+		JButton btnNewButton_1 = new JButton("Select Output File");
+		btnNewButton_1.setEnabled(false);
+		btnNewButton_1.setBounds(10, 211, 178, 35);
+
+		JSlider slider_1 = new JSlider();
+		slider_1.setEnabled(false);
+		slider_1.setBackground(Color.WHITE);
+		slider_1.setBounds(10, 314, 178, 26);
+
+		JLabel lblZoomLevel = new JLabel("Zoom Level:");
+		lblZoomLevel.setEnabled(false);
+		lblZoomLevel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblZoomLevel.setBounds(10, 289, 103, 14);
+
 		JButton b_Clear = new JButton("Clear Simulator");
-		b_Clear.setBounds(10, 165, 178, 23);
+		b_Clear.setBounds(10, 255, 178, 23);
 		b_Clear.addActionListener(new ActionListener()
 		{
 
@@ -206,9 +222,13 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(l_xVelocity);
 		controlPanel.add(l_yVelocity);
 		controlPanel.add(b_ApplyObject);
+		controlPanel.add(b_EditFormula);
 		controlPanel.add(slider);
 		controlPanel.add(lblTimestep);
 		controlPanel.add(b_ReverseTime);
+		controlPanel.add(slider_1);
+		controlPanel.add(btnNewButton_1);
+		controlPanel.add(lblZoomLevel);
 		controlPanel.add(b_Clear);
 		controlPanel.add(comboBox);
 
@@ -223,67 +243,16 @@ public class MainFrame extends JFrame implements Runnable
 		lblColor.setBounds(10, 559, 46, 14);
 		controlPanel.add(lblColor);
 
+		cb_drawPath = new JCheckBox("Draw Path");
+		cb_drawPath.setEnabled(false);
+		cb_drawPath.setBackground(Color.WHITE);
+		cb_drawPath.setBounds(10, 347, 178, 23);
+		controlPanel.add(cb_drawPath);
+
 		cb_speedVec = new JCheckBox("Draw Velocity Vector");
 		cb_speedVec.setBackground(Color.WHITE);
-		cb_speedVec.setBounds(10, 195, 178, 23);
+		cb_speedVec.setBounds(10, 373, 178, 23);
 		controlPanel.add(cb_speedVec);
-		
-		b_previousStep = new JButton("<");
-		b_previousStep.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int s = 1;
-				
-				try
-				{
-					s = Integer.parseInt(t_steps.getText());
-				}
-				catch(Exception esx){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
-				
-				if(s <= 0){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
-
-				Vars.steps = s;
-				Vars.previousStep = true;
-			}
-		});
-		b_previousStep.setFont(new Font("Tahoma", Font.BOLD, 14));
-		b_previousStep.setBounds(10, 225, 76, 50);
-		controlPanel.add(b_previousStep);
-		
-		b_nextStep = new JButton(">");
-		b_nextStep.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-
-				int s = 1;
-				
-				try
-				{
-					s = Integer.parseInt(t_steps.getText());
-				}
-				catch(Exception esx){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
-				
-				if(s <= 0){JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");return;}
-				
-				
-				Vars.steps = s;
-				Vars.nextStep = true;
-			}
-		});
-		b_nextStep.setFont(new Font("Tahoma", Font.BOLD, 14));
-		b_nextStep.setBounds(112, 225, 76, 50);
-		controlPanel.add(b_nextStep);
-		
-		t_steps = new JTextField();
-		t_steps.setText("1");
-		t_steps.setBounds(10, 311, 178, 20);
-		controlPanel.add(t_steps);
-		t_steps.setColumns(10);
-		
-		JLabel lblStepsPerClick = new JLabel("Steps per click:");
-		lblStepsPerClick.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblStepsPerClick.setBounds(10, 286, 178, 14);
-		controlPanel.add(lblStepsPerClick);
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setBounds(10, 11, 130, 14);
@@ -307,8 +276,5 @@ public class MainFrame extends JFrame implements Runnable
 	public void run()
 	{
 		setVisible(true);
-	}
-	public JTextField t_steps() {
-		return t_steps;
 	}
 }

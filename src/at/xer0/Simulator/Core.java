@@ -5,8 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
+import at.xer0.GUI.GUIEvents;
 import at.xer0.GUI.MainFrame;
-import at.xer0.Support.SObject;
+import at.xer0.Support.Obj;
+import at.xer0.Support.Vec2D;
 import at.xer0.Support.Vars;
 
 public class Core
@@ -14,6 +16,7 @@ public class Core
 
 	public static void main(String[] args) throws InterruptedException
 	{
+
 		Vars.mainFrame = new MainFrame();
 		System.out.println("MainFrame initialized!");
 		new Thread(Vars.mainFrame).start();
@@ -23,6 +26,8 @@ public class Core
 			if (Vars.isActive)
 			{
 
+				logic();
+				
 				if (Vars.isTimeReversed)
 				{
 					Vars.time -= Vars.timeStep;
@@ -33,17 +38,51 @@ public class Core
 					Vars.time += Vars.timeStep;
 				}
 
-				logic();
+				
 
 				if (Vars.time <= 0)
 				{
 					Vars.isTimeReversed = false;
-					Vars.isActive = false;
-					Vars.mainFrame.b_StartStop.setText("Start Simulation");
+					GUIEvents.startStop();
 					Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
+					Vars.time = 0;
 
 				}
+			} 
+			else 
+				
+				
+				if (Vars.time <= 0)
+				{
+					Vars.time = 0;
+					Vars.previousStep = false;
+				}
+			
+			
+			if(Vars.nextStep)
+			{
+				for(int i = 0;i<Vars.steps;i++)
+				{
+					Vars.time += Vars.timeStep;
+					logic();
+				}
+				
+				Vars.nextStep = false;
+
+	
 			}
+			else if(Vars.previousStep)
+			{
+				for(int i = 0;i<Vars.steps;i++)
+				{
+					Vars.time -= Vars.timeStep;
+					logic();
+				}
+				
+				Vars.previousStep = false;
+			}
+			
+			
 
 			// Render:
 			Vars.mainFrame.renderPanel.repaint();
@@ -59,7 +98,14 @@ public class Core
 
 	public static void logic()
 	{
-		return;
+
+		for (Obj o1 : Vars.sObjects)
+		{
+			double deltaT = Vars.time - o1.getInitTime();
+			o1.setPosition(new Vec2D(o1.getInitPosition().getX() + (deltaT * o1.getVelocity().getX()), o1.getInitPosition().getY() + (deltaT * o1.getVelocity().getY())));
+		}
+
+		// return;
 	}
 
 	public static void updateGUIVars()
@@ -72,7 +118,7 @@ public class Core
 	{
 		// Actual Render Logic
 
-		for (SObject obj : Vars.sObjects)
+		for (Obj obj : Vars.sObjects)
 		{
 			g.setColor(obj.getColor());
 
@@ -82,8 +128,8 @@ public class Core
 			int radius = (int) obj.getMass() / 10;
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
-			int r_xVel = (int) obj.getVelocity().getX() / 10;
-			int r_yVel = (int) obj.getVelocity().getY() / 10;
+			int r_xVel = (int) obj.getVelocity().getX() / 2;
+			int r_yVel = (int) obj.getVelocity().getY() / 2;
 
 			g.fillOval(r_x, r_y, radius, radius);
 

@@ -18,16 +18,21 @@ public class Vars
 
 	public static MainFrame mainFrame = null;
 
-	public static String version = "0.4a";
+	public static String version = "0.6a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;
+	public static boolean nextStep = false;
+	public static boolean previousStep = false;
+	
+	public static int steps = 10;
 
-	public static ArrayList<SObject> sObjects = new ArrayList<SObject>();
+	
+	public static ArrayList<Obj> sObjects = new ArrayList<Obj>();
 	public static double time = 0;
 	public static double timeStep = 0.00001;
 
-	public static SVector2D currentVelocityPreset = new SVector2D(Double.parseDouble(defxVelocityPreset), Double.parseDouble(defyVelocityPreset));
+	public static Vec2D currentVelocityPreset = new Vec2D(Double.parseDouble(defxVelocityPreset), Double.parseDouble(defyVelocityPreset));
 	public static double currentMassPreset = Double.parseDouble(defMassPreset);
 	public static Color currentColorPreset = defColorPreset;
 
