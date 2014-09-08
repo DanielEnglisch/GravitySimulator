@@ -6,28 +6,19 @@ import java.awt.Color;
 public class Obj
 {
 
-	private Vec2D initPosition;
-	private Vec2D initVelocity;
-	private double initTime;
-
-	private Vec2D position;
-	private Vec2D velocity;
+	private Vec2D position; //Wird im Constructor initiiert.
+	private Vec2D velocity; //Wird im Constructor initiiert.
 	private Vec2D acceleration = new Vec2D(0, 0);
-	private double mass;
+	private double mass; //Wird im Constructor initiiert.
 
-	private Color color;
+	private Color color; //Wird im Constructor initiiert.
 
 	public Obj(Vec2D iPos, Vec2D iVel, double mass, double itime, Color c)
 	{
 		super();
 
-		this.initPosition = iPos;
-		this.position = this.initPosition;
-
-		this.initVelocity = iVel;
-		this.velocity = this.initVelocity;
-
-		this.initTime = itime;
+		this.position = iPos;
+		this.velocity = iVel;
 
 		this.mass = mass;
 
@@ -38,7 +29,7 @@ public class Obj
 	@Override
 	public String toString()
 	{
-		return "Objekt [initPosition=" + initPosition + ", position=" + position + ", initVelocity=" + initVelocity + ", velocity=" + velocity + ", mass=" + mass + ", initTime=" + initTime + ", acceleration=" + acceleration + ", color=" + color + "]";
+		return "Obj [position=" + position + ", velocity=" + velocity + ", acceleration=" + acceleration + ", mass=" + mass + ", color=" + color + "]";
 	}
 
 	public Vec2D getPosition()
@@ -71,29 +62,21 @@ public class Obj
 		this.acceleration = acceleration;
 	}
 
-	public Vec2D getInitPosition()
-	{
-		return initPosition;
-	}
-
-	public Vec2D getInitVelocity()
-	{
-		return initVelocity;
-	}
-
 	public double getMass()
 	{
 		return mass;
 	}
 
-	public double getInitTime()
-	{
-		return initTime;
-	}
-
 	public Color getColor()
 	{
 		return color;
+	}
+
+	public double distanceTo(Obj b)
+	{
+		double dx = b.getPosition().getX() - position.getX();
+		double dy = b.getPosition().getY() - position.getY();
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 
 }

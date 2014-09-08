@@ -44,7 +44,6 @@ public class MainFrame extends JFrame implements Runnable
 	public JButton b_ReverseTime;
 	public JCheckBox cb_speedVec;
 	public JLabel l_timestep;
-	public JButton b_previousStep;
 	public JButton b_nextStep;
 	private JTextField t_steps;
 
@@ -145,14 +144,14 @@ public class MainFrame extends JFrame implements Runnable
 		});
 		b_ReverseTime.setBounds(10, 57, 178, 35);
 
-		JButton b_Clear = new JButton("Clear Simulator");
+		JButton b_Clear = new JButton("Reset Simulator");
 		b_Clear.setBounds(10, 165, 178, 23);
 		b_Clear.addActionListener(new ActionListener()
 		{
 
 			public void actionPerformed(ActionEvent e)
 			{
-				GUIEvents.clearSimulation();
+				GUIEvents.resetSimulation();
 			}
 		});
 
@@ -227,38 +226,6 @@ public class MainFrame extends JFrame implements Runnable
 		cb_speedVec.setBackground(Color.WHITE);
 		cb_speedVec.setBounds(10, 195, 178, 23);
 		controlPanel.add(cb_speedVec);
-
-		b_previousStep = new JButton("<");
-		b_previousStep.addActionListener(new ActionListener()
-		{
-
-			public void actionPerformed(ActionEvent e)
-			{
-
-				int s = 1;
-
-				try
-				{
-					s = Integer.parseInt(t_steps.getText());
-				} catch (Exception esx)
-				{
-					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
-					return;
-				}
-
-				if (s <= 0)
-				{
-					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
-					return;
-				}
-
-				Vars.steps = s;
-				Vars.previousStep = true;
-			}
-		});
-		b_previousStep.setFont(new Font("Tahoma", Font.BOLD, 14));
-		b_previousStep.setBounds(10, 225, 76, 50);
-		controlPanel.add(b_previousStep);
 
 		b_nextStep = new JButton(">");
 		b_nextStep.addActionListener(new ActionListener()

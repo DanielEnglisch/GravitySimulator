@@ -19,7 +19,6 @@ public class GUIEvents
 
 			// DisableStepMode:
 			Vars.mainFrame.b_nextStep.setEnabled(false);
-			Vars.mainFrame.b_previousStep.setEnabled(false);
 
 		} else
 		{
@@ -28,17 +27,21 @@ public class GUIEvents
 
 			// EnableStepMode:
 			Vars.mainFrame.b_nextStep.setEnabled(true);
-			Vars.mainFrame.b_previousStep.setEnabled(true);
 
 		}
 	}
 
-	public static void clearSimulation()
+	public static void resetSimulation()
 	{
 		Vars.sObjects.clear();
 		Vars.time = 0;
+		Vars.isActive = false;
+		Vars.mainFrame.b_StartStop.setText("Start Simulation");
+		Vars.mainFrame.b_nextStep.setEnabled(true);
+		Vars.isTimeReversed = false;
+		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
+		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
-		System.out.println("Simulation cleared!");
 	}
 
 	public static void addObject(int x, int y)
