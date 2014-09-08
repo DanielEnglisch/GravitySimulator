@@ -28,7 +28,7 @@ public class Vars
 	public static int steps = 10;
 
 	//ActiveObjects:
-	public static ArrayList<Obj> sObjects = new ArrayList<Obj>();
+	public static ArrayList<Obj> activeObjects = new ArrayList<Obj>();
 	
 	//Time (only for rendering on GUI)
 	public static double time = 0;

@@ -79,48 +79,57 @@ public class Core
 		}
 
 		//#1:Beschleunigung-Schleife:
-		for (Obj o1 : Vars.sObjects)
+		for (Obj o1 : Vars.activeObjects)
 		{
 			o1.setAcceleration(new Vec2D(0, 0));
 
-			for (Obj o2 : Vars.sObjects)
+			for (Obj o2 : Vars.activeObjects)
 			{
 				if (o1 != o2)
 				{
 
 					double r = o1.distanceTo(o2);
 
-					o1.setAcceleration(new Vec2D((-G * o1.getPosition().getX() * o2.getMass()) / (Math.pow(r, 3)) + (o1.getPosition().getX()), (-G * o1.getPosition().getY() * o2.getMass()) / (Math.pow(r, 3) + (o1.getPosition().getY()))));
+					o1.setAcceleration(new Vec2D(
+							(-G * o1.getPosition().getX() * o2.getMass()) / (Math.pow(r, 3)) + (o1.getPosition().getX()), //X-Komponente
+							(-G * o1.getPosition().getY() * o2.getMass()) / (Math.pow(r, 3) + (o1.getPosition().getY()) //Y-Komponente
+					)));
 
 				}
 			}
 		}
 
 		//#2:Geschwindigkeit-Schleife:
-		for (Obj o1 : Vars.sObjects)
+		for (Obj o1 : Vars.activeObjects)
 		{
 
-			for (Obj o2 : Vars.sObjects)
+			for (Obj o2 : Vars.activeObjects)
 			{
 				if (o1 != o2)
 				{
 
-					o1.setVelocity(new Vec2D(o1.getVelocity().getX() + deltaT * o1.getAcceleration().getX(), o1.getVelocity().getY() + deltaT * o1.getAcceleration().getY()));
+					o1.setVelocity(new Vec2D(
+							o1.getVelocity().getX() + deltaT * o1.getAcceleration().getX(), //X-Komponente
+							o1.getVelocity().getY() + deltaT * o1.getAcceleration().getY() //Y-Komponente
+					));
 
 				}
 			}
 		}
 
 		//#3:Position-Schleife:
-		for (Obj o1 : Vars.sObjects)
+		for (Obj o1 : Vars.activeObjects)
 		{
 
-			for (Obj o2 : Vars.sObjects)
+			for (Obj o2 : Vars.activeObjects)
 			{
 				if (o1 != o2)
 				{
 
-					o1.setPosition(new Vec2D(o1.getPosition().getX() + deltaT * o1.getVelocity().getX(), o1.getPosition().getY() + deltaT * o1.getVelocity().getY()));
+					o1.setPosition(new Vec2D(
+							o1.getPosition().getX() + deltaT * o1.getVelocity().getX(), //X-Komponente
+							o1.getPosition().getY() + deltaT * o1.getVelocity().getY() //Y-Komponente
+					));
 
 				}
 			}
@@ -134,14 +143,14 @@ public class Core
 	public static void updateGUIVars()
 	{
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
-		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.sObjects.size());
+		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.activeObjects.size());
 	}
 
 	public static void render(Graphics g)
 	{
 		// Actual Render Logic
 
-		for (Obj obj : Vars.sObjects)
+		for (Obj obj : Vars.activeObjects)
 		{
 			g.setColor(obj.getColor());
 

@@ -33,7 +33,7 @@ public class GUIEvents
 
 	public static void resetSimulation()
 	{
-		Vars.sObjects.clear();
+		Vars.activeObjects.clear();
 		Vars.time = 0;
 		Vars.isActive = false;
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
@@ -47,7 +47,7 @@ public class GUIEvents
 	public static void addObject(int x, int y)
 	{
 		Obj o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.time, Vars.currentColorPreset);
-		Vars.sObjects.add(o);
+		Vars.activeObjects.add(o);
 
 		System.out.println("Added Object: " + o.toString());
 	}

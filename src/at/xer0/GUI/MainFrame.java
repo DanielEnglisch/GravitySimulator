@@ -274,7 +274,7 @@ public class MainFrame extends JFrame implements Runnable
 		l_Time.setBounds(10, 11, 130, 14);
 		renderPanel.add(l_Time);
 
-		l_Objects = new JLabel("Objects: " + Vars.sObjects.size());
+		l_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
 		l_Objects.setBounds(10, 27, 102, 14);
 		renderPanel.add(l_Objects);
 
