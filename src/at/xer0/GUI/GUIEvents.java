@@ -31,23 +31,13 @@ public class GUIEvents
 		}
 	}
 
-	public static void resetSimulation()
-	{
-		Vars.activeObjects.clear();
-		Vars.time = 0;
-		Vars.isActive = false;
-		Vars.mainFrame.b_StartStop.setText("Start Simulation");
-		Vars.mainFrame.b_nextStep.setEnabled(true);
-		Vars.isTimeReversed = false;
-		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
-		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
-	}
 
 	public static void addObject(int x, int y)
 	{
-		Obj o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.time, Vars.currentColorPreset);
-		Vars.activeObjects.add(o);
+		Obj o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset);
+
+		Vars.bufferedObjects.add(o);
 
 		System.out.println("Added Object: " + o.toString());
 	}
@@ -59,10 +49,12 @@ public class GUIEvents
 		if (Vars.isTimeReversed)
 		{
 			Vars.mainFrame.b_ReverseTime.setText("Normalize Time");
+			Vars.mainFrame.b_nextStep.setText("<");
 			System.out.println("Reversed Time!");
 		} else
 		{
 			Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
+			Vars.mainFrame.b_nextStep.setText(">");
 			System.out.println("Normalized Time!");
 		}
 

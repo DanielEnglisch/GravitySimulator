@@ -45,7 +45,9 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_speedVec;
 	public JLabel l_timestep;
 	public JButton b_nextStep;
-	private JTextField t_steps;
+	public JTextField t_steps;
+	public JCheckBox cb_centerOfMass;
+	public JCheckBox cb_drawPath;
 
 	//
 
@@ -151,7 +153,7 @@ public class MainFrame extends JFrame implements Runnable
 
 			public void actionPerformed(ActionEvent e)
 			{
-				GUIEvents.resetSimulation();
+				Vars.isResetRequested = true;
 			}
 		});
 
@@ -223,6 +225,7 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(lblColor);
 
 		cb_speedVec = new JCheckBox("Draw Velocity Vector");
+		cb_speedVec.setEnabled(false);
 		cb_speedVec.setBackground(Color.WHITE);
 		cb_speedVec.setBounds(10, 195, 178, 23);
 		controlPanel.add(cb_speedVec);
@@ -256,7 +259,7 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 		b_nextStep.setFont(new Font("Tahoma", Font.BOLD, 14));
-		b_nextStep.setBounds(112, 225, 76, 50);
+		b_nextStep.setBounds(10, 225, 76 + 102, 50);
 		controlPanel.add(b_nextStep);
 
 		t_steps = new JTextField();
@@ -269,6 +272,18 @@ public class MainFrame extends JFrame implements Runnable
 		lblStepsPerClick.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblStepsPerClick.setBounds(10, 286, 178, 14);
 		controlPanel.add(lblStepsPerClick);
+		
+		cb_centerOfMass = new JCheckBox("Center Of Mass");
+		cb_centerOfMass.setEnabled(false);
+		cb_centerOfMass.setBackground(Color.WHITE);
+		cb_centerOfMass.setBounds(10, 338, 178, 23);
+		controlPanel.add(cb_centerOfMass);
+		
+		cb_drawPath = new JCheckBox("Draw Path");
+		cb_drawPath.setSelected(true);
+		cb_drawPath.setBackground(Color.WHITE);
+		cb_drawPath.setBounds(10, 364, 97, 23);
+		controlPanel.add(cb_drawPath);
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setBounds(10, 11, 130, 14);
@@ -297,5 +312,11 @@ public class MainFrame extends JFrame implements Runnable
 	public JTextField t_steps()
 	{
 		return t_steps;
+	}
+	public JCheckBox getCb_centerOfMass() {
+		return cb_centerOfMass;
+	}
+	public JCheckBox getCb_drawPath() {
+		return cb_drawPath;
 	}
 }

@@ -2,26 +2,36 @@
 package at.xer0.Support;
 
 import java.awt.Color;
+import at.xer0.Support.Point;
+import java.util.ArrayList;
 
 public class Obj
 {
 
-	private Vec2D position; //Wird im Constructor initiiert.
-	private Vec2D velocity; //Wird im Constructor initiiert.
+	private Vec2D position; // Wird im Constructor initiiert.
+	private Vec2D velocity; // Wird im Constructor initiiert.
 	private Vec2D acceleration = new Vec2D(0, 0);
-	private double mass; //Wird im Constructor initiiert.
+	private double mass; // Wird im Constructor initiiert.
+	private Color color; // Wird im Constructor initiiert.
+	
+	public ArrayList<Point> points = new ArrayList<Point>();
 
-	private Color color; //Wird im Constructor initiiert.
 
-	public Obj(Vec2D iPos, Vec2D iVel, double mass, double itime, Color c)
+	
+
+	/**
+	 * @param position Init position of Object
+	 * @param velocity Init velocity of Object
+	 * @param mass Mass of Object
+	 * @param color Color of Object
+	 */
+	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c)
 	{
 		super();
 
 		this.position = iPos;
 		this.velocity = iVel;
-
 		this.mass = mass;
-
 		this.color = c;
 
 	}
@@ -72,11 +82,28 @@ public class Obj
 		return color;
 	}
 
-	public double distanceTo(Obj b)
+	public Vec2D getDeltaXY(Obj o2)
 	{
-		double dx = b.getPosition().getX() - position.getX();
-		double dy = b.getPosition().getY() - position.getY();
-		return Math.sqrt(dx * dx + dy * dy);
+		double dx = o2.getPosition().getX() - position.getX();
+		double dy = o2.getPosition().getY() - position.getY();
+		return new Vec2D(dx,dy);
+	}
+	
+	public double getRto(Obj o2)
+	{
+		double dx = o2.getPosition().getX() - position.getX();
+		double dy = o2.getPosition().getY() - position.getY();
+		return Math.sqrt(Math.pow(dx, 2)+Math.pow(dy, 2));
+	}
+	
+	public void addPoint(Point p)
+	{
+		this.points.add(p);
+	}
+	
+	public void clearPoints()
+	{
+		this.points.clear();
 	}
 
 }
