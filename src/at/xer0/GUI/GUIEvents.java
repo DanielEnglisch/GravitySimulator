@@ -27,11 +27,8 @@ public class GUIEvents
 
 			// EnableStepMode:
 			Vars.mainFrame.b_nextStep.setEnabled(true);
-
 		}
 	}
-
-
 
 	public static void addObject(int x, int y)
 	{

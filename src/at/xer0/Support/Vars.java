@@ -18,7 +18,7 @@ public class Vars
 
 	public static MainFrame mainFrame = null;
 
-	public static String version = "0.85a";
+	public static String version = "0.87a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;
@@ -33,20 +33,18 @@ public class Vars
 	public static ArrayList<Obj> activeObjects = new ArrayList<Obj>();
 	public static ArrayList<Obj> bufferedObjects = new ArrayList<Obj>();
 
-
 	// Time (only for rendering on GUI)
 	public static double time = 0;
 
 	// Current timestep
 	public static double timeStep = 0.00001;
-	
-	public static int GFactor = -24;
+
 
 	public static Vec2D currentVelocityPreset = new Vec2D(Double.parseDouble(defxVelocityPreset), Double.parseDouble(defyVelocityPreset));
 	public static double currentMassPreset = Double.parseDouble(defMassPreset);
 	public static Color currentColorPreset = defColorPreset;
-	
-	//public static double G =6.67384 * Math.pow(10, -11);
+
 	public static double G =6.67384 * Math.pow(10, -24);
+	
 
 }

@@ -48,7 +48,6 @@ public class MainFrame extends JFrame implements Runnable
 	public JTextField t_steps;
 	public JCheckBox cb_centerOfMass;
 	public JCheckBox cb_drawPath;
-
 	//
 
 	@SuppressWarnings(
@@ -133,7 +132,7 @@ public class MainFrame extends JFrame implements Runnable
 
 		JLabel lblTimestep = new JLabel("Timestep:");
 		lblTimestep.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTimestep.setBounds(10, 103, 65, 14);
+		lblTimestep.setBounds(10, 125, 65, 14);
 
 		b_ReverseTime = new JButton("Reverse Time");
 		b_ReverseTime.addActionListener(new ActionListener()
@@ -144,10 +143,10 @@ public class MainFrame extends JFrame implements Runnable
 				GUIEvents.reverseTime();
 			}
 		});
-		b_ReverseTime.setBounds(10, 57, 178, 35);
+		b_ReverseTime.setBounds(10, 57, 178, 23);
 
 		JButton b_Clear = new JButton("Reset Simulator");
-		b_Clear.setBounds(10, 165, 178, 23);
+		b_Clear.setBounds(10, 91, 178, 23);
 		b_Clear.addActionListener(new ActionListener()
 		{
 
@@ -174,7 +173,7 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.setBounds(10, 11, 198, 649);
 		controlPanel.setLayout(null);
 
-		l_timestep.setBounds(85, 103, 103, 14);
+		l_timestep.setBounds(85, 125, 103, 14);
 		controlPanel.add(l_timestep);
 
 		final JSlider slider = new JSlider();
@@ -196,7 +195,7 @@ public class MainFrame extends JFrame implements Runnable
 		slider.setValue(5);
 		slider.setMaximum(10);
 		slider.setBackground(Color.WHITE);
-		slider.setBounds(10, 128, 178, 26);
+		slider.setBounds(10, 150, 178, 26);
 
 		controlPanel.add(b_StartStop);
 		controlPanel.add(l_newObject);
@@ -227,7 +226,7 @@ public class MainFrame extends JFrame implements Runnable
 		cb_speedVec = new JCheckBox("Draw Velocity Vector");
 		cb_speedVec.setEnabled(false);
 		cb_speedVec.setBackground(Color.WHITE);
-		cb_speedVec.setBounds(10, 195, 178, 23);
+		cb_speedVec.setBounds(10, 390, 178, 23);
 		controlPanel.add(cb_speedVec);
 
 		b_nextStep = new JButton(">");
@@ -259,26 +258,26 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 		b_nextStep.setFont(new Font("Tahoma", Font.BOLD, 14));
-		b_nextStep.setBounds(10, 225, 76 + 102, 50);
+		b_nextStep.setBounds(10, 243, 178, 23);
 		controlPanel.add(b_nextStep);
 
 		t_steps = new JTextField();
 		t_steps.setText("1");
-		t_steps.setBounds(10, 311, 178, 20);
+		t_steps.setBounds(10, 212, 178, 20);
 		controlPanel.add(t_steps);
 		t_steps.setColumns(10);
 
 		JLabel lblStepsPerClick = new JLabel("Steps per click:");
 		lblStepsPerClick.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblStepsPerClick.setBounds(10, 286, 178, 14);
+		lblStepsPerClick.setBounds(10, 187, 178, 14);
 		controlPanel.add(lblStepsPerClick);
-		
+
 		cb_centerOfMass = new JCheckBox("Center Of Mass");
 		cb_centerOfMass.setEnabled(false);
 		cb_centerOfMass.setBackground(Color.WHITE);
 		cb_centerOfMass.setBounds(10, 338, 178, 23);
 		controlPanel.add(cb_centerOfMass);
-		
+
 		cb_drawPath = new JCheckBox("Draw Path");
 		cb_drawPath.setSelected(true);
 		cb_drawPath.setBackground(Color.WHITE);
@@ -313,10 +312,15 @@ public class MainFrame extends JFrame implements Runnable
 	{
 		return t_steps;
 	}
-	public JCheckBox getCb_centerOfMass() {
+
+	public JCheckBox getCb_centerOfMass()
+	{
 		return cb_centerOfMass;
 	}
-	public JCheckBox getCb_drawPath() {
+
+	public JCheckBox getCb_drawPath()
+	{
 		return cb_drawPath;
 	}
+
 }

@@ -13,17 +13,18 @@ public class Obj
 	private Vec2D acceleration = new Vec2D(0, 0);
 	private double mass; // Wird im Constructor initiiert.
 	private Color color; // Wird im Constructor initiiert.
-	
+
 	public ArrayList<Point> points = new ArrayList<Point>();
 
-
-	
-
 	/**
-	 * @param position Init position of Object
-	 * @param velocity Init velocity of Object
-	 * @param mass Mass of Object
-	 * @param color Color of Object
+	 * @param position
+	 *            Init position of Object
+	 * @param velocity
+	 *            Init velocity of Object
+	 * @param mass
+	 *            Mass of Object
+	 * @param color
+	 *            Color of Object
 	 */
 	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c)
 	{
@@ -86,21 +87,21 @@ public class Obj
 	{
 		double dx = o2.getPosition().getX() - position.getX();
 		double dy = o2.getPosition().getY() - position.getY();
-		return new Vec2D(dx,dy);
+		return new Vec2D(dx, dy);
 	}
-	
+
 	public double getRto(Obj o2)
 	{
 		double dx = o2.getPosition().getX() - position.getX();
 		double dy = o2.getPosition().getY() - position.getY();
-		return Math.sqrt(Math.pow(dx, 2)+Math.pow(dy, 2));
+		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 	}
-	
+
 	public void addPoint(Point p)
 	{
 		this.points.add(p);
 	}
-	
+
 	public void clearPoints()
 	{
 		this.points.clear();

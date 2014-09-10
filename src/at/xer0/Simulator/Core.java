@@ -21,38 +21,33 @@ public class Core
 		Vars.mainFrame = new MainFrame();
 		System.out.println("MainFrame initialized!");
 		new Thread(Vars.mainFrame).start();
-		
-		
-		//Custom Objects:
-		
-		//Vars.activeObjects.add(new Obj(new Vec2D(350,350), new Vec2D(0,0), MassPreset.SUN,Color.ORANGE)); //Earth Mass Obj
-		Vars.activeObjects.add(new Obj(new Vec2D(100,300), new Vec2D(0,-10), MassPreset.EARTH,Color.BLUE)); //Sun Mass Obj
-		Vars.activeObjects.add(new Obj(new Vec2D(500,200), new Vec2D(-10,100), MassPreset.EARTH/2,Color.RED)); //Sun Mass Obj
-		Vars.activeObjects.add(new Obj(new Vec2D(300,100), new Vec2D(0,-32), MassPreset.EARTH,Color.GREEN)); //Sun Mass Obj
 
-		
-		
+		// Custom Objects:
+		Vars.activeObjects.add(new Obj(new Vec2D(100, 300), new Vec2D(0, -10), MassPreset.EARTH, Color.BLUE));
+		Vars.activeObjects.add(new Obj(new Vec2D(500, 200), new Vec2D(-10, 100), MassPreset.EARTH / 2, Color.RED));
+		Vars.activeObjects.add(new Obj(new Vec2D(300, 100), new Vec2D(0, -32), MassPreset.EARTH, Color.GREEN));
+
 		// Hauptschleife
 		while (true)
 		{
-			
-			if(Vars.isResetRequested)
+
+			if (Vars.isResetRequested)
 			{
 				resetSimulation();
 				Vars.isResetRequested = false;
 			}
-			
-			//Add buffered Objects:
-			if(Vars.bufferedObjects.size() != 0)
+
+			// Add buffered Objects:
+			if (Vars.bufferedObjects.size() != 0)
 			{
-				for(Obj no : Vars.bufferedObjects)
+				for (Obj no : Vars.bufferedObjects)
 				{
 					Vars.activeObjects.add(no);
 				}
-				
+
 				Vars.bufferedObjects.clear();
 			}
-			
+
 			// Wenn die Simulation läuft:
 			if (Vars.isActive)
 			{
@@ -104,7 +99,7 @@ public class Core
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
 	}
-	
+
 	public static void logic()
 	{
 
@@ -131,22 +126,15 @@ public class Core
 			{
 				if (o1 != o2)
 				{
-
 					double deltaX = o1.getDeltaXY(o2).getX();
 					double deltaY = o1.getDeltaXY(o2).getY();
 					double r = o1.getRto(o2);
 
-					//[-G] * m * (y/r)
-					
-					//ax = (-G * deltaX * m2 )/ r³
-					
 					o1.setAcceleration(new Vec2D(
-							
-							(G * o2.getMass() * (deltaX/r)),
-							(G * o2.getMass() * (deltaY/r))
-							
+
+					(G * o2.getMass() * (deltaX / r)), (G * o2.getMass() * (deltaY / r))
+
 					));
-					
 
 				}
 			}
@@ -161,8 +149,7 @@ public class Core
 				if (o1 != o2)
 				{
 
-					o1.setVelocity(new Vec2D(
-					o1.getVelocity().getX() + deltaT * o1.getAcceleration().getX(), // X-Komponente
+					o1.setVelocity(new Vec2D(o1.getVelocity().getX() + deltaT * o1.getAcceleration().getX(), // X-Komponente
 					o1.getVelocity().getY() + deltaT * o1.getAcceleration().getY() // Y-Komponente
 					));
 
@@ -178,80 +165,60 @@ public class Core
 			{
 				if (o1 != o2)
 				{
-
-					o1.setPosition(new Vec2D(
-					o1.getPosition().getX() + deltaT * o1.getVelocity().getX(), // X-Komponente
+					o1.setPosition(new Vec2D(o1.getPosition().getX() + deltaT * o1.getVelocity().getX(), // X-Komponente
 					o1.getPosition().getY() + deltaT * o1.getVelocity().getY() // Y-Komponente
 					));
-					
-					
-					//Path:
-					if(Vars.mainFrame.cb_drawPath.isSelected())
+
+					// Path:
+					if (Vars.mainFrame.cb_drawPath.isSelected())
 					{
-						Point p = new Point((int)o1.getPosition().getX(),(int)o1.getPosition().getY());
-						
-						if(p.getX()<Vars.mainFrame.renderPanel.getWidth() && p.getY()<Vars.mainFrame.renderPanel.getHeight())
+						Point p = new Point((int) o1.getPosition().getX(), (int) o1.getPosition().getY());
+
+						if (p.getX() < Vars.mainFrame.renderPanel.getWidth() && p.getY() < Vars.mainFrame.renderPanel.getHeight())
 						{
 							boolean add = true;
-							
-							for(Point pp : o1.points)
+
+							for (Point pp : o1.points)
 							{
-								if(pp.isIdenticalTo(p))
+								if (pp.isIdenticalTo(p))
 								{
 									add = false;
 								}
 							}
-							
-							if(add)
+
+							if (add)
 							{
 								o1.addPoint(p);
 							}
 						}
-						
-						
-						
-					}else
+
+					} else
 					{
 						o1.clearPoints();
 					}
-			
 					//
 
 				}
 			}
 		}
-		
-		
-		
-		
-		/*if(Vars.centerOfMassMode)
-		{
-			//(m*v = pges // gesM) for o - v
-			//center of mass feature
-			
-			Vec2D Pges = new Vec2D(0,0);
-			
-			for(Obj o : Vars.activeObjects)
-			{
-				Pges.setX(Pges.getX() +( o.getMass() * o.getVelocity().getX()));
-				Pges.setY(Pges.getY() +( o.getMass() * o.getVelocity().getY()));
-			}
-			
-			for(Obj o : Vars.activeObjects)
-			{
-				o.getVelocity().setX(o.getVelocity().getX() - Pges.getX());
-				o.getVelocity().setY(o.getVelocity().getY() - Pges.getY());
-			}
-		}*/
-		
-		
+
+		/*
+		 * if(Vars.centerOfMassMode) { //(m*v = pges // gesM) for o - v //center
+		 * of mass feature
+		 * 
+		 * Vec2D Pges = new Vec2D(0,0);
+		 * 
+		 * for(Obj o : Vars.activeObjects) { Pges.setX(Pges.getX() +(
+		 * o.getMass() * o.getVelocity().getX())); Pges.setY(Pges.getY() +(
+		 * o.getMass() * o.getVelocity().getY())); }
+		 * 
+		 * for(Obj o : Vars.activeObjects) {
+		 * o.getVelocity().setX(o.getVelocity().getX() - Pges.getX());
+		 * o.getVelocity().setY(o.getVelocity().getY() - Pges.getY()); } }
+		 */
 
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
-		
-		
-
-
 	}
 
 	public static void updateGUIVars()
@@ -272,41 +239,40 @@ public class Core
 			int y = (int) obj.getPosition().getY();
 
 			int radius = (int) (obj.getMass() * Vars.G);
-			
+
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
 			int r_xVel = ((int) obj.getVelocity().getX());
 			int r_yVel = ((int) obj.getVelocity().getY());
 
-			//Render Object:
+			// Render Object:
 			g.fillOval(r_x, r_y, radius, radius);
 			//
-			
-	
-			
-			//Render Path:
-			if(Vars.mainFrame.cb_drawPath.isSelected())
+
+			// Render Path:
+			if (Vars.mainFrame.cb_drawPath.isSelected())
 			{
 				g.setColor(obj.getColor());
 
-				for(int i = 0; i<obj.points.size();i++)
+				for (int i = 0; i < obj.points.size(); i++)
 				{
-					try{
+					try
+					{
 						Point p1 = obj.points.get(i);
-						Point p2 = obj.points.get(i+1);
+						Point p2 = obj.points.get(i + 1);
 
-						g.drawLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
-						
-						i++;
+						g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+
+					} catch (Exception exx)
+					{
 					}
-					catch(Exception exx){}
-				
+
 				}
 			}
-			
+
 			//
-			
-			//Velocity Vector:
+
+			// Velocity Vector:
 			if (Vars.mainFrame.cb_speedVec.isSelected())
 			{
 				g.setColor(Color.BLACK);
