@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import at.xer0.Simulator.Core;
+import at.xer0.Simulator.Render;
 
 public class RenderPanel extends JPanel
 {
@@ -25,7 +25,7 @@ public class RenderPanel extends JPanel
 	{
 
 		super.paintComponent(g);
-		Core.render(g);
+		Render.renderFrame(g);
 
 	}
 

@@ -8,11 +8,9 @@ import java.util.ArrayList;
 public class Obj
 {
 
-	private Vec2D position; // Wird im Constructor initiiert.
-	private Vec2D velocity; // Wird im Constructor initiiert.
-	private Vec2D acceleration = new Vec2D(0, 0);
-	private double mass; // Wird im Constructor initiiert.
-	private Color color; // Wird im Constructor initiiert.
+	private Vec2D position,velocity,acceleration = new Vec2D(0, 0);
+	private double mass;
+	private Color color;
 
 	public ArrayList<Point> points = new ArrayList<Point>();
 
