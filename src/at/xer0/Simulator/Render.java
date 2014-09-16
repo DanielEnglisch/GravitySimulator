@@ -2,6 +2,8 @@ package at.xer0.Simulator;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import at.xer0.Support.Obj;
 import at.xer0.Support.Point;
@@ -10,10 +12,14 @@ import at.xer0.Support.Vars;
 
 public class Render
 {
-	public static void renderFrame(Graphics g)
+	public static void renderFrame(Graphics gn)
 	{
 		// Actual Render Logic
 
+		Graphics2D g = (Graphics2D) gn;
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		
 		for (Obj obj : Vars.activeObjects)
 		{
 			g.setColor(obj.getColor());

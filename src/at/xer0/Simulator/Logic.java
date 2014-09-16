@@ -79,7 +79,7 @@ public class Logic
 					// Path:
 					if (Vars.mainFrame.cb_drawPath.isSelected())
 					{
-						Point p = new Point((int) o1.getPosition().getX(), (int) o1.getPosition().getY());
+						Point p = new Point( (int) o1.getPosition().getX(), (int) o1.getPosition().getY());
 
 						if (p.getX() < Vars.mainFrame.renderPanel.getWidth() && p.getY() < Vars.mainFrame.renderPanel.getHeight())
 						{
@@ -103,26 +103,12 @@ public class Logic
 					{
 						o1.clearPoints();
 					}
-					//
+					
 
 				}
 			}
 		}
 
-		/*
-		 * if(Vars.centerOfMassMode) { //(m*v = pges // gesM) for o - v //center
-		 * of mass feature
-		 * 
-		 * Vec2D Pges = new Vec2D(0,0);
-		 * 
-		 * for(Obj o : Vars.activeObjects) { Pges.setX(Pges.getX() +(
-		 * o.getMass() * o.getVelocity().getX())); Pges.setY(Pges.getY() +(
-		 * o.getMass() * o.getVelocity().getY())); }
-		 * 
-		 * for(Obj o : Vars.activeObjects) {
-		 * o.getVelocity().setX(o.getVelocity().getX() - Pges.getX());
-		 * o.getVelocity().setY(o.getVelocity().getY() - Pges.getY()); } }
-		 */
 
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
