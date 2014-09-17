@@ -81,7 +81,7 @@ public class Logic
 					{
 						Point p = new Point( (int) o1.getPosition().getX(), (int) o1.getPosition().getY());
 
-						if (p.getX() < Vars.mainFrame.renderPanel.getWidth() && p.getY() < Vars.mainFrame.renderPanel.getHeight())
+					if (p.getX() <= Vars.mainFrame.renderPanel.getWidth() + 200 && p.getY() <= Vars.mainFrame.renderPanel.getHeight() + + 200 &&p.getX() >= 0 - 200 && p.getY() >= 0 - 200)
 						{
 							boolean add = true;
 

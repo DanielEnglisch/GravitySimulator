@@ -20,10 +20,9 @@ public class Core
 		System.out.println("MainFrame initialized!");
 		new Thread(Vars.mainFrame).start();
 
-		// Custom Objects:
-		Vars.activeObjects.add(new Obj(new Vec2D(100, 300), new Vec2D(0, -10), MassPreset.EARTH, Color.BLUE));
-		Vars.activeObjects.add(new Obj(new Vec2D(500, 200), new Vec2D(-10, 100), MassPreset.EARTH / 2, Color.RED));
-		Vars.activeObjects.add(new Obj(new Vec2D(300, 100), new Vec2D(0, -32), MassPreset.EARTH, Color.GREEN));
+		
+		addCutomObjects();
+
 
 		// Hauptschleife
 		while (true)
@@ -94,6 +93,14 @@ public class Core
 		}
 
 	}
+	
+	public static void addCutomObjects()
+	{
+		// Custom Objects:
+		Vars.activeObjects.add(new Obj(new Vec2D(100, 300), new Vec2D(0, -10), MassPreset.EARTH, Color.BLUE));
+		Vars.activeObjects.add(new Obj(new Vec2D(500, 200), new Vec2D(-10, 100), MassPreset.EARTH / 2, Color.RED));
+		Vars.activeObjects.add(new Obj(new Vec2D(300, 100), new Vec2D(0, -32), MassPreset.EARTH, Color.GREEN));
+	}
 
 	public static void resetSimulation()
 	{
@@ -106,6 +113,8 @@ public class Core
 		Vars.isTimeReversed = false;
 		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
+		
+		addCutomObjects();
 
 	}
 

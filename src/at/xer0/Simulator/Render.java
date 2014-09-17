@@ -19,6 +19,7 @@ public class Render
 		Graphics2D g = (Graphics2D) gn;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
 		
 		for (Obj obj : Vars.activeObjects)
 		{
