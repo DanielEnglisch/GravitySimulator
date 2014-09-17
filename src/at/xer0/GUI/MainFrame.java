@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -163,7 +164,16 @@ public class MainFrame extends JFrame implements Runnable
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				GUIEvents.addObject(arg0.getX(), arg0.getY());
+				if(SwingUtilities.isLeftMouseButton(arg0))
+				{
+					GUIEvents.addObject(arg0.getX(), arg0.getY());
+				}
+				
+				if(SwingUtilities.isRightMouseButton(arg0))
+				{
+					GUIEvents.editObject(arg0.getX(), arg0.getY());
+				}
+				
 			}
 		});
 		renderPanel.setBounds(218, 11, 666, 649);

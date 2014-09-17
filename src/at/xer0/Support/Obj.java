@@ -35,6 +35,12 @@ public class Obj
 
 	}
 
+	
+	public void setMass(double mass)
+	{
+		this.mass = mass;
+	}
+
 	@Override
 	public String toString()
 	{

@@ -2,8 +2,8 @@
 package at.xer0.GUI;
 
 import at.xer0.Support.Obj;
-import at.xer0.Support.Vec2D;
 import at.xer0.Support.Vars;
+import at.xer0.Support.Vec2D;
 
 public class GUIEvents
 {
@@ -56,6 +56,36 @@ public class GUIEvents
 		}
 
 	}
+	
+	
+	public static void editObject(int x, int y)
+	{
+		
+		
+		
+		if(!Vars.isActive)
+		{
+			Obj chosen = null;
+			
+			for(Obj o : Vars.activeObjects)
+			{
+				if(x  < o.getPosition().getX() + 10 && x  > o.getPosition().getX() - 10 &&
+						y  < o.getPosition().getY() + 10 && y  > o.getPosition().getY() - 10)
+				{
+					chosen = o;
+				}
+			}
+			
+			if(chosen != null)
+			{
+				EditObjectGUI os = new EditObjectGUI(chosen);
+				os.setVisible(true);
+			}
+		}
+	}
+
+	
+	
 
 	public static void updateTimestep(int timestepfactor)
 	{

@@ -35,6 +35,17 @@ public class Core
 				Vars.isResetRequested = false;
 			}
 
+			//Delete requested Object:
+			if (Vars.objectToDelete.size() != 0)
+			{
+				for (Obj no : Vars.objectToDelete)
+				{
+					Vars.activeObjects.remove(no);
+				}
+
+				Vars.objectToDelete.clear();
+			}
+			
 			// Add buffered Objects:
 			if (Vars.bufferedObjects.size() != 0)
 			{

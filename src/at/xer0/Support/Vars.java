@@ -32,6 +32,7 @@ public class Vars
 	// ActiveObjects:
 	public static ArrayList<Obj> activeObjects = new ArrayList<Obj>();
 	public static ArrayList<Obj> bufferedObjects = new ArrayList<Obj>();
+	public static ArrayList<Obj> objectToDelete = new ArrayList<Obj>();
 
 	// Time (only for rendering on GUI)
 	public static double time = 0;
