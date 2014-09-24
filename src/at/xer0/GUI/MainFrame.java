@@ -29,7 +29,6 @@ import at.xer0.Support.Vec2D;
 
 public class MainFrame extends JFrame implements Runnable
 {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel masterPanel;
 	private JTextField t_mass;
@@ -53,9 +52,9 @@ public class MainFrame extends JFrame implements Runnable
 
 	@SuppressWarnings(
 	{ "unchecked", "rawtypes" })
+	
 	public MainFrame()
 	{
-
 		b_StartStop = new JButton("Start Simulation");
 		b_StartStop.setToolTipText("Start");
 		b_StartStop.setBounds(10, 11, 178, 35);
@@ -158,6 +157,7 @@ public class MainFrame extends JFrame implements Runnable
 		});
 
 		renderPanel = new RenderPanel();
+		renderPanel.setBackground(Color.BLACK);
 		renderPanel.addMouseListener(new MouseAdapter()
 		{
 
@@ -295,10 +295,12 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(cb_drawPath);
 
 		l_Time = new JLabel("Time: " + Vars.time);
+		l_Time.setForeground(Color.WHITE);
 		l_Time.setBounds(10, 11, 130, 14);
 		renderPanel.add(l_Time);
 
 		l_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
+		l_Objects.setForeground(Color.WHITE);
 		l_Objects.setBounds(10, 27, 102, 14);
 		renderPanel.add(l_Objects);
 

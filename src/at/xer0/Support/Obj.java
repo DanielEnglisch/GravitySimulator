@@ -2,7 +2,9 @@
 package at.xer0.Support;
 
 import java.awt.Color;
+
 import at.xer0.Support.Point;
+
 import java.util.ArrayList;
 
 public class Obj
@@ -11,6 +13,22 @@ public class Obj
 	private Vec2D position,velocity,acceleration = new Vec2D(0, 0);
 	private double mass;
 	private Color color;
+	
+	//Render:
+	private int radius = 0;
+
+	
+	public int getRadius()
+	{
+		return radius;
+	}
+
+
+	
+	public void setRadius(int radius)
+	{
+		this.radius = radius;
+	}
 
 	public ArrayList<Point> points = new ArrayList<Point>();
 
@@ -32,6 +50,9 @@ public class Obj
 		this.velocity = iVel;
 		this.mass = mass;
 		this.color = c;
+		
+		this.radius = (int)(mass * Vars.G);
+		
 
 	}
 
@@ -94,7 +115,7 @@ public class Obj
 		return new Vec2D(dx, dy);
 	}
 
-	public double getRto(Obj o2)
+	public double getDistanceTo(Obj o2)
 	{
 		double dx = o2.getPosition().getX() - position.getX();
 		double dy = o2.getPosition().getY() - position.getY();

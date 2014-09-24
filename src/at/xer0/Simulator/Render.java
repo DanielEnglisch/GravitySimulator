@@ -28,7 +28,7 @@ public class Render
 			int x = (int) obj.getPosition().getX();
 			int y = (int) obj.getPosition().getY();
 
-			int radius = (int) (obj.getMass() * Vars.G);
+			int radius = obj.getRadius();
 
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);

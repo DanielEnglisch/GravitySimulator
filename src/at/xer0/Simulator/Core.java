@@ -60,7 +60,7 @@ public class Core
 			if (Vars.isActive)
 			{
 				// Logik
-				Logic.simpleAlgorithm();
+				Logic.tick();
 
 			} else
 			{
@@ -73,7 +73,7 @@ public class Core
 
 					for (int i = 0; i < Vars.steps; i++)
 					{
-						Logic.simpleAlgorithm();
+						Logic.tick();
 					}
 
 					// Setze den SingleStep Button Request wieder auf false.
@@ -100,6 +100,12 @@ public class Core
 		Vars.activeObjects.add(new Obj(new Vec2D(100, 300), new Vec2D(0, -10), MassPreset.EARTH, Color.BLUE));
 		Vars.activeObjects.add(new Obj(new Vec2D(500, 200), new Vec2D(-10, 100), MassPreset.EARTH / 2, Color.RED));
 		Vars.activeObjects.add(new Obj(new Vec2D(300, 100), new Vec2D(0, -32), MassPreset.EARTH, Color.GREEN));
+		
+		
+		//Obj o = new Obj(new Vec2D(500, 500), new Vec2D(0, 0), Math.pow(10, 50), Color.WHITE);
+		//o.setRadius(10);
+		//Vars.activeObjects.add(o);
+
 	}
 
 	public static void resetSimulation()

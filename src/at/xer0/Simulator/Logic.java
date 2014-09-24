@@ -8,6 +8,12 @@ import at.xer0.Support.Vec2D;
 
 public class Logic
 {
+	public static void tick()
+	{
+		//checkCollision();
+		simpleAlgorithm();
+	}
+	
 	public static void simpleAlgorithm()
 	{
 		double deltaT;
@@ -35,7 +41,7 @@ public class Logic
 				{
 					double deltaX = o1.getDeltaXY(o2).getX();
 					double deltaY = o1.getDeltaXY(o2).getY();
-					double r = o1.getRto(o2);
+					double r = o1.getDistanceTo(o2);
 
 					o1.setAcceleration(new Vec2D(
 
@@ -81,7 +87,7 @@ public class Logic
 					{
 						Point p = new Point( (int) o1.getPosition().getX(), (int) o1.getPosition().getY());
 
-					if (p.getX() <= Vars.mainFrame.renderPanel.getWidth() + 200 && p.getY() <= Vars.mainFrame.renderPanel.getHeight() + + 200 &&p.getX() >= 0 - 200 && p.getY() >= 0 - 200)
+					if (p.getX() <= Vars.mainFrame.renderPanel.getWidth() + 200 && p.getY() <= Vars.mainFrame.renderPanel.getHeight() + 200 &&p.getX() >= 0 - 200 && p.getY() >= 0 - 200)
 						{
 							boolean add = true;
 
@@ -109,8 +115,36 @@ public class Logic
 			}
 		}
 
-
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
+	}
+	
+	public static void checkCollision()
+	{
+		for(Obj o1 : Vars.activeObjects)
+		{
+			for(Obj o2 : Vars.activeObjects)
+			{
+				if(o1 != o2)
+				{
+					int distance = (int)o1.getDistanceTo(o2);
+					
+					System.out.println(distance + " - " + o1.getRadius());
+					
+					
+					if(o1.getRadius() + o2.getRadius() > distance)
+					{
+						if(o1.getRadius() <= o2.getRadius())
+						{
+							Vars.objectToDelete.add(o1);
+						}
+						else
+						{
+							Vars.objectToDelete.add(o2);
+						}
+					}
+				}
+			}
+		}
 	}
 }
