@@ -153,13 +153,14 @@ public class GUIEvents
 	
 	public static void loadConf()
 	{
-		boolean restart  = false;
-		if(Vars.isActive){Vars.isActive = false; restart = true;}
 		
 		JFileChooser fc  = new JFileChooser();
 		fc.setDialogTitle("Select a file");
 		
 		 if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			 
+				Vars.isResetRequested = true;
+
 			 
 			 File selectedFile = fc.getSelectedFile();
 			 
@@ -187,6 +188,57 @@ public class GUIEvents
 					
 					System.out.println("Parsed Object: " + o.toString());
 					
+
+					Vars.bufferedObjects.add(o);
+				 }
+				 
+				 in.close();
+				 
+				 Vars.lastFile = selectedFile;
+				 
+			 }
+			 catch(Exception e)
+			 {
+				 e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Invalid Fileformat!");
+
+			 }
+		 }
+		     
+		 
+		 
+	}
+
+	public static void loadConf(File f)
+	{
+
+		Vars.isResetRequested = true;
+
+		
+		try
+			 {
+				 BufferedReader in = new BufferedReader(new FileReader(f));
+				 
+				 while(in.ready())
+				 {
+					 String inText = in.readLine();
+					 
+					 String[] split = inText.split("#");
+					 
+					 double x = Double.parseDouble(split[0]);
+					 double y = Double.parseDouble(split[1]);
+					 
+					 double vx = Double.parseDouble(split[2]);
+					 double vy = Double.parseDouble(split[3]);
+					 
+					 double mass = Double.parseDouble(split[4]);
+					 
+					 boolean stat = Boolean.parseBoolean(split[5]);
+
+					Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor(),stat);
+					
+					System.out.println("Parsed Object: " + o.toString());
+										
 					Vars.bufferedObjects.add(o);
 				 }
 				 
@@ -196,14 +248,14 @@ public class GUIEvents
 			 catch(Exception e)
 			 {
 				 e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Invalid Fileformat!");
 			 }
-		 }
+		 
 		     
 		 
 		 
-		if(restart){Vars.isActive = true;}
 	}
-
+	
 	public static void updateTimestep(int timestepfactor)
 	{
 

@@ -3,6 +3,7 @@ package at.xer0.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -29,7 +31,6 @@ import javax.swing.event.ChangeListener;
 import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
-import java.awt.Toolkit;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -348,7 +349,29 @@ public class MainFrame extends JFrame implements Runnable
 
 			}
 		});
+		
+		JMenuItem mntmReloadLastFile = new JMenuItem("Reload Configuration");
+		mntmReloadLastFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(Vars.lastFile == null)
+				{
+					GUIEvents.loadConf();
+				}else
+				{
+					GUIEvents.loadConf(Vars.lastFile);
+				}
+				
+			}
+		});
+		mnFile.add(mntmReloadLastFile);
+		
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
 		mnFile.add(mntmAbout);
+		
+		JSeparator separator_1 = new JSeparator();
+		mnFile.add(separator_1);
 		mnFile.add(mntmCloseSimulator);
 		setContentPane(masterPanel);
 	}
@@ -358,5 +381,4 @@ public class MainFrame extends JFrame implements Runnable
 	{
 		setVisible(true);
 	}
-
 }

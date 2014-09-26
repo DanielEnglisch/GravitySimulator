@@ -2,6 +2,7 @@
 package at.xer0.Support;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 
 import at.xer0.GUI.MainFrame;
@@ -18,7 +19,7 @@ public class Vars
 
 	public static MainFrame mainFrame = null;
 
-	public static String version = "0.89b";
+	public static String version = "0.90a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;
@@ -27,6 +28,8 @@ public class Vars
 	
 	public static boolean customObjects = false;
 
+	public static File lastFile = null;
+	
 	// Steps to do in SingleStepMode (by default 1)
 	public static int steps = 1;
 
