@@ -286,12 +286,12 @@ public class MainFrame extends JFrame implements Runnable
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
-		l_Time.setBounds(10, 11, 130, 14);
+		l_Time.setBounds(10 - (renderPanel.getWidth()/2), 11 - (renderPanel.getHeight()/2), 130 ,14);
 		renderPanel.add(l_Time);
 
 		l_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
 		l_Objects.setForeground(Color.WHITE);
-		l_Objects.setBounds(10, 27, 102, 14);
+		l_Objects.setBounds(10 - (renderPanel.getWidth()/2), 27 - (renderPanel.getHeight()/2),  102 ,14);
 		renderPanel.add(l_Objects);
 
 		// JFrame:
@@ -333,6 +333,16 @@ public class MainFrame extends JFrame implements Runnable
 				System.exit(0);
 			}
 		});
+		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//JOptionPane.showMessageDialog(null, "x0 Gravity Simulator version " + Vars.version + "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
+
+			}
+		});
+		mnFile.add(mntmAbout);
 		mnFile.add(mntmCloseSimulator);
 		setContentPane(masterPanel);
 

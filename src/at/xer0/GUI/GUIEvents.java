@@ -42,6 +42,10 @@ public class GUIEvents
 
 	public static void addObject(int x, int y)
 	{
+		x -= (Vars.mainFrame.renderPanel.getWidth()/2);
+		y -= (Vars.mainFrame.renderPanel.getHeight()/2);
+
+		
 		Obj o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset);
 
 		Vars.bufferedObjects.add(o);
@@ -70,8 +74,6 @@ public class GUIEvents
 	
 	public static void editObject(int x, int y)
 	{
-		
-		
 		
 		if(!Vars.isActive)
 		{
