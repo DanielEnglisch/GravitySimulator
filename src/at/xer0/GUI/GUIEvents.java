@@ -74,6 +74,8 @@ public class GUIEvents
 	
 	public static void editObject(int x, int y)
 	{
+		x -= (Vars.mainFrame.renderPanel.getWidth()/2);
+		y -= (Vars.mainFrame.renderPanel.getHeight()/2);
 		
 		if(!Vars.isActive)
 		{

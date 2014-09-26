@@ -30,11 +30,11 @@ public class Logic
 			// Sonnst positiv
 			deltaT = Vars.timeStep;
 		}
+		
 
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
 		{
-			o1.setAcceleration(new Vec2D(0, 0));
 
 			for (Obj o2 : Vars.activeObjects)
 			{
@@ -55,37 +55,21 @@ public class Logic
 		}
 
 		// #2:Geschwindigkeit-Schleife:
-		for (Obj o1 : Vars.activeObjects)
+		for (Obj o : Vars.activeObjects)
 		{
 
-			for (Obj o2 : Vars.activeObjects)
-			{
-				if (o1 != o2)
-				{
-
-					o1.setVelocity(new Vec2D(o1.getVelocity().getX() + deltaT * o1.getAcceleration().getX(), // X-Komponente
-					o1.getVelocity().getY() + deltaT * o1.getAcceleration().getY() // Y-Komponente
-					));
-
-				}
-			}
+			o.setVelocity(new Vec2D(o.getVelocity().getX() + deltaT * o.getAcceleration().getX(), // X-Komponente
+			o.getVelocity().getY() + deltaT * o.getAcceleration().getY() // Y-Komponente
+			));
 		}
 
 		// #3:Position-Schleife:
-		for (Obj o1 : Vars.activeObjects)
+		for (Obj o : Vars.activeObjects)
 		{
+			o.setPosition(new Vec2D(o.getPosition().getX() + deltaT * o.getVelocity().getX(), // X-Komponente
+			o.getPosition().getY() + deltaT * o.getVelocity().getY() // Y-Komponente
+			));
 
-			for (Obj o2 : Vars.activeObjects)
-			{
-				if (o1 != o2)
-				{
-					o1.setPosition(new Vec2D(o1.getPosition().getX() + deltaT * o1.getVelocity().getX(), // X-Komponente
-					o1.getPosition().getY() + deltaT * o1.getVelocity().getY() // Y-Komponente
-					));
-
-
-				}
-			}
 		}
 
 		// Nur für die Zeit Anzeige Relevant:
