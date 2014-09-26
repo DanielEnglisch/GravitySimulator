@@ -10,15 +10,15 @@ public class Vars
 {
 
 	// Standart Werte
-	public static String defxVelocityPreset = "17";
-	public static String defyVelocityPreset = "-34";
+	public static String defxVelocityPreset = "0";
+	public static String defyVelocityPreset = "0";
 	public static String defMassPreset = "" + MassPreset.EARTH;
-	public static Color defColorPreset = Color.MAGENTA;
+	public static Color defColorPreset = ColorEnum.randomColor();
 	//
 
 	public static MainFrame mainFrame = null;
 
-	public static String version = "0.88a";
+	public static String version = "0.89a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;

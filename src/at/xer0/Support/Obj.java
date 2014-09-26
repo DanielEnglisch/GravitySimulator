@@ -56,6 +56,8 @@ public class Obj
 	public void setMass(double mass)
 	{
 		this.mass = mass;
+		this.radius = (int)(mass * Vars.G);
+
 	}
 
 	@Override

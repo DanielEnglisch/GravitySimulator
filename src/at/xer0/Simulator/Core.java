@@ -102,7 +102,7 @@ public class Core
 		
 		// Custom Objects:
 		Vars.activeObjects.add(new Obj(new Vec2D(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2 - 200), new Vec2D(20, 0), MassPreset.EARTH, ColorEnum.randomColor()));
-		Vars.activeObjects.add(new Obj(new Vec2D(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2 + 200), new Vec2D(0, 0), MassPreset.EARTH, ColorEnum.randomColor()));
+		Vars.activeObjects.add(new Obj(new Vec2D(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2 + 200), new Vec2D(-20, 0), MassPreset.EARTH, ColorEnum.randomColor()));
 
 		//Vars.activeObjects.add(new Obj(new Vec2D(500, 200), new Vec2D(-10, 100), MassPreset.EARTH / 2, Color.RED));
 		//Vars.activeObjects.add(new Obj(new Vec2D(300, 100), new Vec2D(0, -32), MassPreset.EARTH, Color.GREEN));

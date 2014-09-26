@@ -100,20 +100,20 @@ public class GUIEvents
 		if(Vars.isActive){Vars.isActive = false; restart = true;}
 		
 		JFileChooser fc  = new JFileChooser();
-		fc.setDialogTitle("Select an output directory");
-		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		fc.setAcceptAllFileFilterUsed(false);
+		fc.setDialogTitle("Select an output file");
 		
-		File dir = new File(".");
+		File file = new File(".");
 		
-		if (fc.showOpenDialog(Vars.mainFrame) == JFileChooser.APPROVE_OPTION)
+		int res = fc.showSaveDialog(Vars.mainFrame);
+		
+		if ( res == JFileChooser.APPROVE_OPTION)
 		{ 
-			dir = fc.getSelectedFile();
+			file = fc.getSelectedFile();
 		}
 		
 		try
 		{
-			BufferedWriter out = new BufferedWriter(new FileWriter(new File(dir,"output.x0")));
+			BufferedWriter out = new BufferedWriter(new FileWriter(file));
 			
 			for(Obj o : Vars.activeObjects)
 			{
@@ -123,7 +123,11 @@ public class GUIEvents
 			out.flush();
 			out.close();
 			
-			JOptionPane.showMessageDialog(null, "Successfully saved configuration!");
+			if ( res == JFileChooser.APPROVE_OPTION)
+			{
+				JOptionPane.showMessageDialog(null, "Successfully saved configuration!");
+
+			}
 
 			
 		} catch (Exception e)

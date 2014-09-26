@@ -6,7 +6,7 @@ import java.util.Random;
 
 public enum ColorEnum {
 
-	Magenta, Light_Gray, Gray, Dark_Gray, Black, Red, Pink, Orange, Yellow, Green, Cyan, Blue;
+	Random_Color, Magenta, Light_Gray, Gray, Dark_Gray, Black, Red, Pink, Orange, Yellow, Green, Cyan, Blue;
 
 	
 	public static Color randomColor()
@@ -26,6 +26,10 @@ public enum ColorEnum {
 
 		switch (ce)
 		{
+		
+		case Random_Color:
+			returnColor = (randomColor());
+			break;
 		case Magenta:
 			returnColor = (Color.MAGENTA);
 			break;

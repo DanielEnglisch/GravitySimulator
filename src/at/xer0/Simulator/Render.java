@@ -19,6 +19,8 @@ public class Render
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
+		//Render Origin at Center of screen:
+		//g.translate(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2);
 		
 		for (Obj obj : Vars.activeObjects)
 		{

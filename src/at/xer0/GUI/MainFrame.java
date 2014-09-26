@@ -14,6 +14,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -26,6 +29,7 @@ import javax.swing.event.ChangeListener;
 import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -53,6 +57,7 @@ public class MainFrame extends JFrame implements Runnable
 	
 	public MainFrame()
 	{
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/32x32.png")));
 		b_StartStop = new JButton("Start Simulation");
 		b_StartStop.setToolTipText("Start");
 		b_StartStop.setBounds(10, 11, 178, 35);
@@ -67,36 +72,36 @@ public class MainFrame extends JFrame implements Runnable
 
 		l_timestep = new JLabel("0.00001");
 
-		JLabel l_newObject = new JLabel("New Object:");
+		JLabel l_newObject = new JLabel("Object Presets:");
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
-		l_newObject.setBounds(10, 441, 178, 14);
+		l_newObject.setBounds(10, 387, 178, 14);
 
 		t_mass = new JTextField();
 		t_mass.setText(Vars.defMassPreset);
-		t_mass.setBounds(85, 466, 103, 20);
+		t_mass.setBounds(85, 412, 103, 20);
 		t_mass.setColumns(10);
 
 		t_xVelocity = new JTextField();
 		t_xVelocity.setText(Vars.defxVelocityPreset);
-		t_xVelocity.setBounds(85, 497, 103, 20);
+		t_xVelocity.setBounds(85, 443, 103, 20);
 
 		t_yVelocity = new JTextField();
 		t_yVelocity.setText(Vars.defyVelocityPreset);
-		t_yVelocity.setBounds(85, 528, 103, 20);
+		t_yVelocity.setBounds(85, 474, 103, 20);
 		t_yVelocity.setColumns(10);
 
 		JLabel l_mass = new JLabel("Mass:");
-		l_mass.setBounds(10, 469, 65, 14);
+		l_mass.setBounds(10, 415, 65, 14);
 
 		JLabel l_xVelocity = new JLabel("x Velocity:");
-		l_xVelocity.setBounds(10, 500, 65, 14);
+		l_xVelocity.setBounds(10, 446, 65, 14);
 
 		JLabel l_yVelocity = new JLabel("y Velocity:");
-		l_yVelocity.setBounds(10, 531, 65, 14);
+		l_yVelocity.setBounds(10, 477, 65, 14);
 
 		final JComboBox<?> comboBox = new JComboBox<>();
 		comboBox.setModel(new DefaultComboBoxModel(ColorEnum.values()));
-		comboBox.setBounds(10, 584, 178, 20);
+		comboBox.setBounds(10, 527, 178, 20);
 
 		JButton b_ApplyObject = new JButton("Apply Preset");
 		b_ApplyObject.addActionListener(new ActionListener()
@@ -126,7 +131,7 @@ public class MainFrame extends JFrame implements Runnable
 				System.out.println("Preset set!");
 			}
 		});
-		b_ApplyObject.setBounds(10, 615, 178, 23);
+		b_ApplyObject.setBounds(10, 558, 178, 23);
 
 		JLabel lblTimestep = new JLabel("Timestep:");
 		lblTimestep.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -155,6 +160,7 @@ public class MainFrame extends JFrame implements Runnable
 		});
 
 		renderPanel = new RenderPanel();
+		renderPanel.setBounds(218, 11, 846, 648);
 		renderPanel.addMouseListener(new MouseAdapter()
 		{
 
@@ -176,7 +182,7 @@ public class MainFrame extends JFrame implements Runnable
 
 		controlPanel = new JPanel();
 		controlPanel.setBackground(Color.WHITE);
-		controlPanel.setBounds(10, 11, 198, 649);
+		controlPanel.setBounds(10, 11, 198, 648);
 		controlPanel.setLayout(null);
 
 		l_timestep.setBounds(85, 125, 103, 14);
@@ -226,7 +232,7 @@ public class MainFrame extends JFrame implements Runnable
 		masterPanel.add(renderPanel);
 
 		JLabel lblColor = new JLabel("Color:");
-		lblColor.setBounds(10, 559, 46, 14);
+		lblColor.setBounds(10, 502, 46, 14);
 		controlPanel.add(lblColor);
 
 		b_nextStep = new JButton(">");
@@ -275,26 +281,8 @@ public class MainFrame extends JFrame implements Runnable
 		cb_drawPath = new JCheckBox("Draw Path");
 		cb_drawPath.setSelected(true);
 		cb_drawPath.setBackground(Color.WHITE);
-		cb_drawPath.setBounds(10, 273, 97, 23);
+		cb_drawPath.setBounds(10, 341, 97, 23);
 		controlPanel.add(cb_drawPath);
-		
-		JButton b_save = new JButton("Save Configuration");
-		b_save.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				GUIEvents.saveConf();
-			}
-		});
-		b_save.setBounds(10, 303, 178, 23);
-		controlPanel.add(b_save);
-		
-		JButton b_load = new JButton("Load Configuration");
-		b_load.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GUIEvents.loadConf();
-			}
-		});
-		b_load.setBounds(10, 337, 178, 23);
-		controlPanel.add(b_load);
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
@@ -311,7 +299,41 @@ public class MainFrame extends JFrame implements Runnable
 		setResizable(false);
 		setTitle("x0 Gravity Simulator v" + Vars.version);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 700);
+		setBounds(100, 100, 1080, 720);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenuItem mntmLoadConfiguration = new JMenuItem("Load Configuration");
+		mntmLoadConfiguration.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				GUIEvents.loadConf();
+			}
+		});
+		mnFile.add(mntmLoadConfiguration);
+		
+		JMenuItem mntmSaveConfiguration = new JMenuItem("Save Configuration");
+		mntmSaveConfiguration.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				GUIEvents.saveConf();
+				
+			}
+		});
+		mnFile.add(mntmSaveConfiguration);
+		
+		JMenuItem mntmCloseSimulator = new JMenuItem("Close Simulator");
+		mntmCloseSimulator.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				System.exit(0);
+			}
+		});
+		mnFile.add(mntmCloseSimulator);
 		setContentPane(masterPanel);
 
 	}
@@ -321,6 +343,4 @@ public class MainFrame extends JFrame implements Runnable
 	{
 		setVisible(true);
 	}
-
-
 }
