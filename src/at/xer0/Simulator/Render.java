@@ -1,6 +1,5 @@
 package at.xer0.Simulator;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -32,8 +31,6 @@ public class Render
 
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
-			int r_xVel = ((int) obj.getVelocity().getX());
-			int r_yVel = ((int) obj.getVelocity().getY());
 
 			// Render Object:
 			g.fillOval(r_x, r_y, radius, radius);
@@ -59,16 +56,7 @@ public class Render
 
 				}
 			}
-
-			//
-
-			// Velocity Vector:
-			if (Vars.mainFrame.cb_speedVec.isSelected())
-			{
-				g.setColor(Color.BLACK);
-				g.drawLine(x, y, x + r_xVel, y + r_yVel);
-			}
-			//
+		
 		}
 	}
 }

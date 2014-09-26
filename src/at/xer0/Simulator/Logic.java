@@ -12,6 +12,7 @@ public class Logic
 	{
 		//checkCollision();
 		simpleAlgorithm();
+		handlePath();
 	}
 	
 	public static void simpleAlgorithm()
@@ -82,34 +83,6 @@ public class Logic
 					o1.getPosition().getY() + deltaT * o1.getVelocity().getY() // Y-Komponente
 					));
 
-					// Path:
-					if (Vars.mainFrame.cb_drawPath.isSelected())
-					{
-						Point p = new Point( (int) o1.getPosition().getX(), (int) o1.getPosition().getY());
-
-					if (p.getX() <= Vars.mainFrame.renderPanel.getWidth() + 200 && p.getY() <= Vars.mainFrame.renderPanel.getHeight() + 200 &&p.getX() >= 0 - 200 && p.getY() >= 0 - 200)
-						{
-							boolean add = true;
-
-							for (Point pp : o1.points)
-							{
-								if (pp.isIdenticalTo(p))
-								{
-									add = false;
-								}
-							}
-
-							if (add)
-							{
-								o1.addPoint(p);
-							}
-						}
-
-					} else
-					{
-						o1.clearPoints();
-					}
-					
 
 				}
 			}
@@ -117,6 +90,44 @@ public class Logic
 
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
+	}
+	
+	private static void handlePath()
+	{
+		
+		for(Obj o1 : Vars.activeObjects)
+		{
+			// Path:
+			if (Vars.mainFrame.cb_drawPath.isSelected())
+			{
+				Point p = new Point( (int) o1.getPosition().getX(), (int) o1.getPosition().getY());
+
+			if (p.getX() <= Vars.mainFrame.renderPanel.getWidth() + 200 && p.getY() <= Vars.mainFrame.renderPanel.getHeight() + 200 &&p.getX() >= 0 - 200 && p.getY() >= 0 - 200)
+				{
+					boolean add = true;
+
+					for (Point pp : o1.points)
+					{
+						if (pp.isIdenticalTo(p))
+						{
+							add = false;
+						}
+					}
+
+					if (add)
+					{
+						o1.addPoint(p);
+					}
+				}
+
+			} else
+			{
+				o1.clearPoints();
+			}
+			
+		}
+		
+		
 	}
 	
 	public static void checkCollision()

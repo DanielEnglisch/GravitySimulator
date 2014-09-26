@@ -1,10 +1,10 @@
 
 package at.xer0.Simulator;
 
-import java.awt.Color;
 import java.util.Random;
 
 import at.xer0.GUI.MainFrame;
+import at.xer0.Support.ColorEnum;
 import at.xer0.Support.MassPreset;
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
@@ -96,10 +96,16 @@ public class Core
 	
 	public static void addCutomObjects()
 	{
+		
+		if(!Vars.customObjects){return;};
+
+		
 		// Custom Objects:
-		Vars.activeObjects.add(new Obj(new Vec2D(100, 300), new Vec2D(0, -10), MassPreset.EARTH, Color.BLUE));
-		Vars.activeObjects.add(new Obj(new Vec2D(500, 200), new Vec2D(-10, 100), MassPreset.EARTH / 2, Color.RED));
-		Vars.activeObjects.add(new Obj(new Vec2D(300, 100), new Vec2D(0, -32), MassPreset.EARTH, Color.GREEN));
+		Vars.activeObjects.add(new Obj(new Vec2D(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2 - 200), new Vec2D(20, 0), MassPreset.EARTH, ColorEnum.randomColor()));
+		Vars.activeObjects.add(new Obj(new Vec2D(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2 + 200), new Vec2D(0, 0), MassPreset.EARTH, ColorEnum.randomColor()));
+
+		//Vars.activeObjects.add(new Obj(new Vec2D(500, 200), new Vec2D(-10, 100), MassPreset.EARTH / 2, Color.RED));
+		//Vars.activeObjects.add(new Obj(new Vec2D(300, 100), new Vec2D(0, -32), MassPreset.EARTH, Color.GREEN));
 		
 		
 		//Obj o = new Obj(new Vec2D(500, 500), new Vec2D(0, 0), Math.pow(10, 50), Color.WHITE);

@@ -42,11 +42,9 @@ public class MainFrame extends JFrame implements Runnable
 	public JLabel l_Objects;
 	public JButton b_StartStop;
 	public JButton b_ReverseTime;
-	public JCheckBox cb_speedVec;
 	public JLabel l_timestep;
 	public JButton b_nextStep;
 	public JTextField t_steps;
-	public JCheckBox cb_centerOfMass;
 	public JCheckBox cb_drawPath;
 	//
 
@@ -157,7 +155,6 @@ public class MainFrame extends JFrame implements Runnable
 		});
 
 		renderPanel = new RenderPanel();
-		renderPanel.setBackground(Color.BLACK);
 		renderPanel.addMouseListener(new MouseAdapter()
 		{
 
@@ -176,7 +173,6 @@ public class MainFrame extends JFrame implements Runnable
 				
 			}
 		});
-		renderPanel.setBounds(218, 11, 666, 649);
 
 		controlPanel = new JPanel();
 		controlPanel.setBackground(Color.WHITE);
@@ -233,12 +229,6 @@ public class MainFrame extends JFrame implements Runnable
 		lblColor.setBounds(10, 559, 46, 14);
 		controlPanel.add(lblColor);
 
-		cb_speedVec = new JCheckBox("Draw Velocity Vector");
-		cb_speedVec.setEnabled(false);
-		cb_speedVec.setBackground(Color.WHITE);
-		cb_speedVec.setBounds(10, 390, 178, 23);
-		controlPanel.add(cb_speedVec);
-
 		b_nextStep = new JButton(">");
 		b_nextStep.addActionListener(new ActionListener()
 		{
@@ -282,17 +272,29 @@ public class MainFrame extends JFrame implements Runnable
 		lblStepsPerClick.setBounds(10, 187, 178, 14);
 		controlPanel.add(lblStepsPerClick);
 
-		cb_centerOfMass = new JCheckBox("Center Of Mass");
-		cb_centerOfMass.setEnabled(false);
-		cb_centerOfMass.setBackground(Color.WHITE);
-		cb_centerOfMass.setBounds(10, 338, 178, 23);
-		controlPanel.add(cb_centerOfMass);
-
 		cb_drawPath = new JCheckBox("Draw Path");
 		cb_drawPath.setSelected(true);
 		cb_drawPath.setBackground(Color.WHITE);
-		cb_drawPath.setBounds(10, 364, 97, 23);
+		cb_drawPath.setBounds(10, 273, 97, 23);
 		controlPanel.add(cb_drawPath);
+		
+		JButton b_save = new JButton("Save Configuration");
+		b_save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GUIEvents.saveConf();
+			}
+		});
+		b_save.setBounds(10, 303, 178, 23);
+		controlPanel.add(b_save);
+		
+		JButton b_load = new JButton("Load Configuration");
+		b_load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIEvents.loadConf();
+			}
+		});
+		b_load.setBounds(10, 337, 178, 23);
+		controlPanel.add(b_load);
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
@@ -320,19 +322,5 @@ public class MainFrame extends JFrame implements Runnable
 		setVisible(true);
 	}
 
-	public JTextField t_steps()
-	{
-		return t_steps;
-	}
-
-	public JCheckBox getCb_centerOfMass()
-	{
-		return cb_centerOfMass;
-	}
-
-	public JCheckBox getCb_drawPath()
-	{
-		return cb_drawPath;
-	}
 
 }

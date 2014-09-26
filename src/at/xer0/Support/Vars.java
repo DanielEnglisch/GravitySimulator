@@ -18,13 +18,14 @@ public class Vars
 
 	public static MainFrame mainFrame = null;
 
-	public static String version = "0.87a";
+	public static String version = "0.88a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;
 	public static boolean nextStep = false;
 	public static boolean isResetRequested = false;
-	public static boolean centerOfMassMode = true;
+	
+	public static boolean customObjects = false;
 
 	// Steps to do in SingleStepMode (by default 1)
 	public static int steps = 1;

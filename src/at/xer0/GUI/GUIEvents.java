@@ -1,6 +1,16 @@
 
 package at.xer0.GUI;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
@@ -84,8 +94,101 @@ public class GUIEvents
 		}
 	}
 
+	public static void saveConf()
+	{
+		boolean restart  = false;
+		if(Vars.isActive){Vars.isActive = false; restart = true;}
+		
+		JFileChooser fc  = new JFileChooser();
+		fc.setDialogTitle("Select an output directory");
+		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fc.setAcceptAllFileFilterUsed(false);
+		
+		File dir = new File(".");
+		
+		if (fc.showOpenDialog(Vars.mainFrame) == JFileChooser.APPROVE_OPTION)
+		{ 
+			dir = fc.getSelectedFile();
+		}
+		
+		try
+		{
+			BufferedWriter out = new BufferedWriter(new FileWriter(new File(dir,"output.x0")));
+			
+			for(Obj o : Vars.activeObjects)
+			{
+				out.write(o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "\n");
+			}
+			
+			out.flush();
+			out.close();
+			
+			JOptionPane.showMessageDialog(null, "Successfully saved configuration!");
+
+			
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		
+		if(restart){Vars.isActive = true;}
+
+	}
 	
 	
+	public static void loadConf()
+	{
+		boolean restart  = false;
+		if(Vars.isActive){Vars.isActive = false; restart = true;}
+		
+		JFileChooser fc  = new JFileChooser();
+		fc.setDialogTitle("Select a file");
+		
+		 if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			 
+			 File selectedFile = fc.getSelectedFile();
+			 
+			 try
+			 {
+				 BufferedReader in = new BufferedReader(new FileReader(selectedFile));
+				 
+				 while(in.ready())
+				 {
+					 String inText = in.readLine();
+					 
+					 String[] split = inText.split("#");
+					 
+					 double x = Double.parseDouble(split[0]);
+					 double y = Double.parseDouble(split[1]);
+					 
+					 double vx = Double.parseDouble(split[2]);
+					 double vy = Double.parseDouble(split[3]);
+					 
+					 double mass = Double.parseDouble(split[4]);
+					 
+					 
+					 
+					Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor());
+					
+					System.out.println("Parsed Object: " + o.toString());
+					
+					Vars.bufferedObjects.add(o);
+				 }
+				 
+				 in.close();
+				 
+			 }
+			 catch(Exception e)
+			 {
+				 e.printStackTrace();
+			 }
+		 }
+		     
+		 
+		 
+		if(restart){Vars.isActive = true;}
+	}
 
 	public static void updateTimestep(int timestepfactor)
 	{

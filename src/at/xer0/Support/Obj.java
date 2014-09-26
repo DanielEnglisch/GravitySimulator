@@ -22,8 +22,6 @@ public class Obj
 	{
 		return radius;
 	}
-
-
 	
 	public void setRadius(int radius)
 	{
@@ -52,8 +50,6 @@ public class Obj
 		this.color = c;
 		
 		this.radius = (int)(mass * Vars.G);
-		
-
 	}
 
 	

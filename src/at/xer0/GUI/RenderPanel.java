@@ -16,9 +16,9 @@ public class RenderPanel extends JPanel
 	public RenderPanel()
 	{
 		setForeground(Color.WHITE);
-		setBackground(Color.WHITE);
-		setBounds(218, 11, 600, 400);
+		setBackground(Color.BLACK);
 		setLayout(null);
+		setBounds(218, 11, 666, 649);
 	}
 
 	public void paintComponent(Graphics g)

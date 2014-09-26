@@ -2,11 +2,23 @@
 package at.xer0.Support;
 
 import java.awt.Color;
+import java.util.Random;
 
 public enum ColorEnum {
 
 	Magenta, Light_Gray, Gray, Dark_Gray, Black, Red, Pink, Orange, Yellow, Green, Cyan, Blue;
 
+	
+	public static Color randomColor()
+	{
+		Random rand = new Random();
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+		
+		return new Color(r, g, b);
+	}
+	
 	public static Color getAWTColor(ColorEnum ce)
 	{
 
