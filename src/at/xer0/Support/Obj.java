@@ -2,9 +2,6 @@
 package at.xer0.Support;
 
 import java.awt.Color;
-
-import at.xer0.Support.Point;
-
 import java.util.ArrayList;
 
 public class Obj
@@ -14,7 +11,8 @@ public class Obj
 	private double mass;
 	private Color color;
 	
-	private int id;
+	
+	public boolean isStatic = false;
 	
 	//Render:
 	private int radius = 0;
@@ -42,7 +40,7 @@ public class Obj
 	 * @param color
 	 *            Color of Object
 	 */
-	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c)
+	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c,boolean isStat)
 	{
 		super();
 
@@ -53,15 +51,15 @@ public class Obj
 		
 		this.radius = (int)(mass * Vars.G);
 		
-		id = Vars.activeObjects.size();
+		this.isStatic = isStat;
+		
+		if(isStat)
+		{
+			this.velocity = new Vec2D(0,0);
+		}
+		
 	}
 
-	
-	
-	public int getId()
-	{
-		return id;
-	}
 
 	public void setMass(double mass)
 	{
@@ -70,10 +68,12 @@ public class Obj
 
 	}
 
+
+
 	@Override
 	public String toString()
 	{
-		return "Obj [position=" + position + ", velocity=" + velocity + ", acceleration=" + acceleration + ", mass=" + mass + ", color=" + color + "]";
+		return "Obj [position=" + position + ", velocity=" + velocity  + ", mass=" + mass + ", isStatic=" + isStatic + ", radius=" + radius + "]";
 	}
 
 	public Vec2D getPosition()

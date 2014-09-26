@@ -25,7 +25,7 @@ public class Vars
 	public static boolean nextStep = false;
 	public static boolean isResetRequested = false;
 	
-	public static boolean customObjects = true;
+	public static boolean customObjects = false;
 
 	// Steps to do in SingleStepMode (by default 1)
 	public static int steps = 1;

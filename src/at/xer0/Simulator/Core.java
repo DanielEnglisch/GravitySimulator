@@ -4,8 +4,11 @@ package at.xer0.Simulator;
 import java.util.Random;
 
 import at.xer0.GUI.MainFrame;
+import at.xer0.Support.ColorEnum;
+import at.xer0.Support.MassPreset;
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
+import at.xer0.Support.Vec2D;
 
 public class Core
 {
@@ -100,6 +103,7 @@ public class Core
 		
 		if(!Vars.customObjects){return;};
 
+		Vars.activeObjects.add(new Obj(new Vec2D(0,0),new Vec2D(0,0),MassPreset.EARTH,ColorEnum.randomColor(),true));
 
 
 	}

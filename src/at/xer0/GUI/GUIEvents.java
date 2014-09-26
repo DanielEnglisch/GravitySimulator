@@ -45,8 +45,11 @@ public class GUIEvents
 		x -= (Vars.mainFrame.renderPanel.getWidth()/2);
 		y -= (Vars.mainFrame.renderPanel.getHeight()/2);
 
+		Obj o = null;
 		
-		Obj o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset);
+		o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset,Vars.mainFrame.cb_static.isSelected() );
+
+
 
 		Vars.bufferedObjects.add(o);
 
@@ -121,7 +124,10 @@ public class GUIEvents
 			
 			for(Obj o : Vars.activeObjects)
 			{
-				out.write(o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "\n");
+				String stat = "false";
+				if(o.isStatic){stat = "true";}
+				
+				out.write(o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "#" + stat + "\n");
 			}
 			
 			out.flush();
@@ -175,9 +181,9 @@ public class GUIEvents
 					 
 					 double mass = Double.parseDouble(split[4]);
 					 
-					 
-					 
-					Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor());
+					 boolean stat = Boolean.parseBoolean(split[5]);
+
+					Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor(),stat);
 					
 					System.out.println("Parsed Object: " + o.toString());
 					

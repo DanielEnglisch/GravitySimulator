@@ -42,15 +42,18 @@ public class Logic
 			{
 				if (o1 != o2)
 				{
-					double deltaX = o1.getDeltaXY(o2).getX();
-					double deltaY = o1.getDeltaXY(o2).getY();
-					double r = o1.getDistanceTo(o2);
+					if(!o1.isStatic)
+					{
+						double deltaX = o1.getDeltaXY(o2).getX();
+						double deltaY = o1.getDeltaXY(o2).getY();
+						double r = o1.getDistanceTo(o2);
 
-					o1.setAcceleration(new Vec2D(
+						o1.setAcceleration(new Vec2D(
 
-					(G * o2.getMass() * (deltaX / r)), (G * o2.getMass() * (deltaY / r))
+						(G * o2.getMass() * (deltaX / r)), (G * o2.getMass() * (deltaY / r))
 
-					));
+						));
+					}
 
 				}
 			}
