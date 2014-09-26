@@ -161,6 +161,7 @@ public class MainFrame extends JFrame implements Runnable
 
 		renderPanel = new RenderPanel();
 		renderPanel.setBounds(218, 11, 846, 648);
+		renderPanel.setIgnoreRepaint(true);
 		renderPanel.addMouseListener(new MouseAdapter()
 		{
 
@@ -345,7 +346,6 @@ public class MainFrame extends JFrame implements Runnable
 		mnFile.add(mntmAbout);
 		mnFile.add(mntmCloseSimulator);
 		setContentPane(masterPanel);
-
 	}
 
 	@Override

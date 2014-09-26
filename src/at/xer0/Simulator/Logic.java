@@ -10,9 +10,11 @@ public class Logic
 {
 	public static void tick()
 	{
+
 		//checkCollision();
 		simpleAlgorithm();
 		handlePath();
+
 	}
 	
 	public static void simpleAlgorithm()
@@ -53,6 +55,9 @@ public class Logic
 				}
 			}
 		}
+				
+		
+		
 
 		// #2:Geschwindigkeit-Schleife:
 		for (Obj o : Vars.activeObjects)

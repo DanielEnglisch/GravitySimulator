@@ -14,6 +14,8 @@ public class Obj
 	private double mass;
 	private Color color;
 	
+	private int id;
+	
 	//Render:
 	private int radius = 0;
 
@@ -50,9 +52,17 @@ public class Obj
 		this.color = c;
 		
 		this.radius = (int)(mass * Vars.G);
+		
+		id = Vars.activeObjects.size();
 	}
 
 	
+	
+	public int getId()
+	{
+		return id;
+	}
+
 	public void setMass(double mass)
 	{
 		this.mass = mass;

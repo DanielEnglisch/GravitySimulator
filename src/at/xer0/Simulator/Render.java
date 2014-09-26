@@ -1,8 +1,10 @@
 package at.xer0.Simulator;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.Ellipse2D;
+import java.util.Collections;
+import java.util.Random;
 
 import at.xer0.Support.Obj;
 import at.xer0.Support.Point;
@@ -11,17 +13,19 @@ import at.xer0.Support.Vars;
 
 public class Render
 {
-	public static void renderFrame(Graphics gn)
+	public static void renderFrame(Graphics2D g)
 	{
-		// Actual Render Logic
+		
+		Collections.shuffle(Vars.activeObjects, new Random());
 
-		Graphics2D g = (Graphics2D) gn;
+		
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
 		//Render Origin at Center of screen:
 		g.translate(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2);
 		
+	
 		for (Obj obj : Vars.activeObjects)
 		{
 			g.setColor(obj.getColor());
@@ -35,7 +39,7 @@ public class Render
 			int r_y = y - (radius / 2);
 
 			// Render Object:
-			g.fillOval(r_x, r_y, radius, radius);
+			g.fill(new Ellipse2D.Double(r_x, r_y, radius, radius));
 			//
 
 			// Render Path:
@@ -60,5 +64,8 @@ public class Render
 			}
 		
 		}
+		
 	}
+	
+
 }

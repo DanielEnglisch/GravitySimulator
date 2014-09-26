@@ -3,6 +3,7 @@ package at.xer0.GUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -19,13 +20,19 @@ public class RenderPanel extends JPanel
 		setBackground(Color.BLACK);
 		setLayout(null);
 		setBounds(218, 11, 666, 649);
+		setIgnoreRepaint(true);
+
+
 	}
 
 	public void paintComponent(Graphics g)
 	{
 
-		super.paintComponent(g);
-		Render.renderFrame(g);
+		Graphics2D gn = (Graphics2D) g;
+		
+		super.paintComponent(gn);
+		
+		Render.renderFrame(gn);
 
 	}
 
