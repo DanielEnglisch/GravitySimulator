@@ -256,6 +256,25 @@ public class GUIEvents
 		 
 	}
 	
+	
+	public static void forceRadius(boolean force)
+	{
+		if(force)
+		{
+			for(Obj o : Vars.activeObjects)
+			{
+				o.setRadius(30);
+			}
+		}
+		else
+		{
+			for(Obj o : Vars.activeObjects)
+			{
+				o.setRadius((int)(o.getMass() * Vars.G));
+			}
+		}
+	}
+	
 	public static void updateTimestep(int timestepfactor)
 	{
 

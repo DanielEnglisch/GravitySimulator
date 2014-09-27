@@ -111,6 +111,10 @@ public class Logic
 
 					if (add)
 					{
+						if(o1.points.size() >= 200)
+						{
+							o1.points.remove(0);
+						}
 						o1.addPoint(p);
 					}
 				}

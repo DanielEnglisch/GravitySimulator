@@ -13,7 +13,7 @@ public class Vars
 	// Standart Werte
 	public static String defxVelocityPreset = "0";
 	public static String defyVelocityPreset = "0";
-	public static String defMassPreset = "" + MassPreset.EARTH;
+	public static String defMassPreset = "5E24";
 	public static Color defColorPreset = ColorEnum.randomColor();
 	//
 

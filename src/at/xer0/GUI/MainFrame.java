@@ -31,6 +31,8 @@ import javax.swing.event.ChangeListener;
 import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -52,6 +54,7 @@ public class MainFrame extends JFrame implements Runnable
 	public JTextField t_steps;
 	public JCheckBox cb_drawPath;
 	public JCheckBox cb_static;
+	public JCheckBox cb_forceRadius;
 	//
 
 	@SuppressWarnings(
@@ -284,12 +287,25 @@ public class MainFrame extends JFrame implements Runnable
 		cb_drawPath = new JCheckBox("Draw Path");
 		cb_drawPath.setSelected(true);
 		cb_drawPath.setBackground(Color.WHITE);
-		cb_drawPath.setBounds(10, 311, 97, 23);
+		cb_drawPath.setBounds(10, 299, 97, 23);
 		controlPanel.add(cb_drawPath);
 		
 		cb_static = new JCheckBox("Static");
+		cb_static.setBackground(Color.WHITE);
 		cb_static.setBounds(10, 456, 178, 23);
 		controlPanel.add(cb_static);
+		
+		cb_forceRadius = new JCheckBox("Same Radius");
+		cb_forceRadius.setBackground(Color.WHITE);
+		cb_forceRadius.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				GUIEvents.forceRadius(cb_forceRadius.isSelected());
+
+			}
+		});
+
+		cb_forceRadius.setBounds(10, 273, 178, 23);
+		controlPanel.add(cb_forceRadius);
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
@@ -381,4 +397,5 @@ public class MainFrame extends JFrame implements Runnable
 	{
 		setVisible(true);
 	}
+
 }

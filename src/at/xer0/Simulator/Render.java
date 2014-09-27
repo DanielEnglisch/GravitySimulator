@@ -26,8 +26,13 @@ public class Render
 		g.translate(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2);
 		
 	
+		renderPath(g);
+		
 		for (Obj obj : Vars.activeObjects)
 		{
+			
+			
+			
 			g.setColor(obj.getColor());
 
 			int x = (int) obj.getPosition().getX();
@@ -42,30 +47,40 @@ public class Render
 			g.fill(new Ellipse2D.Double(r_x, r_y, radius, radius));
 			//
 
-			// Render Path:
-			if (Vars.mainFrame.cb_drawPath.isSelected())
-			{
-				g.setColor(obj.getColor());
-
-				for (int i = 0; i < obj.points.size(); i++)
-				{
-					try
-					{
-						Point p1 = obj.points.get(i);
-						Point p2 = obj.points.get(i + 1);
-
-						g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-
-					} catch (Exception exx)
-					{
-					}
-
-				}
-			}
+			
 		
 		}
 		
 	}
 	
+	private static void renderPath(Graphics2D g)
+	{
+		
+		for (Obj obj : Vars.activeObjects)
+		{
+			
+		
+					if (Vars.mainFrame.cb_drawPath.isSelected())
+					{
+						g.setColor(obj.getColor());
+
+						for (int i = 0; i < obj.points.size(); i++)
+						{
+							try
+							{
+								Point p1 = obj.points.get(i);
+								Point p2 = obj.points.get(i + 1);
+
+								g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+
+							} catch (Exception exx)
+							{
+							}
+
+						}
+					}
+					
+		}
+	}
 
 }

@@ -49,8 +49,14 @@ public class Obj
 		this.mass = mass;
 		this.color = c;
 		
-		this.radius = (int)(mass * Vars.G);
-		
+		if(Vars.mainFrame.cb_forceRadius.isSelected())
+		{
+			this.radius = 30;
+		}
+		else
+		{
+			this.radius = (int)(mass * Vars.G);
+		}		
 		this.isStatic = isStat;
 		
 		if(isStat)
@@ -64,7 +70,16 @@ public class Obj
 	public void setMass(double mass)
 	{
 		this.mass = mass;
-		this.radius = (int)(mass * Vars.G);
+		
+		if(Vars.mainFrame.cb_forceRadius.isSelected())
+		{
+			this.radius = 30;
+		}
+		else
+		{
+			this.radius = (int)(mass * Vars.G);
+		}
+		
 
 	}
 
