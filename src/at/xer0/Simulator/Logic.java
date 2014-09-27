@@ -94,6 +94,11 @@ public class Logic
 			{
 				Point p = new Point( (int) o1.getPosition().getX(), (int) o1.getPosition().getY());
 
+				if(o1.points.size() >= 200)
+				{
+					o1.points.remove(0);
+				}
+				
 			if (p.getX() > -(Vars.mainFrame.renderPanel.getWidth()/2) - 200 &&
 					p.getX() < (Vars.mainFrame.renderPanel.getWidth()/2) + 200 &&
 					p.getY() > -(Vars.mainFrame.renderPanel.getHeight()/2) - 200 &&
@@ -111,12 +116,11 @@ public class Logic
 
 					if (add)
 					{
-						if(o1.points.size() >= 200)
-						{
-							o1.points.remove(0);
-						}
 						o1.addPoint(p);
 					}
+				} else
+				{
+					o1.clearPoints();
 				}
 
 			} else

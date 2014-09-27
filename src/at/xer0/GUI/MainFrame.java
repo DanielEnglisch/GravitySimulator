@@ -295,7 +295,7 @@ public class MainFrame extends JFrame implements Runnable
 		cb_static.setBounds(10, 456, 178, 23);
 		controlPanel.add(cb_static);
 		
-		cb_forceRadius = new JCheckBox("Same Radius");
+		cb_forceRadius = new JCheckBox("Force Radius");
 		cb_forceRadius.setBackground(Color.WHITE);
 		cb_forceRadius.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
@@ -375,7 +375,7 @@ public class MainFrame extends JFrame implements Runnable
 					GUIEvents.loadConf();
 				}else
 				{
-					GUIEvents.loadConf(Vars.lastFile);
+					GUIEvents.reloadConfig();
 				}
 				
 			}

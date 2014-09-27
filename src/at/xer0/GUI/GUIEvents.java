@@ -122,6 +122,11 @@ public class GUIEvents
 		{
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
 			
+			if(Vars.mainFrame.cb_forceRadius.isSelected())
+			{
+				out.write("forceRadius\n");
+			}
+			
 			for(Obj o : Vars.activeObjects)
 			{
 				String stat = "false";
@@ -158,102 +163,69 @@ public class GUIEvents
 		fc.setDialogTitle("Select a file");
 		
 		 if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			 
-				Vars.isResetRequested = true;
 
-			 
-			 File selectedFile = fc.getSelectedFile();
-			 
-			 try
-			 {
-				 BufferedReader in = new BufferedReader(new FileReader(selectedFile));
-				 
-				 while(in.ready())
-				 {
-					 String inText = in.readLine();
-					 
-					 String[] split = inText.split("#");
-					 
-					 double x = Double.parseDouble(split[0]);
-					 double y = Double.parseDouble(split[1]);
-					 
-					 double vx = Double.parseDouble(split[2]);
-					 double vy = Double.parseDouble(split[3]);
-					 
-					 double mass = Double.parseDouble(split[4]);
-					 
-					 boolean stat = Boolean.parseBoolean(split[5]);
-
-					Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor(),stat);
-					
-					System.out.println("Parsed Object: " + o.toString());
-					
-
-					Vars.bufferedObjects.add(o);
-				 }
-				 
-				 in.close();
-				 
-				 Vars.lastFile = selectedFile;
-				 
-			 }
-			 catch(Exception e)
-			 {
-				 e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Invalid Fileformat!");
-
-			 }
+				loadConfigFromFile(fc.getSelectedFile());
 		 }
 		     
 		 
 		 
 	}
 
-	public static void loadConf(File f)
+	public static void reloadConfig()
 	{
-
+		loadConfigFromFile(Vars.lastFile);
+	}
+	
+	private static void loadConfigFromFile(File f)
+	{
 		Vars.isResetRequested = true;
-
-		
-		try
+		 
+		 try
+		 {
+			 BufferedReader in = new BufferedReader(new FileReader(f));
+			 
+			 while(in.ready())
 			 {
-				 BufferedReader in = new BufferedReader(new FileReader(f));
+				 String inText = in.readLine();
 				 
-				 while(in.ready())
+				 if(inText.equals("forceRadius"))
 				 {
-					 String inText = in.readLine();
-					 
-					 String[] split = inText.split("#");
-					 
-					 double x = Double.parseDouble(split[0]);
-					 double y = Double.parseDouble(split[1]);
-					 
-					 double vx = Double.parseDouble(split[2]);
-					 double vy = Double.parseDouble(split[3]);
-					 
-					 double mass = Double.parseDouble(split[4]);
-					 
-					 boolean stat = Boolean.parseBoolean(split[5]);
-
-					Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor(),stat);
-					
-					System.out.println("Parsed Object: " + o.toString());
-										
-					Vars.bufferedObjects.add(o);
+					 Vars.mainFrame.cb_forceRadius.setSelected(true);
+					 GUIEvents.forceRadius(true);
+					 inText = in.readLine();
 				 }
+				
+				 String[] split = inText.split("#");
 				 
-				 in.close();
+				 double x = Double.parseDouble(split[0]);
+				 double y = Double.parseDouble(split[1]);
 				 
+				 double vx = Double.parseDouble(split[2]);
+				 double vy = Double.parseDouble(split[3]);
+				 
+				 double mass = Double.parseDouble(split[4]);
+				 
+				 boolean stat = Boolean.parseBoolean(split[5]);
+
+				Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor(),stat);
+				
+				System.out.println("Parsed Object: " + o.toString());
+				
+
+				Vars.bufferedObjects.add(o);
 			 }
-			 catch(Exception e)
-			 {
-				 e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Invalid Fileformat!");
-			 }
-		 
-		     
-		 
-		 
+			 
+			 in.close();
+			 
+			 Vars.lastFile = f;
+			 
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Invalid Fileformat!");
+
+		 }
 	}
 	
 	

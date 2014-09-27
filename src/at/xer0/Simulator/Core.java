@@ -1,10 +1,10 @@
 
 package at.xer0.Simulator;
 
+import java.awt.Color;
 import java.util.Random;
 
 import at.xer0.GUI.MainFrame;
-import at.xer0.Support.ColorEnum;
 import at.xer0.Support.MassPreset;
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
@@ -103,8 +103,13 @@ public class Core
 		
 		if(!Vars.customObjects){return;};
 
-		Vars.activeObjects.add(new Obj(new Vec2D(0,0),new Vec2D(0,0),MassPreset.EARTH,ColorEnum.randomColor(),true));
-
+		for(int x = 0; x < 10; x++)
+		{
+			for(int y = 0; y < 10; y++)
+			{
+				Vars.activeObjects.add(new Obj(new Vec2D(-250 + (50*x),-250 + (50*y)),new Vec2D(0,0),MassPreset.EARTH,Color.GREEN,false));
+			}
+		}
 
 	}
 
@@ -114,6 +119,9 @@ public class Core
 
 		Vars.activeObjects.clear();
 		Vars.time = 0;
+		Vars.mainFrame.cb_drawPath.setSelected(true);
+		Vars.mainFrame.cb_forceRadius.setSelected(false);
+
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
 		Vars.mainFrame.b_nextStep.setEnabled(true);
 		Vars.isTimeReversed = false;
