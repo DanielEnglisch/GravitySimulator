@@ -20,23 +20,19 @@ public class Core
 		System.out.println("MainFrame initialized!");
 		new Thread(Vars.mainFrame).start();
 
-		
 		addCutomObjects();
-
 
 		// Hauptschleife
 		while (true)
 		{
 
-
-			
 			if (Vars.isResetRequested)
 			{
 				resetSimulation();
 				Vars.isResetRequested = false;
 			}
 
-			//Delete requested Object:
+			// Delete requested Object:
 			if (Vars.objectToDelete.size() != 0)
 			{
 				for (Obj no : Vars.objectToDelete)
@@ -46,7 +42,7 @@ public class Core
 
 				Vars.objectToDelete.clear();
 			}
-			
+
 			// Add buffered Objects:
 			if (Vars.bufferedObjects.size() != 0)
 			{
@@ -83,8 +79,6 @@ public class Core
 				}
 
 			}
-			
-			
 
 			// Render:
 			Vars.mainFrame.renderPanel.repaint();
@@ -97,17 +91,20 @@ public class Core
 		}
 
 	}
-	
+
 	public static void addCutomObjects()
 	{
-		
-		if(!Vars.customObjects){return;};
 
-		for(int x = 0; x < 10; x++)
+		if (!Vars.customObjects)
 		{
-			for(int y = 0; y < 10; y++)
+			return;
+		};
+
+		for (int x = 0; x < 10; x++)
+		{
+			for (int y = 0; y < 10; y++)
 			{
-				Vars.activeObjects.add(new Obj(new Vec2D(-250 + (50*x),-250 + (50*y)),new Vec2D(0,0),MassPreset.EARTH,Color.GREEN,false));
+				Vars.activeObjects.add(new Obj(new Vec2D(-250 + (50 * x), -250 + (50 * y)), new Vec2D(0, 0), MassPreset.EARTH, Color.GREEN, false));
 			}
 		}
 
@@ -127,7 +124,7 @@ public class Core
 		Vars.isTimeReversed = false;
 		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
-		
+
 		addCutomObjects();
 
 	}
@@ -137,8 +134,6 @@ public class Core
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.activeObjects.size());
 	}
-
-
 
 	public static int randInt(int min, int max)
 	{

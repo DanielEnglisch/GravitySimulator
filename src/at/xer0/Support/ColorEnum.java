@@ -8,17 +8,16 @@ public enum ColorEnum {
 
 	Random_Color, Magenta, Light_Gray, Gray, Dark_Gray, Black, Red, Pink, Orange, Yellow, Green, Cyan, Blue;
 
-	
 	public static Color randomColor()
 	{
 		Random rand = new Random();
 		float r = rand.nextFloat();
 		float g = rand.nextFloat();
 		float b = rand.nextFloat();
-		
+
 		return new Color(r, g, b);
 	}
-	
+
 	public static Color getAWTColor(ColorEnum ce)
 	{
 
@@ -26,7 +25,7 @@ public enum ColorEnum {
 
 		switch (ce)
 		{
-		
+
 		case Random_Color:
 			returnColor = (randomColor());
 			break;

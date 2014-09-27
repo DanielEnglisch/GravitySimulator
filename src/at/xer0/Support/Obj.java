@@ -7,22 +7,22 @@ import java.util.ArrayList;
 public class Obj
 {
 
-	private Vec2D position,velocity,acceleration = new Vec2D(0, 0);
+	private Vec2D position,
+			velocity,
+			acceleration = new Vec2D(0, 0);
 	private double mass;
 	private Color color;
-	
-	
+
 	public boolean isStatic = false;
-	
-	//Render:
+
+	// Render:
 	private int radius = 0;
 
-	
 	public int getRadius()
 	{
 		return radius;
 	}
-	
+
 	public void setRadius(int radius)
 	{
 		this.radius = radius;
@@ -40,7 +40,7 @@ public class Obj
 	 * @param color
 	 *            Color of Object
 	 */
-	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c,boolean isStat)
+	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c, boolean isStat)
 	{
 		super();
 
@@ -48,47 +48,41 @@ public class Obj
 		this.velocity = iVel;
 		this.mass = mass;
 		this.color = c;
-		
-		if(Vars.mainFrame.cb_forceRadius.isSelected())
+
+		if (Vars.mainFrame.cb_forceRadius.isSelected())
 		{
 			this.radius = 30;
-		}
-		else
+		} else
 		{
-			this.radius = (int)(mass * Vars.G);
-		}		
+			this.radius = (int) (mass * Vars.G);
+		}
 		this.isStatic = isStat;
-		
-		if(isStat)
-		{
-			this.velocity = new Vec2D(0,0);
-		}
-		
-	}
 
+		if (isStat)
+		{
+			this.velocity = new Vec2D(0, 0);
+		}
+
+	}
 
 	public void setMass(double mass)
 	{
 		this.mass = mass;
-		
-		if(Vars.mainFrame.cb_forceRadius.isSelected())
+
+		if (Vars.mainFrame.cb_forceRadius.isSelected())
 		{
 			this.radius = 30;
-		}
-		else
+		} else
 		{
-			this.radius = (int)(mass * Vars.G);
+			this.radius = (int) (mass * Vars.G);
 		}
-		
 
 	}
-
-
 
 	@Override
 	public String toString()
 	{
-		return "Obj [position=" + position + ", velocity=" + velocity  + ", mass=" + mass + ", isStatic=" + isStatic + ", radius=" + radius + "]";
+		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass + ", isStatic=" + isStatic + ", radius=" + radius + "]";
 	}
 
 	public Vec2D getPosition()

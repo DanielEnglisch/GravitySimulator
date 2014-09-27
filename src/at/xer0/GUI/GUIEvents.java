@@ -42,14 +42,12 @@ public class GUIEvents
 
 	public static void addObject(int x, int y)
 	{
-		x -= (Vars.mainFrame.renderPanel.getWidth()/2);
-		y -= (Vars.mainFrame.renderPanel.getHeight()/2);
+		x -= (Vars.mainFrame.renderPanel.getWidth() / 2);
+		y -= (Vars.mainFrame.renderPanel.getHeight() / 2);
 
 		Obj o = null;
-		
-		o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset,Vars.mainFrame.cb_static.isSelected() );
 
-
+		o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset, Vars.mainFrame.cb_static.isSelected());
 
 		Vars.bufferedObjects.add(o);
 
@@ -73,27 +71,25 @@ public class GUIEvents
 		}
 
 	}
-	
-	
+
 	public static void editObject(int x, int y)
 	{
-		x -= (Vars.mainFrame.renderPanel.getWidth()/2);
-		y -= (Vars.mainFrame.renderPanel.getHeight()/2);
-		
-		if(!Vars.isActive)
+		x -= (Vars.mainFrame.renderPanel.getWidth() / 2);
+		y -= (Vars.mainFrame.renderPanel.getHeight() / 2);
+
+		if (!Vars.isActive)
 		{
 			Obj chosen = null;
-			
-			for(Obj o : Vars.activeObjects)
+
+			for (Obj o : Vars.activeObjects)
 			{
-				if(x  < o.getPosition().getX() + 10 && x  > o.getPosition().getX() - 10 &&
-						y  < o.getPosition().getY() + 10 && y  > o.getPosition().getY() - 10)
+				if (x < o.getPosition().getX() + 10 && x > o.getPosition().getX() - 10 && y < o.getPosition().getY() + 10 && y > o.getPosition().getY() - 10)
 				{
 					chosen = o;
 				}
 			}
-			
-			if(chosen != null)
+
+			if (chosen != null)
 			{
 				EditObjectGUI os = new EditObjectGUI(chosen);
 				os.setVisible(true);
@@ -103,150 +99,152 @@ public class GUIEvents
 
 	public static void saveConf()
 	{
-		boolean restart  = false;
-		if(Vars.isActive){Vars.isActive = false; restart = true;}
-		
-		JFileChooser fc  = new JFileChooser();
+		boolean restart = false;
+		if (Vars.isActive)
+		{
+			Vars.isActive = false;
+			restart = true;
+		}
+
+		JFileChooser fc = new JFileChooser();
 		fc.setDialogTitle("Select an output file");
-		
+
 		File file = new File(".");
-		
+
 		int res = fc.showSaveDialog(Vars.mainFrame);
-		
-		if ( res == JFileChooser.APPROVE_OPTION)
-		{ 
+
+		if (res == JFileChooser.APPROVE_OPTION)
+		{
 			file = fc.getSelectedFile();
 		}
-		
+
 		try
 		{
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-			
-			if(Vars.mainFrame.cb_forceRadius.isSelected())
+
+			if (Vars.mainFrame.cb_forceRadius.isSelected())
 			{
 				out.write("forceRadius\n");
 			}
-			
-			for(Obj o : Vars.activeObjects)
+
+			for (Obj o : Vars.activeObjects)
 			{
 				String stat = "false";
-				if(o.isStatic){stat = "true";}
-				
+				if (o.isStatic)
+				{
+					stat = "true";
+				}
+
 				out.write(o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "#" + stat + "\n");
 			}
-			
+
 			out.flush();
 			out.close();
-			
-			if ( res == JFileChooser.APPROVE_OPTION)
+
+			if (res == JFileChooser.APPROVE_OPTION)
 			{
 				JOptionPane.showMessageDialog(null, "Successfully saved configuration!");
 
 			}
 
-			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 
-		
-		if(restart){Vars.isActive = true;}
+		if (restart)
+		{
+			Vars.isActive = true;
+		}
 
 	}
-	
-	
+
 	public static void loadConf()
 	{
-		
-		JFileChooser fc  = new JFileChooser();
-		fc.setDialogTitle("Select a file");
-		
-		 if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 
-				loadConfigFromFile(fc.getSelectedFile());
-		 }
-		     
-		 
-		 
+		JFileChooser fc = new JFileChooser();
+		fc.setDialogTitle("Select a file");
+
+		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+		{
+
+			loadConfigFromFile(fc.getSelectedFile());
+		}
+
 	}
 
 	public static void reloadConfig()
 	{
 		loadConfigFromFile(Vars.lastFile);
 	}
-	
+
 	private static void loadConfigFromFile(File f)
 	{
 		Vars.isResetRequested = true;
-		 
-		 try
-		 {
-			 BufferedReader in = new BufferedReader(new FileReader(f));
-			 
-			 while(in.ready())
-			 {
-				 String inText = in.readLine();
-				 
-				 if(inText.equals("forceRadius"))
-				 {
-					 Vars.mainFrame.cb_forceRadius.setSelected(true);
-					 GUIEvents.forceRadius(true);
-					 inText = in.readLine();
-				 }
-				
-				 String[] split = inText.split("#");
-				 
-				 double x = Double.parseDouble(split[0]);
-				 double y = Double.parseDouble(split[1]);
-				 
-				 double vx = Double.parseDouble(split[2]);
-				 double vy = Double.parseDouble(split[3]);
-				 
-				 double mass = Double.parseDouble(split[4]);
-				 
-				 boolean stat = Boolean.parseBoolean(split[5]);
 
-				Obj o = new Obj(new Vec2D(x,y), new Vec2D(vx,vy), mass, ColorEnum.randomColor(),stat);
-				
+		try
+		{
+			BufferedReader in = new BufferedReader(new FileReader(f));
+
+			while (in.ready())
+			{
+				String inText = in.readLine();
+
+				if (inText.equals("forceRadius"))
+				{
+					Vars.mainFrame.cb_forceRadius.setSelected(true);
+					GUIEvents.forceRadius(true);
+					inText = in.readLine();
+				}
+
+				String[] split = inText.split("#");
+
+				double x = Double.parseDouble(split[0]);
+				double y = Double.parseDouble(split[1]);
+
+				double vx = Double.parseDouble(split[2]);
+				double vy = Double.parseDouble(split[3]);
+
+				double mass = Double.parseDouble(split[4]);
+
+				boolean stat = Boolean.parseBoolean(split[5]);
+
+				Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass, ColorEnum.randomColor(), stat);
+
 				System.out.println("Parsed Object: " + o.toString());
-				
 
 				Vars.bufferedObjects.add(o);
-			 }
-			 
-			 in.close();
-			 
-			 Vars.lastFile = f;
-			 
-		 }
-		 catch(Exception e)
-		 {
-			 e.printStackTrace();
+			}
+
+			in.close();
+
+			Vars.lastFile = f;
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Invalid Fileformat!");
 
-		 }
+		}
 	}
-	
-	
+
 	public static void forceRadius(boolean force)
 	{
-		if(force)
+		if (force)
 		{
-			for(Obj o : Vars.activeObjects)
+			for (Obj o : Vars.activeObjects)
 			{
 				o.setRadius(30);
 			}
-		}
-		else
+		} else
 		{
-			for(Obj o : Vars.activeObjects)
+			for (Obj o : Vars.activeObjects)
 			{
-				o.setRadius((int)(o.getMass() * Vars.G));
+				o.setRadius((int) (o.getMass() * Vars.G));
 			}
 		}
 	}
-	
+
 	public static void updateTimestep(int timestepfactor)
 	{
 

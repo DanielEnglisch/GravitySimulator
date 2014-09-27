@@ -36,6 +36,7 @@ import java.awt.event.ItemEvent;
 
 public class MainFrame extends JFrame implements Runnable
 {
+
 	private static final long serialVersionUID = 1L;
 	private JPanel masterPanel;
 	private JTextField t_mass;
@@ -55,11 +56,12 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_drawPath;
 	public JCheckBox cb_static;
 	public JCheckBox cb_forceRadius;
+	public JTextField t_pathSize;
+
 	//
 
 	@SuppressWarnings(
 	{ "unchecked", "rawtypes" })
-	
 	public MainFrame()
 	{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/32x32.png")));
@@ -173,16 +175,16 @@ public class MainFrame extends JFrame implements Runnable
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				if(SwingUtilities.isLeftMouseButton(arg0))
+				if (SwingUtilities.isLeftMouseButton(arg0))
 				{
 					GUIEvents.addObject(arg0.getX(), arg0.getY());
 				}
-				
-				if(SwingUtilities.isRightMouseButton(arg0))
+
+				if (SwingUtilities.isRightMouseButton(arg0))
 				{
 					GUIEvents.editObject(arg0.getX(), arg0.getY());
 				}
-				
+
 			}
 		});
 
@@ -287,18 +289,21 @@ public class MainFrame extends JFrame implements Runnable
 		cb_drawPath = new JCheckBox("Draw Path");
 		cb_drawPath.setSelected(true);
 		cb_drawPath.setBackground(Color.WHITE);
-		cb_drawPath.setBounds(10, 299, 97, 23);
+		cb_drawPath.setBounds(10, 299, 107, 23);
 		controlPanel.add(cb_drawPath);
-		
+
 		cb_static = new JCheckBox("Static");
 		cb_static.setBackground(Color.WHITE);
 		cb_static.setBounds(10, 456, 178, 23);
 		controlPanel.add(cb_static);
-		
+
 		cb_forceRadius = new JCheckBox("Force Radius");
 		cb_forceRadius.setBackground(Color.WHITE);
-		cb_forceRadius.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
+		cb_forceRadius.addItemListener(new ItemListener()
+		{
+
+			public void itemStateChanged(ItemEvent arg0)
+			{
 				GUIEvents.forceRadius(cb_forceRadius.isSelected());
 
 			}
@@ -306,15 +311,22 @@ public class MainFrame extends JFrame implements Runnable
 
 		cb_forceRadius.setBounds(10, 273, 178, 23);
 		controlPanel.add(cb_forceRadius);
+		
+		t_pathSize = new JTextField();
+
+		t_pathSize.setText("300");
+		t_pathSize.setBounds(123, 300, 65, 20);
+		controlPanel.add(t_pathSize);
+		t_pathSize.setColumns(10);
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
-		l_Time.setBounds(10 - (renderPanel.getWidth()/2), 11 - (renderPanel.getHeight()/2), 130 ,14);
+		l_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), 130, 14);
 		renderPanel.add(l_Time);
 
 		l_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
 		l_Objects.setForeground(Color.WHITE);
-		l_Objects.setBounds(10 - (renderPanel.getWidth()/2), 27 - (renderPanel.getHeight()/2),  102 ,14);
+		l_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), 102, 14);
 		renderPanel.add(l_Objects);
 
 		// JFrame:
@@ -323,69 +335,84 @@ public class MainFrame extends JFrame implements Runnable
 		setTitle("x0 Gravity Simulator v" + Vars.version);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 720);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-		
+
 		JMenuItem mntmLoadConfiguration = new JMenuItem("Load Configuration");
-		mntmLoadConfiguration.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
+		mntmLoadConfiguration.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent arg0)
+			{
+
 				GUIEvents.loadConf();
 			}
 		});
 		mnFile.add(mntmLoadConfiguration);
-		
+
 		JMenuItem mntmSaveConfiguration = new JMenuItem("Save Configuration");
-		mntmSaveConfiguration.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
+		mntmSaveConfiguration.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+
 				GUIEvents.saveConf();
-				
-			}
-		});
-		mnFile.add(mntmSaveConfiguration);
-		
-		JMenuItem mntmCloseSimulator = new JMenuItem("Close Simulator");
-		mntmCloseSimulator.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				System.exit(0);
-			}
-		});
-		
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			JOptionPane.showMessageDialog(null, "x0 Gravity Simulator version " + Vars.version + "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
 
 			}
 		});
-		
+		mnFile.add(mntmSaveConfiguration);
+
+		JMenuItem mntmCloseSimulator = new JMenuItem("Close Simulator");
+		mntmCloseSimulator.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+
+				System.exit(0);
+			}
+		});
+
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent arg0)
+			{
+
+				JOptionPane.showMessageDialog(null, "x0 Gravity Simulator version " + Vars.version + "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
+
+			}
+		});
+
 		JMenuItem mntmReloadLastFile = new JMenuItem("Reload Configuration");
-		mntmReloadLastFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				if(Vars.lastFile == null)
+		mntmReloadLastFile.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent arg0)
+			{
+
+				if (Vars.lastFile == null)
 				{
 					GUIEvents.loadConf();
-				}else
+				} else
 				{
 					GUIEvents.reloadConfig();
 				}
-				
+
 			}
 		});
 		mnFile.add(mntmReloadLastFile);
-		
+
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 		mnFile.add(mntmAbout);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		mnFile.add(separator_1);
 		mnFile.add(mntmCloseSimulator);

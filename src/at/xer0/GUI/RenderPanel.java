@@ -22,16 +22,15 @@ public class RenderPanel extends JPanel
 		setBounds(218, 11, 666, 649);
 		setIgnoreRepaint(true);
 
-
 	}
 
 	public void paintComponent(Graphics g)
 	{
 
 		Graphics2D gn = (Graphics2D) g;
-		
+
 		super.paintComponent(gn);
-		
+
 		Render.renderFrame(gn);
 
 	}

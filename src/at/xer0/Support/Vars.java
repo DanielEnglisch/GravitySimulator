@@ -25,11 +25,11 @@ public class Vars
 	public static boolean isTimeReversed = false;
 	public static boolean nextStep = false;
 	public static boolean isResetRequested = false;
-	
+
 	public static boolean customObjects = false;
 
 	public static File lastFile = null;
-	
+
 	// Steps to do in SingleStepMode (by default 1)
 	public static int steps = 1;
 
@@ -44,12 +44,10 @@ public class Vars
 	// Current timestep
 	public static double timeStep = 0.00001;
 
-
 	public static Vec2D currentVelocityPreset = new Vec2D(Double.parseDouble(defxVelocityPreset), Double.parseDouble(defyVelocityPreset));
 	public static double currentMassPreset = Double.parseDouble(defMassPreset);
 	public static Color currentColorPreset = defColorPreset;
 
-	public static double G =6.67384 * Math.pow(10, -24);
-	
+	public static double G = 6.67384 * Math.pow(10, -24);
 
 }

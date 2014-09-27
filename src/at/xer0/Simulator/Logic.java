@@ -1,3 +1,4 @@
+
 package at.xer0.Simulator;
 
 import at.xer0.Support.Obj;
@@ -5,18 +6,18 @@ import at.xer0.Support.Point;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
 
-
 public class Logic
 {
+
 	public static void tick()
 	{
 
-		//checkCollision();
+		// checkCollision();
 		simpleAlgorithm();
 		handlePath();
 
 	}
-	
+
 	public static void simpleAlgorithm()
 	{
 		double deltaT;
@@ -32,7 +33,6 @@ public class Logic
 			// Sonnst positiv
 			deltaT = Vars.timeStep;
 		}
-		
 
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
@@ -42,7 +42,7 @@ public class Logic
 			{
 				if (o1 != o2)
 				{
-					if(!o1.isStatic)
+					if (!o1.isStatic)
 					{
 						double deltaX = o1.getDeltaXY(o2).getX();
 						double deltaY = o1.getDeltaXY(o2).getY();
@@ -58,9 +58,6 @@ public class Logic
 				}
 			}
 		}
-				
-		
-		
 
 		// #2:Geschwindigkeit-Schleife:
 		for (Obj o : Vars.activeObjects)
@@ -83,26 +80,34 @@ public class Logic
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
 	}
-	
+
 	private static void handlePath()
 	{
-		
-		for(Obj o1 : Vars.activeObjects)
+
+		for (Obj o1 : Vars.activeObjects)
 		{
 			// Path:
 			if (Vars.mainFrame.cb_drawPath.isSelected())
 			{
-				Point p = new Point( (int) o1.getPosition().getX(), (int) o1.getPosition().getY());
+				Point p = new Point((int) o1.getPosition().getX(), (int) o1.getPosition().getY());
 
-				if(o1.points.size() >= 200)
+				int pathSize = 300;
+				
+				try
+				{
+					pathSize = Integer.parseInt(Vars.mainFrame.t_pathSize.getText());
+				}
+				catch(Exception ex)
+				{
+					
+				}
+				
+				if (o1.points.size() >= pathSize)
 				{
 					o1.points.remove(0);
 				}
-				
-			if (p.getX() > -(Vars.mainFrame.renderPanel.getWidth()/2) - 200 &&
-					p.getX() < (Vars.mainFrame.renderPanel.getWidth()/2) + 200 &&
-					p.getY() > -(Vars.mainFrame.renderPanel.getHeight()/2) - 200 &&
-					p.getY() < (Vars.mainFrame.renderPanel.getHeight()/2) + 200)
+
+				if (p.getX() > -(Vars.mainFrame.renderPanel.getWidth() / 2) - 200 && p.getX() < (Vars.mainFrame.renderPanel.getWidth() / 2) + 200 && p.getY() > -(Vars.mainFrame.renderPanel.getHeight() / 2) - 200 && p.getY() < (Vars.mainFrame.renderPanel.getHeight() / 2) + 200)
 				{
 					boolean add = true;
 
@@ -127,32 +132,29 @@ public class Logic
 			{
 				o1.clearPoints();
 			}
-			
+
 		}
-		
-		
+
 	}
-	
+
 	public static void checkCollision()
 	{
-		for(Obj o1 : Vars.activeObjects)
+		for (Obj o1 : Vars.activeObjects)
 		{
-			for(Obj o2 : Vars.activeObjects)
+			for (Obj o2 : Vars.activeObjects)
 			{
-				if(o1 != o2)
+				if (o1 != o2)
 				{
-					int distance = (int)o1.getDistanceTo(o2);
-					
+					int distance = (int) o1.getDistanceTo(o2);
+
 					System.out.println(distance + " - " + o1.getRadius());
-					
-					
-					if(o1.getRadius() + o2.getRadius() > distance)
+
+					if (o1.getRadius() + o2.getRadius() > distance)
 					{
-						if(o1.getRadius() <= o2.getRadius())
+						if (o1.getRadius() <= o2.getRadius())
 						{
 							Vars.objectToDelete.add(o1);
-						}
-						else
+						} else
 						{
 							Vars.objectToDelete.add(o2);
 						}

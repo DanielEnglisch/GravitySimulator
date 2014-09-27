@@ -1,3 +1,4 @@
+
 package at.xer0.Simulator;
 
 import java.awt.Graphics2D;
@@ -10,29 +11,25 @@ import at.xer0.Support.Obj;
 import at.xer0.Support.Point;
 import at.xer0.Support.Vars;
 
-
 public class Render
 {
+
 	public static void renderFrame(Graphics2D g)
 	{
-		
+
 		Collections.shuffle(Vars.activeObjects, new Random());
 
-		
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		//Render Origin at Center of screen:
-		g.translate(Vars.mainFrame.renderPanel.getWidth()/2, Vars.mainFrame.renderPanel.getHeight()/2);
-		
-	
+		// Render Origin at Center of screen:
+		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2, Vars.mainFrame.renderPanel.getHeight() / 2);
+
 		renderPath(g);
-		
+
 		for (Obj obj : Vars.activeObjects)
 		{
-			
-			
-			
+
 			g.setColor(obj.getColor());
 
 			int x = (int) obj.getPosition().getX();
@@ -47,39 +44,36 @@ public class Render
 			g.fill(new Ellipse2D.Double(r_x, r_y, radius, radius));
 			//
 
-			
-		
 		}
-		
+
 	}
-	
+
 	private static void renderPath(Graphics2D g)
 	{
-		
+
 		for (Obj obj : Vars.activeObjects)
 		{
-			
-		
-					if (Vars.mainFrame.cb_drawPath.isSelected())
+
+			if (Vars.mainFrame.cb_drawPath.isSelected())
+			{
+				g.setColor(obj.getColor());
+
+				for (int i = 0; i < obj.points.size(); i++)
+				{
+					try
 					{
-						g.setColor(obj.getColor());
+						Point p1 = obj.points.get(i);
+						Point p2 = obj.points.get(i + 1);
 
-						for (int i = 0; i < obj.points.size(); i++)
-						{
-							try
-							{
-								Point p1 = obj.points.get(i);
-								Point p2 = obj.points.get(i + 1);
+						g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 
-								g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-
-							} catch (Exception exx)
-							{
-							}
-
-						}
+					} catch (Exception exx)
+					{
 					}
-					
+
+				}
+			}
+
 		}
 	}
 
