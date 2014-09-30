@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -31,8 +33,6 @@ import javax.swing.event.ChangeListener;
 import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -81,34 +81,34 @@ public class MainFrame extends JFrame implements Runnable
 
 		JLabel l_newObject = new JLabel("Object Presets:");
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
-		l_newObject.setBounds(10, 357, 178, 14);
+		l_newObject.setBounds(10, 425, 178, 14);
 
 		t_mass = new JTextField();
 		t_mass.setText(Vars.defMassPreset);
-		t_mass.setBounds(85, 379, 103, 20);
+		t_mass.setBounds(85, 447, 103, 20);
 		t_mass.setColumns(10);
 
 		t_xVelocity = new JTextField();
 		t_xVelocity.setText(Vars.defxVelocityPreset);
-		t_xVelocity.setBounds(85, 404, 103, 20);
+		t_xVelocity.setBounds(85, 472, 103, 20);
 
 		t_yVelocity = new JTextField();
 		t_yVelocity.setText(Vars.defyVelocityPreset);
-		t_yVelocity.setBounds(85, 429, 103, 20);
+		t_yVelocity.setBounds(85, 497, 103, 20);
 		t_yVelocity.setColumns(10);
 
 		JLabel l_mass = new JLabel("Mass:");
-		l_mass.setBounds(10, 382, 65, 14);
+		l_mass.setBounds(10, 450, 65, 14);
 
 		JLabel l_xVelocity = new JLabel("x Velocity:");
-		l_xVelocity.setBounds(10, 407, 65, 14);
+		l_xVelocity.setBounds(10, 475, 65, 14);
 
 		JLabel l_yVelocity = new JLabel("y Velocity:");
-		l_yVelocity.setBounds(10, 432, 65, 14);
+		l_yVelocity.setBounds(10, 500, 65, 14);
 
 		final JComboBox<?> comboBox = new JComboBox<>();
 		comboBox.setModel(new DefaultComboBoxModel(ColorEnum.values()));
-		comboBox.setBounds(10, 511, 178, 20);
+		comboBox.setBounds(10, 583, 178, 20);
 
 		JButton b_ApplyObject = new JButton("Apply Preset");
 		b_ApplyObject.addActionListener(new ActionListener()
@@ -138,7 +138,7 @@ public class MainFrame extends JFrame implements Runnable
 				System.out.println("Preset set!");
 			}
 		});
-		b_ApplyObject.setBounds(10, 542, 178, 23);
+		b_ApplyObject.setBounds(10, 614, 178, 23);
 
 		JLabel lblTimestep = new JLabel("Timestep:");
 		lblTimestep.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -240,7 +240,7 @@ public class MainFrame extends JFrame implements Runnable
 		masterPanel.add(renderPanel);
 
 		JLabel lblColor = new JLabel("Color:");
-		lblColor.setBounds(10, 486, 46, 14);
+		lblColor.setBounds(10, 558, 46, 14);
 		controlPanel.add(lblColor);
 
 		b_nextStep = new JButton(">");
@@ -294,10 +294,11 @@ public class MainFrame extends JFrame implements Runnable
 
 		cb_static = new JCheckBox("Static");
 		cb_static.setBackground(Color.WHITE);
-		cb_static.setBounds(10, 456, 178, 23);
+		cb_static.setBounds(10, 524, 178, 23);
 		controlPanel.add(cb_static);
 
 		cb_forceRadius = new JCheckBox("Force Radius");
+		cb_forceRadius.setSelected(false);
 		cb_forceRadius.setBackground(Color.WHITE);
 		cb_forceRadius.addItemListener(new ItemListener()
 		{
@@ -305,7 +306,7 @@ public class MainFrame extends JFrame implements Runnable
 			public void itemStateChanged(ItemEvent arg0)
 			{
 				GUIEvents.forceRadius(cb_forceRadius.isSelected());
-
+				System.out.println("ForceRadius: " + cb_forceRadius.isSelected());
 			}
 		});
 
@@ -318,6 +319,31 @@ public class MainFrame extends JFrame implements Runnable
 		t_pathSize.setBounds(123, 300, 65, 20);
 		controlPanel.add(t_pathSize);
 		t_pathSize.setColumns(10);
+		
+		final JLabel l_massstab = new JLabel("Mas\u00DFstab: ");
+		l_massstab.setBounds(10, 383, 178, 14);
+		controlPanel.add(l_massstab);
+		
+		final JSlider slider_1 = new JSlider();
+		slider_1.setMinimum(1);
+		slider_1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				
+				double d = slider_1.getValue();
+				Vars.scaleFactor = (double)(1/d);
+				
+		
+				
+				l_massstab.setText("Mas\u00DFstab= 1:" + (int)(1/Vars.scaleFactor) );
+			}
+		});
+		slider_1.setMaximum(1000);
+		slider_1.setMinorTickSpacing(1);
+		slider_1.setValue(1);
+		slider_1.setBounds(10, 346, 178, 26);
+		controlPanel.add(slider_1);
+		
+		
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
@@ -424,5 +450,4 @@ public class MainFrame extends JFrame implements Runnable
 	{
 		setVisible(true);
 	}
-
 }

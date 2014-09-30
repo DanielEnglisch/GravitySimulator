@@ -4,6 +4,12 @@ package at.xer0.Support;
 public class Point
 {
 
+	@Override
+	public String toString()
+	{
+		return "Point [x=" + x + ", y=" + y + "]";
+	}
+
 	private int x,
 			y;
 

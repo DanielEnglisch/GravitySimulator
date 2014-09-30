@@ -13,19 +13,18 @@ public class Vars
 	// Standart Werte
 	public static String defxVelocityPreset = "0";
 	public static String defyVelocityPreset = "0";
-	public static String defMassPreset = "5E24";
+	public static String defMassPreset = "6E24";
 	public static Color defColorPreset = ColorEnum.randomColor();
 	//
 
 	public static MainFrame mainFrame = null;
-
 	public static String version = "0.91a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;
 	public static boolean nextStep = false;
 	public static boolean isResetRequested = false;
-
+	public static boolean isRenderPaused = false;
 	public static boolean customObjects = false;
 
 	public static File lastFile = null;
@@ -43,11 +42,15 @@ public class Vars
 
 	// Current timestep
 	public static double timeStep = 0.00001;
-
+ 
 	public static Vec2D currentVelocityPreset = new Vec2D(Double.parseDouble(defxVelocityPreset), Double.parseDouble(defyVelocityPreset));
 	public static double currentMassPreset = Double.parseDouble(defMassPreset);
 	public static Color currentColorPreset = defColorPreset;
 
-	public static double G = 6.67384 * Math.pow(10, -24);
+	public static double G = 6.67384 * Math.pow(10, -11);
+	
+	public static double scaleFactor = 1;
+	public static boolean forceRadius = false;
 
+	
 }

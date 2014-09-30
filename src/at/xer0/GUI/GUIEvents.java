@@ -20,6 +20,7 @@ public class GUIEvents
 
 	public static void startStop()
 	{
+		
 		Vars.isActive = !Vars.isActive;
 
 		if (Vars.isActive)
@@ -45,9 +46,10 @@ public class GUIEvents
 		x -= (Vars.mainFrame.renderPanel.getWidth() / 2);
 		y -= (Vars.mainFrame.renderPanel.getHeight() / 2);
 
+		
 		Obj o = null;
 
-		o = new Obj(new Vec2D(x, y), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset, Vars.mainFrame.cb_static.isSelected());
+		o = new Obj(new Vec2D(x / Vars.scaleFactor, y / Vars.scaleFactor), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset, Vars.mainFrame.cb_static.isSelected());
 
 		Vars.bufferedObjects.add(o);
 
@@ -230,19 +232,7 @@ public class GUIEvents
 
 	public static void forceRadius(boolean force)
 	{
-		if (force)
-		{
-			for (Obj o : Vars.activeObjects)
-			{
-				o.setRadius(30);
-			}
-		} else
-		{
-			for (Obj o : Vars.activeObjects)
-			{
-				o.setRadius((int) (o.getMass() * Vars.G));
-			}
-		}
+		Vars.forceRadius = force;
 	}
 
 	public static void updateTimestep(int timestepfactor)

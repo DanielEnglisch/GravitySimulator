@@ -15,18 +15,6 @@ public class Obj
 
 	public boolean isStatic = false;
 
-	// Render:
-	private int radius = 0;
-
-	public int getRadius()
-	{
-		return radius;
-	}
-
-	public void setRadius(int radius)
-	{
-		this.radius = radius;
-	}
 
 	public ArrayList<Point> points = new ArrayList<Point>();
 
@@ -49,13 +37,7 @@ public class Obj
 		this.mass = mass;
 		this.color = c;
 
-		if (Vars.mainFrame.cb_forceRadius.isSelected())
-		{
-			this.radius = 30;
-		} else
-		{
-			this.radius = (int) (mass * Vars.G);
-		}
+
 		this.isStatic = isStat;
 
 		if (isStat)
@@ -69,20 +51,14 @@ public class Obj
 	{
 		this.mass = mass;
 
-		if (Vars.mainFrame.cb_forceRadius.isSelected())
-		{
-			this.radius = 30;
-		} else
-		{
-			this.radius = (int) (mass * Vars.G);
-		}
+		
 
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass + ", isStatic=" + isStatic + ", radius=" + radius + "]";
+		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass + ", isStatic=" + isStatic + "]";
 	}
 
 	public Vec2D getPosition()

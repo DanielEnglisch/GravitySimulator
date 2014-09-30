@@ -16,30 +16,33 @@ public class Render
 
 	public static void renderFrame(Graphics2D g)
 	{
-
 		Collections.shuffle(Vars.activeObjects, new Random());
 
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		// Render Origin at Center of screen:
+		//Render Origin at Center of screen:
 		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2, Vars.mainFrame.renderPanel.getHeight() / 2);
-
+		
 		renderPath(g);
 
 		for (Obj obj : Vars.activeObjects)
 		{
-
 			g.setColor(obj.getColor());
 
-			int x = (int) obj.getPosition().getX();
-			int y = (int) obj.getPosition().getY();
-
-			int radius = obj.getRadius();
+			int x = (int) (obj.getPosition().getX() * Vars.scaleFactor);
+			int y = (int) (obj.getPosition().getY() * Vars.scaleFactor);
+			
+			int radius = (int) (obj.getMass() * (Vars.scaleFactor/Math.pow(10, 23)));
+			
+			if(Vars.forceRadius)
+			{
+				radius = 40;
+			}
 
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
-
+			
 			// Render Object:
 			g.fill(new Ellipse2D.Double(r_x, r_y, radius, radius));
 			//
@@ -65,7 +68,7 @@ public class Render
 						Point p1 = obj.points.get(i);
 						Point p2 = obj.points.get(i + 1);
 
-						g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+						g.drawLine((int)(p1.getX()), (int)(p1.getY()), (int)(p2.getX()), (int)(p2.getY()));
 
 					} catch (Exception exx)
 					{

@@ -9,10 +9,12 @@ import at.xer0.Support.Vec2D;
 public class Logic
 {
 
+	private static double previousScaleFactor = 1;
+	
 	public static void tick()
 	{
 
-		// checkCollision();
+		checkCollision();
 		simpleAlgorithm();
 		handlePath();
 
@@ -34,45 +36,49 @@ public class Logic
 			deltaT = Vars.timeStep;
 		}
 
+		double ax = 0;
+		double ay = 0;
+
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
 		{
-
 			for (Obj o2 : Vars.activeObjects)
 			{
 				if (o1 != o2)
 				{
+
 					if (!o1.isStatic)
 					{
 						double deltaX = o1.getDeltaXY(o2).getX();
 						double deltaY = o1.getDeltaXY(o2).getY();
 						double r = o1.getDistanceTo(o2);
 
-						o1.setAcceleration(new Vec2D(
-
-						(G * o2.getMass() * (deltaX / r)), (G * o2.getMass() * (deltaY / r))
-
-						));
+						ax += (G * o2.getMass() * deltaX )/ Math.pow(r, 3);
+						ay += (G * o2.getMass() * deltaY )/ Math.pow(r, 3);
 					}
 
 				}
 			}
+
+			o1.setAcceleration(new Vec2D(ax, ay));
+
 		}
 
 		// #2:Geschwindigkeit-Schleife:
 		for (Obj o : Vars.activeObjects)
 		{
-
-			o.setVelocity(new Vec2D(o.getVelocity().getX() + deltaT * o.getAcceleration().getX(), // X-Komponente
-			o.getVelocity().getY() + deltaT * o.getAcceleration().getY() // Y-Komponente
+			o.setVelocity(new Vec2D(
+					o.getVelocity().getX() + deltaT * o.getAcceleration().getX(),
+					o.getVelocity().getY() + deltaT * o.getAcceleration().getY()
 			));
 		}
 
 		// #3:Position-Schleife:
 		for (Obj o : Vars.activeObjects)
 		{
-			o.setPosition(new Vec2D(o.getPosition().getX() + deltaT * o.getVelocity().getX(), // X-Komponente
-			o.getPosition().getY() + deltaT * o.getVelocity().getY() // Y-Komponente
+			o.setPosition(new Vec2D(
+					o.getPosition().getX() + deltaT * o.getVelocity().getX(),
+					o.getPosition().getY() + deltaT * o.getVelocity().getY()
 			));
 
 		}
@@ -84,57 +90,74 @@ public class Logic
 	private static void handlePath()
 	{
 
+		if(Vars.scaleFactor != previousScaleFactor)
+		{
+			for (Obj o: Vars.activeObjects)
+			{
+				o.clearPoints();
+			}
+			
+			previousScaleFactor = Vars.scaleFactor;
+		}
+		
 		for (Obj o1 : Vars.activeObjects)
 		{
-			// Path:
 			if (Vars.mainFrame.cb_drawPath.isSelected())
 			{
-				Point p = new Point((int) o1.getPosition().getX(), (int) o1.getPosition().getY());
 
 				int pathSize = 300;
-				
+
 				try
 				{
 					pathSize = Integer.parseInt(Vars.mainFrame.t_pathSize.getText());
-				}
-				catch(Exception ex)
-				{
-					
-				}
-				
-				if (o1.points.size() >= pathSize)
-				{
-					o1.points.remove(0);
-				}
 
-				if (p.getX() > -(Vars.mainFrame.renderPanel.getWidth() / 2) - 200 && p.getX() < (Vars.mainFrame.renderPanel.getWidth() / 2) + 200 && p.getY() > -(Vars.mainFrame.renderPanel.getHeight() / 2) - 200 && p.getY() < (Vars.mainFrame.renderPanel.getHeight() / 2) + 200)
-				{
-					boolean add = true;
-
-					for (Point pp : o1.points)
+					if (pathSize < 0)
 					{
-						if (pp.isIdenticalTo(p))
-						{
-							add = false;
-						}
+						pathSize = 0;
 					}
+				} catch (Exception ex)
+				{
 
-					if (add)
-					{
-						o1.addPoint(p);
-					}
-				} else
+				}
+
+				if (pathSize == 0)
 				{
 					o1.clearPoints();
+					return;
 				}
 
-			} else
-			{
-				o1.clearPoints();
+				if (o1.points.size() > pathSize)
+				{
+					if (o1.points.size() != 0)
+					{
+						for (int i = 0; i < (o1.points.size() - pathSize); i++)
+						{
+							o1.points.remove(i);
+						}
+
+					}
+
+				}
+
+				Point p = new Point((int) (o1.getPosition().getX() * Vars.scaleFactor), (int) (o1.getPosition().getY() * Vars.scaleFactor));
+
+				boolean add = true;
+
+				for (Point pp : o1.points)
+				{
+					if (pp.isIdenticalTo(p))
+					{
+						add = false;
+					}
+				}
+
+				if (add)
+				{
+					o1.addPoint(p);
+				}
+
 			}
-
 		}
-
 	}
 
 	public static void checkCollision()
@@ -147,18 +170,12 @@ public class Logic
 				{
 					int distance = (int) o1.getDistanceTo(o2);
 
-					System.out.println(distance + " - " + o1.getRadius());
-
-					if (o1.getRadius() + o2.getRadius() > distance)
+					if (distance <= 10)
 					{
-						if (o1.getRadius() <= o2.getRadius())
-						{
-							Vars.objectToDelete.add(o1);
-						} else
-						{
-							Vars.objectToDelete.add(o2);
-						}
+						System.out.println("COLLISION");
+						Vars.isActive = false;
 					}
+
 				}
 			}
 		}
