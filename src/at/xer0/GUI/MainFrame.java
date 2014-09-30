@@ -198,8 +198,8 @@ public class MainFrame extends JFrame implements Runnable
 		{
 
 			@Override
-			public void mouseClicked(MouseEvent arg0)
-			{
+			public void mousePressed(MouseEvent arg0) {
+				
 				if (SwingUtilities.isLeftMouseButton(arg0))
 				{
 					GUIEvents.addObject(arg0.getX(), arg0.getY());
@@ -209,7 +209,6 @@ public class MainFrame extends JFrame implements Runnable
 				{
 					GUIEvents.editObject(arg0.getX(), arg0.getY());
 				}
-
 			}
 		});
 
