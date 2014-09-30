@@ -33,8 +33,8 @@ public class Render
 			int x = (int) (obj.getPosition().getX() * Vars.scaleFactor);
 			int y = (int) (obj.getPosition().getY() * Vars.scaleFactor);
 			
-			int radius = (int) (obj.getMass() * (Vars.scaleFactor/Math.pow(10, 23)));
-			
+			int radius = (int) (obj.getMass() * (Vars.scaleFactor/Double.parseDouble("1E23")));
+						
 			if(Vars.forceRadius)
 			{
 				radius = 40;

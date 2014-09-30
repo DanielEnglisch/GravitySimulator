@@ -33,6 +33,8 @@ import javax.swing.event.ChangeListener;
 import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -57,6 +59,9 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_static;
 	public JCheckBox cb_forceRadius;
 	public JTextField t_pathSize;
+
+	
+	private static int lastMouseWheelState = 1;
 
 	//
 
@@ -165,8 +170,28 @@ public class MainFrame extends JFrame implements Runnable
 				Vars.isResetRequested = true;
 			}
 		});
-
+		
+		final JLabel l_massstab = new JLabel("Ma\u00DFstab = 1:1");
+		l_massstab.setBounds(10, 329, 178, 14);
+		
 		renderPanel = new RenderPanel();
+		renderPanel.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent arg0) {
+				
+				lastMouseWheelState += arg0.getUnitsToScroll();
+				
+				if(lastMouseWheelState < 1)
+				{
+					lastMouseWheelState = 1;
+				}
+				
+				double d = lastMouseWheelState;
+				Vars.scaleFactor = (double)(1/d);
+				
+				l_massstab.setText("Maßstab = 1:" + (int) (1/Vars.scaleFactor));
+				
+			}
+		});
 		renderPanel.setBounds(218, 11, 846, 648);
 		renderPanel.setIgnoreRepaint(true);
 		renderPanel.addMouseListener(new MouseAdapter()
@@ -192,6 +217,8 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.setBackground(Color.WHITE);
 		controlPanel.setBounds(10, 11, 198, 648);
 		controlPanel.setLayout(null);
+
+		controlPanel.add(l_massstab);
 
 		l_timestep.setBounds(85, 125, 103, 14);
 		controlPanel.add(l_timestep);
@@ -319,29 +346,6 @@ public class MainFrame extends JFrame implements Runnable
 		t_pathSize.setBounds(123, 300, 65, 20);
 		controlPanel.add(t_pathSize);
 		t_pathSize.setColumns(10);
-		
-		final JLabel l_massstab = new JLabel("Mas\u00DFstab: ");
-		l_massstab.setBounds(10, 383, 178, 14);
-		controlPanel.add(l_massstab);
-		
-		final JSlider slider_1 = new JSlider();
-		slider_1.setMinimum(1);
-		slider_1.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				
-				double d = slider_1.getValue();
-				Vars.scaleFactor = (double)(1/d);
-				
-		
-				
-				l_massstab.setText("Mas\u00DFstab= 1:" + (int)(1/Vars.scaleFactor) );
-			}
-		});
-		slider_1.setMaximum(1000);
-		slider_1.setMinorTickSpacing(1);
-		slider_1.setValue(1);
-		slider_1.setBounds(10, 346, 178, 26);
-		controlPanel.add(slider_1);
 		
 		
 

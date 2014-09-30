@@ -173,7 +173,8 @@ public class Logic
 					if (distance <= 10)
 					{
 						System.out.println("COLLISION");
-						Vars.isActive = false;
+						
+						
 					}
 
 				}
