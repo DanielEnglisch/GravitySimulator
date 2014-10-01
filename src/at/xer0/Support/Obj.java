@@ -12,7 +12,7 @@ public class Obj
 			acceleration = new Vec2D(0, 0);
 	private double mass;
 	private Color color;
-
+public int id = 0;
 	public boolean isStatic = false;
 
 
@@ -31,6 +31,9 @@ public class Obj
 	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c, boolean isStat)
 	{
 		super();
+		
+		id = Vars.ObjectID;
+		Vars.ObjectID++;
 
 		this.position = iPos;
 		this.velocity = iVel;

@@ -4,8 +4,6 @@ package at.xer0.Simulator;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import java.util.Collections;
-import java.util.Random;
 
 import at.xer0.Support.Obj;
 import at.xer0.Support.Point;
@@ -16,8 +14,6 @@ public class Render
 
 	public static void renderFrame(Graphics2D g)
 	{
-		Collections.shuffle(Vars.activeObjects, new Random());
-
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
@@ -75,6 +71,9 @@ public class Render
 					}
 
 				}
+			}else
+			{
+				obj.clearPoints();
 			}
 
 		}

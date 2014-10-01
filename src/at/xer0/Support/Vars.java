@@ -26,6 +26,8 @@ public class Vars
 	public static boolean isResetRequested = false;
 	public static boolean isRenderPaused = false;
 	public static boolean customObjects = false;
+	
+	public static int ObjectID = 0;
 
 	public static File lastFile = null;
 

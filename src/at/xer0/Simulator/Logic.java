@@ -36,17 +36,20 @@ public class Logic
 			deltaT = Vars.timeStep;
 		}
 
-		double ax = 0;
-		double ay = 0;
-
+		
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
 		{
+			
+			double ax = 0;
+			double ay = 0;
+
+			
 			for (Obj o2 : Vars.activeObjects)
 			{
 				if (o1 != o2)
 				{
-
+					
 					if (!o1.isStatic)
 					{
 						double deltaX = o1.getDeltaXY(o2).getX();
@@ -77,10 +80,10 @@ public class Logic
 		for (Obj o : Vars.activeObjects)
 		{
 			o.setPosition(new Vec2D(
-					o.getPosition().getX() + deltaT * o.getVelocity().getX(),
-					o.getPosition().getY() + deltaT * o.getVelocity().getY()
+					o.getPosition().getX() + (deltaT * o.getVelocity().getX()) + ((1/2)*o.getAcceleration().getX() * Math.pow(deltaT,2)),
+					o.getPosition().getY() + (deltaT * o.getVelocity().getY()) + ((1/2)*o.getAcceleration().getY() * Math.pow(deltaT,2))
 			));
-
+			
 		}
 
 		// Nur für die Zeit Anzeige Relevant:
