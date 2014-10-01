@@ -124,6 +124,16 @@ public class Core
 		Vars.isTimeReversed = false;
 		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
+		
+		Vars.scaleFactor = 1;
+		Vars.scaleDeltaX = 0;
+		Vars.scaleDeltaY = 0;
+		
+		Vars.mainFrame.lastMouseWheelState = 1;
+		Vars.mainFrame.mouseClickPos = new Vec2D(0,0);
+		Vars.mainFrame.mouseReleasePos = new Vec2D(0,0);
+		
+		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1");
 
 		addCutomObjects();
 

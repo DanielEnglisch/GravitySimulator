@@ -26,6 +26,9 @@ public class Vars
 	public static boolean isResetRequested = false;
 	public static boolean isRenderPaused = false;
 	public static boolean customObjects = false;
+
+	public static boolean clearPoints = false;
+
 	
 	public static int ObjectID = 0;
 
@@ -52,6 +55,9 @@ public class Vars
 	public static double G = 6.67384 * Math.pow(10, -11);
 	
 	public static double scaleFactor = 1;
+	public static double scaleDeltaX = 0;
+	public static double scaleDeltaY = 0;
+
 	public static boolean forceRadius = false;
 
 	

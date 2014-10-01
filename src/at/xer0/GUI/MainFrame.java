@@ -10,6 +10,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -33,8 +35,6 @@ import javax.swing.event.ChangeListener;
 import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
-import java.awt.event.MouseWheelListener;
-import java.awt.event.MouseWheelEvent;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -59,9 +59,13 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_static;
 	public JCheckBox cb_forceRadius;
 	public JTextField t_pathSize;
+	public JLabel l_massstab;
 
 	
-	private static int lastMouseWheelState = 1;
+	public  int lastMouseWheelState = 1;
+	public  Vec2D mouseClickPos = new Vec2D(0,0);
+	public  Vec2D  mouseReleasePos = new Vec2D(0,0);
+
 
 	//
 
@@ -171,7 +175,7 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 		
-		final JLabel l_massstab = new JLabel("Ma\u00DFstab = 1:1");
+		l_massstab = new JLabel("Ma\u00DFstab = 1:1");
 		l_massstab.setBounds(10, 329, 178, 14);
 		
 		renderPanel = new RenderPanel();
@@ -190,6 +194,9 @@ public class MainFrame extends JFrame implements Runnable
 				
 				l_massstab.setText("Maﬂstab = 1:" + (int) (1/Vars.scaleFactor));
 				
+				//Clear Points:
+				Vars.clearPoints = true;
+				
 			}
 		});
 		renderPanel.setBounds(218, 11, 846, 648);
@@ -202,6 +209,13 @@ public class MainFrame extends JFrame implements Runnable
 				
 				if (SwingUtilities.isLeftMouseButton(arg0))
 				{
+					if(arg0.isControlDown())
+					{
+						mouseClickPos.setX(arg0.getX());
+						mouseClickPos.setY(arg0.getY());
+
+					}
+					else
 					GUIEvents.addObject(arg0.getX(), arg0.getY());
 				}
 
@@ -209,6 +223,29 @@ public class MainFrame extends JFrame implements Runnable
 				{
 					GUIEvents.editObject(arg0.getX(), arg0.getY());
 				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				
+				if(arg0.isControlDown())
+				{
+					
+					//Clear Points:
+					Vars.clearPoints = true;
+					
+					mouseReleasePos.setX(arg0.getX());
+					mouseReleasePos.setY(arg0.getY());
+					
+					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos.getX()) / Vars.scaleFactor);
+					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos.getY()) / Vars.scaleFactor);
+
+					Vars.scaleDeltaX += deltaX;
+					Vars.scaleDeltaY += deltaY;
+					
+					
+
+
+				}				
 			}
 		});
 

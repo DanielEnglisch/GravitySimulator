@@ -26,8 +26,8 @@ public class Render
 		{
 			g.setColor(obj.getColor());
 
-			int x = (int) (obj.getPosition().getX() * Vars.scaleFactor);
-			int y = (int) (obj.getPosition().getY() * Vars.scaleFactor);
+			int x = (int) ((obj.getPosition().getX() + Vars.scaleDeltaX) * Vars.scaleFactor);
+			int y = (int) ((obj.getPosition().getY() + Vars.scaleDeltaY) * Vars.scaleFactor);
 			
 			int radius = (int) (obj.getMass() * (Vars.scaleFactor/Double.parseDouble("1E23")));
 						
@@ -39,8 +39,8 @@ public class Render
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
 			
-			// Render Object:
-			g.fill(new Ellipse2D.Double(r_x, r_y, radius, radius));
+			//Render Object:
+			g.fill(new Ellipse2D.Double(r_x , r_y , radius, radius));
 			//
 
 		}

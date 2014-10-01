@@ -8,8 +8,6 @@ import at.xer0.Support.Vec2D;
 
 public class Logic
 {
-
-	private static double previousScaleFactor = 1;
 	
 	public static void tick()
 	{
@@ -93,21 +91,15 @@ public class Logic
 	private static void handlePath()
 	{
 
-		if(Vars.scaleFactor != previousScaleFactor)
-		{
-			for (Obj o: Vars.activeObjects)
-			{
-				o.clearPoints();
-			}
-			
-			previousScaleFactor = Vars.scaleFactor;
-		}
 		
 		for (Obj o1 : Vars.activeObjects)
 		{
 			if (Vars.mainFrame.cb_drawPath.isSelected())
 			{
 
+				
+
+				
 				int pathSize = 300;
 
 				try
@@ -142,7 +134,15 @@ public class Logic
 
 				}
 
+				//Zoom:
 				Point p = new Point((int) (o1.getPosition().getX() * Vars.scaleFactor), (int) (o1.getPosition().getY() * Vars.scaleFactor));
+				
+				//Verschiebung:
+
+				
+				p.setX((int) (p.getX() + Vars.scaleDeltaX * Vars.scaleFactor) );
+				p.setY((int) (p.getY() + Vars.scaleDeltaY * Vars.scaleFactor) );
+
 
 				boolean add = true;
 
@@ -159,8 +159,16 @@ public class Logic
 					o1.addPoint(p);
 				}
 
+				if(Vars.clearPoints)
+				{
+					o1.clearPoints();
+				}
 			}
+			
 		}
+		
+		Vars.clearPoints = false;
+
 	}
 
 	public static void checkCollision()

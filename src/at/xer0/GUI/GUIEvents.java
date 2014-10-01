@@ -43,13 +43,26 @@ public class GUIEvents
 
 	public static void addObject(int x, int y)
 	{
+		//Verschiebung:
+		x-= Vars.scaleDeltaX * Vars.scaleFactor;
+		y-= Vars.scaleDeltaY * Vars.scaleFactor;
+
+		//Origin:
 		x -= (Vars.mainFrame.renderPanel.getWidth() / 2);
 		y -= (Vars.mainFrame.renderPanel.getHeight() / 2);
 
-		
+
 		Obj o = null;
 
-		o = new Obj(new Vec2D(x / Vars.scaleFactor, y / Vars.scaleFactor), Vars.currentVelocityPreset, Vars.currentMassPreset, Vars.currentColorPreset, Vars.mainFrame.cb_static.isSelected());
+		o = new Obj(new Vec2D(
+					//Zoom:
+					(x / Vars.scaleFactor),
+					(y / Vars.scaleFactor)
+				),
+				Vars.currentVelocityPreset,
+				Vars.currentMassPreset,
+				Vars.currentColorPreset,
+				Vars.mainFrame.cb_static.isSelected());
 
 		Vars.bufferedObjects.add(o);
 
@@ -63,7 +76,7 @@ public class GUIEvents
 		if (Vars.isTimeReversed)
 		{
 			Vars.mainFrame.b_ReverseTime.setText("Normalize Time");
-			Vars.mainFrame.b_nextStep.setText("<");
+			Vars.mainFrame.b_nextStep.setText(">");
 			System.out.println("Reversed Time!");
 		} else
 		{
