@@ -13,7 +13,6 @@ public class Obj
 	private double mass;
 	private Color color;
 public int id = 0;
-	public boolean isStatic = false;
 
 
 	public ArrayList<Point> points = new ArrayList<Point>();
@@ -28,7 +27,7 @@ public int id = 0;
 	 * @param color
 	 *            Color of Object
 	 */
-	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c, boolean isStat)
+	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c)
 	{
 		super();
 		
@@ -39,14 +38,6 @@ public int id = 0;
 		this.velocity = iVel;
 		this.mass = mass;
 		this.color = c;
-
-
-		this.isStatic = isStat;
-
-		if (isStat)
-		{
-			this.velocity = new Vec2D(0, 0);
-		}
 
 	}
 
@@ -61,7 +52,7 @@ public int id = 0;
 	@Override
 	public String toString()
 	{
-		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass + ", isStatic=" + isStatic + "]";
+		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass  + "]";
 	}
 
 	public Vec2D getPosition()

@@ -18,7 +18,7 @@ public class Vars
 	//
 
 	public static MainFrame mainFrame = null;
-	public static String version = "0.92b";
+	public static String version = "0.94a";
 
 	public static boolean isActive = false;
 	public static boolean isTimeReversed = false;

@@ -56,7 +56,6 @@ public class MainFrame extends JFrame implements Runnable
 	public JButton b_nextStep;
 	public JTextField t_steps;
 	public JCheckBox cb_drawPath;
-	public JCheckBox cb_static;
 	public JCheckBox cb_forceRadius;
 	public JTextField t_pathSize;
 	public JLabel l_massstab;
@@ -182,7 +181,19 @@ public class MainFrame extends JFrame implements Runnable
 		renderPanel.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent arg0) {
 				
-				lastMouseWheelState += arg0.getUnitsToScroll();
+				
+				//Clear Points:
+				Vars.clearPoints = true;
+
+				
+				if(arg0.isShiftDown())
+				{
+					lastMouseWheelState += (arg0.getUnitsToScroll() * 1000000);
+				}
+				else
+				{
+					lastMouseWheelState += arg0.getUnitsToScroll();
+				}
 				
 				if(lastMouseWheelState < 1)
 				{
@@ -190,13 +201,13 @@ public class MainFrame extends JFrame implements Runnable
 				}
 				
 				double d = lastMouseWheelState;
+				
+			
 				Vars.scaleFactor = (double)(1/d);
 				
 				l_massstab.setText("Maßstab = 1:" + (int) (1/Vars.scaleFactor));
 				
-				//Clear Points:
-				Vars.clearPoints = true;
-				
+		
 			}
 		});
 		renderPanel.setBounds(218, 11, 846, 648);
@@ -233,14 +244,18 @@ public class MainFrame extends JFrame implements Runnable
 					//Clear Points:
 					Vars.clearPoints = true;
 					
+
+					
 					mouseReleasePos.setX(arg0.getX());
 					mouseReleasePos.setY(arg0.getY());
 					
-					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos.getX()) / Vars.scaleFactor);
-					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos.getY()) / Vars.scaleFactor);
+					double fac = (int)(1/ Vars.scaleFactor);
+					
+					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos.getX()));
+					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos.getY()));
 
-					Vars.scaleDeltaX += deltaX;
-					Vars.scaleDeltaY += deltaY;
+					Vars.scaleDeltaX += deltaX * fac;
+					Vars.scaleDeltaY += deltaY * fac;
 					
 					
 
@@ -354,11 +369,6 @@ public class MainFrame extends JFrame implements Runnable
 		cb_drawPath.setBackground(Color.WHITE);
 		cb_drawPath.setBounds(10, 299, 107, 23);
 		controlPanel.add(cb_drawPath);
-
-		cb_static = new JCheckBox("Static");
-		cb_static.setBackground(Color.WHITE);
-		cb_static.setBounds(10, 524, 178, 23);
-		controlPanel.add(cb_static);
 
 		cb_forceRadius = new JCheckBox("Force Radius");
 		cb_forceRadius.setSelected(false);

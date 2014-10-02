@@ -48,16 +48,12 @@ public class Logic
 				if (o1 != o2)
 				{
 					
-					if (!o1.isStatic)
-					{
 						double deltaX = o1.getDeltaXY(o2).getX();
 						double deltaY = o1.getDeltaXY(o2).getY();
 						double r = o1.getDistanceTo(o2);
 
 						ax += (G * o2.getMass() * deltaX )/ Math.pow(r, 3);
 						ay += (G * o2.getMass() * deltaY )/ Math.pow(r, 3);
-					}
-
 				}
 			}
 
@@ -91,6 +87,17 @@ public class Logic
 	private static void handlePath()
 	{
 
+
+		if(Vars.clearPoints)
+		{
+			for (Obj o1 : Vars.activeObjects)
+			{
+				o1.clearPoints();
+			}
+			
+			Vars.clearPoints = false;
+
+		}
 		
 		for (Obj o1 : Vars.activeObjects)
 		{
@@ -159,16 +166,11 @@ public class Logic
 					o1.addPoint(p);
 				}
 
-				if(Vars.clearPoints)
-				{
-					o1.clearPoints();
-				}
+				
 			}
 			
 		}
 		
-		Vars.clearPoints = false;
-
 	}
 
 	public static void checkCollision()
