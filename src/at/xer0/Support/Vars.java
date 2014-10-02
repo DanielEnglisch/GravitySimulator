@@ -47,7 +47,8 @@ public class Vars
 
 	// Current timestep
 	public static double timeStep = 0.00001;
- 
+
+	
 	public static Vec2D currentVelocityPreset = new Vec2D(Double.parseDouble(defxVelocityPreset), Double.parseDouble(defyVelocityPreset));
 	public static double currentMassPreset = Double.parseDouble(defMassPreset);
 	public static Color currentColorPreset = defColorPreset;

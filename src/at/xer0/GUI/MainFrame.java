@@ -33,6 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import at.xer0.Support.ColorEnum;
+import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
 
@@ -185,6 +186,13 @@ public class MainFrame extends JFrame implements Runnable
 				//Clear Points:
 				Vars.clearPoints = true;
 
+				if(!Vars.isActive)
+				{
+					for(Obj o : Vars.activeObjects)
+					{
+						o.clearPoints();
+					}
+				}
 				
 				if(arg0.isShiftDown())
 				{
@@ -230,10 +238,7 @@ public class MainFrame extends JFrame implements Runnable
 					GUIEvents.addObject(arg0.getX(), arg0.getY());
 				}
 
-				if (SwingUtilities.isRightMouseButton(arg0))
-				{
-					GUIEvents.editObject(arg0.getX(), arg0.getY());
-				}
+
 			}
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -244,6 +249,13 @@ public class MainFrame extends JFrame implements Runnable
 					//Clear Points:
 					Vars.clearPoints = true;
 					
+					if(!Vars.isActive)
+					{
+						for(Obj o : Vars.activeObjects)
+						{
+							o.clearPoints();
+						}
+					}
 
 					
 					mouseReleasePos.setX(arg0.getX());

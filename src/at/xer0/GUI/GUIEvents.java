@@ -86,30 +86,6 @@ public class GUIEvents
 
 	}
 
-	public static void editObject(int x, int y)
-	{
-		x -= (Vars.mainFrame.renderPanel.getWidth() / 2);
-		y -= (Vars.mainFrame.renderPanel.getHeight() / 2);
-
-		if (!Vars.isActive)
-		{
-			Obj chosen = null;
-
-			for (Obj o : Vars.activeObjects)
-			{
-				if (x < o.getPosition().getX() + 10 && x > o.getPosition().getX() - 10 && y < o.getPosition().getY() + 10 && y > o.getPosition().getY() - 10)
-				{
-					chosen = o;
-				}
-			}
-
-			if (chosen != null)
-			{
-				EditObjectGUI os = new EditObjectGUI(chosen);
-				os.setVisible(true);
-			}
-		}
-	}
 
 	public static void saveConf()
 	{

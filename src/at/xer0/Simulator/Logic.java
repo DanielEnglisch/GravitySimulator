@@ -150,7 +150,7 @@ public class Logic
 				p.setX((int) (p.getX() + Vars.scaleDeltaX * Vars.scaleFactor) );
 				p.setY((int) (p.getY() + Vars.scaleDeltaY * Vars.scaleFactor) );
 
-
+				
 				boolean add = true;
 
 				for (Point pp : o1.points)
