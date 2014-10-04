@@ -15,11 +15,13 @@ public class Core
 	{
 		// Ladet und startet die GUI
 		Vars.mainFrame = new MainFrame();
-		System.out.println("MainFrame initialized!");
 		new Thread(Vars.mainFrame).start();
 
 		addCutomObjects();
 
+		System.out.println("GravitySimulator initialized!");
+
+		
 		// Hauptschleife
 		while (true)
 		{
@@ -116,9 +118,8 @@ public class Core
 		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 		
-		Vars.scaleFactor = 1;
-		Vars.scaleDeltaX = 0;
-		Vars.scaleDeltaY = 0;
+		Vars.scaling_ZoomFactor = 1;
+		Vars.scaling_Delta = new Vec2D(0,0);
 		
 		Vars.mainFrame.lastMouseWheelState = 1;
 		Vars.mainFrame.mouseClickPos = new Vec2D(0,0);

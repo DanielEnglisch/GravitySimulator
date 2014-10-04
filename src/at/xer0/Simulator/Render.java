@@ -26,10 +26,10 @@ public class Render
 		{
 			g.setColor(obj.getColor());
 
-			int x = (int) ((obj.getPosition().getX() + Vars.scaleDeltaX) * Vars.scaleFactor);
-			int y = (int) ((obj.getPosition().getY() + Vars.scaleDeltaY) * Vars.scaleFactor);
+			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta.getX()) * Vars.scaling_ZoomFactor);
+			int y = (int) ((obj.getPosition().getY() + Vars.scaling_Delta.getY()) * Vars.scaling_ZoomFactor);
 			
-			int radius = (int) (obj.getMass() * (Vars.scaleFactor/Double.parseDouble("1E23")));
+			int radius = (int) (obj.getMass() * (Vars.scaling_ZoomFactor/Double.parseDouble("1E23")));
 						
 			if(Vars.forceRadius)
 			{
@@ -57,6 +57,8 @@ public class Render
 			{
 				g.setColor(obj.getColor());
 
+				
+				//LinePath:
 				for (int i = 0; i < obj.points.size(); i++)
 				{
 					try

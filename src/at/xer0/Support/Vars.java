@@ -55,9 +55,13 @@ public class Vars
 
 	public static double G = 6.67384 * Math.pow(10, -11);
 	
-	public static double scaleFactor = 1;
-	public static double scaleDeltaX = 0;
-	public static double scaleDeltaY = 0;
+	public static double scaling_ZoomFactor = 1;
+	
+	//public static double scaleDeltaX = 0;
+	//public static double scaleDeltaY = 0;
+	
+	public static Vec2D scaling_Delta = new Vec2D(0,0);
+
 
 	public static boolean forceRadius = false;
 

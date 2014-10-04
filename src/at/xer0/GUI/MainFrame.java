@@ -25,17 +25,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -53,18 +52,19 @@ public class MainFrame extends JFrame implements Runnable
 	public JLabel l_Objects;
 	public JButton b_StartStop;
 	public JButton b_ReverseTime;
-	public JLabel l_timestep;
 	public JButton b_nextStep;
 	public JTextField t_steps;
 	public JCheckBox cb_drawPath;
 	public JCheckBox cb_forceRadius;
 	public JTextField t_pathSize;
 	public JLabel l_massstab;
+	public JLabel l_Timestep;
 
 	
 	public  int lastMouseWheelState = 1;
 	public  Vec2D mouseClickPos = new Vec2D(0,0);
 	public  Vec2D  mouseReleasePos = new Vec2D(0,0);
+	public JTextField t_timestep;
 
 
 	//
@@ -85,8 +85,6 @@ public class MainFrame extends JFrame implements Runnable
 				GUIEvents.startStop();
 			}
 		});
-
-		l_timestep = new JLabel("0.00001");
 
 		JLabel l_newObject = new JLabel("Object Presets:");
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -149,9 +147,9 @@ public class MainFrame extends JFrame implements Runnable
 		});
 		b_ApplyObject.setBounds(10, 614, 178, 23);
 
-		JLabel lblTimestep = new JLabel("Timestep:");
-		lblTimestep.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTimestep.setBounds(10, 125, 65, 14);
+		l_Timestep = new JLabel("Timestep: 0.0001");
+		l_Timestep.setFont(new Font("Tahoma", Font.BOLD, 11));
+		l_Timestep.setBounds(10, 125, 178, 14);
 
 		b_ReverseTime = new JButton("Reverse Time");
 		b_ReverseTime.addActionListener(new ActionListener()
@@ -211,9 +209,9 @@ public class MainFrame extends JFrame implements Runnable
 				double d = lastMouseWheelState;
 				
 			
-				Vars.scaleFactor = (double)(1/d);
+				Vars.scaling_ZoomFactor = (double)(1/d);
 				
-				l_massstab.setText("Maßstab = 1:" + (int) (1/Vars.scaleFactor));
+				l_massstab.setText("Maßstab = 1:" + (int) (1/Vars.scaling_ZoomFactor));
 				
 		
 			}
@@ -261,13 +259,13 @@ public class MainFrame extends JFrame implements Runnable
 					mouseReleasePos.setX(arg0.getX());
 					mouseReleasePos.setY(arg0.getY());
 					
-					double fac = (int)(1/ Vars.scaleFactor);
+					double fac = (int)(1/ Vars.scaling_ZoomFactor);
 					
 					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos.getX()));
 					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos.getY()));
 
-					Vars.scaleDeltaX += deltaX * fac;
-					Vars.scaleDeltaY += deltaY * fac;
+					Vars.scaling_Delta.setX(Vars.scaling_Delta.getX() + deltaX * fac);
+					Vars.scaling_Delta.setY(Vars.scaling_Delta.getY() + deltaY * fac);
 					
 					
 
@@ -283,30 +281,6 @@ public class MainFrame extends JFrame implements Runnable
 
 		controlPanel.add(l_massstab);
 
-		l_timestep.setBounds(85, 125, 103, 14);
-		controlPanel.add(l_timestep);
-
-		final JSlider slider = new JSlider();
-		slider.setSnapToTicks(true);
-		slider.setPaintTicks(true);
-		slider.setMajorTickSpacing(1);
-		slider.setMinorTickSpacing(1);
-		slider.addChangeListener(new ChangeListener()
-		{
-
-			public void stateChanged(ChangeEvent arg0)
-			{
-
-				if (Vars.mainFrame != null)
-					GUIEvents.updateTimestep(slider.getValue());
-
-			}
-		});
-		slider.setValue(5);
-		slider.setMaximum(10);
-		slider.setBackground(Color.WHITE);
-		slider.setBounds(10, 150, 178, 26);
-
 		controlPanel.add(b_StartStop);
 		controlPanel.add(l_newObject);
 		controlPanel.add(t_mass);
@@ -316,8 +290,7 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(l_xVelocity);
 		controlPanel.add(l_yVelocity);
 		controlPanel.add(b_ApplyObject);
-		controlPanel.add(slider);
-		controlPanel.add(lblTimestep);
+		controlPanel.add(l_Timestep);
 		controlPanel.add(b_ReverseTime);
 		controlPanel.add(b_Clear);
 		controlPanel.add(comboBox);
@@ -404,6 +377,35 @@ public class MainFrame extends JFrame implements Runnable
 		t_pathSize.setBounds(123, 300, 65, 20);
 		controlPanel.add(t_pathSize);
 		t_pathSize.setColumns(10);
+		
+		t_timestep = new JTextField();
+		t_timestep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					try
+					{
+						double d = Double.parseDouble(t_timestep.getText());
+						
+						Vars.timeStep = d;
+						
+						l_Timestep.setText("Timestep: " + Vars.timeStep);
+						
+						
+					}catch(Exception ex)
+					{
+						JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
+						return;
+					}
+				}
+			}
+		});
+		t_timestep.setText("0.0001");
+		t_timestep.setBounds(10, 152, 178, 22);
+		controlPanel.add(t_timestep);
+		t_timestep.setColumns(10);
 		
 		
 

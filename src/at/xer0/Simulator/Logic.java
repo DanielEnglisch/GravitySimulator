@@ -82,7 +82,7 @@ public class Logic
 
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
-	}
+}
 
 	private static void handlePath()
 	{
@@ -142,13 +142,13 @@ public class Logic
 				}
 
 				//Zoom:
-				Point p = new Point((int) (o1.getPosition().getX() * Vars.scaleFactor), (int) (o1.getPosition().getY() * Vars.scaleFactor));
+				Point p = new Point((int) (o1.getPosition().getX() * Vars.scaling_ZoomFactor), (int) (o1.getPosition().getY() * Vars.scaling_ZoomFactor));
 				
 				//Verschiebung:
 
 				
-				p.setX((int) (p.getX() + Vars.scaleDeltaX * Vars.scaleFactor) );
-				p.setY((int) (p.getY() + Vars.scaleDeltaY * Vars.scaleFactor) );
+				p.setX((int) (p.getX() + Vars.scaling_Delta.getX() * Vars.scaling_ZoomFactor) );
+				p.setY((int) (p.getY() + Vars.scaling_Delta.getY() * Vars.scaling_ZoomFactor) );
 
 				
 				boolean add = true;

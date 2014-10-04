@@ -44,8 +44,8 @@ public class GUIEvents
 	public static void addObject(int x, int y)
 	{
 		//Verschiebung:
-		x-= Vars.scaleDeltaX * Vars.scaleFactor;
-		y-= Vars.scaleDeltaY * Vars.scaleFactor;
+		x-= Vars.scaling_Delta.getX() * Vars.scaling_ZoomFactor;
+		y-= Vars.scaling_Delta.getY() * Vars.scaling_ZoomFactor;
 
 		//Origin:
 		x -= (Vars.mainFrame.renderPanel.getWidth() / 2);
@@ -56,8 +56,8 @@ public class GUIEvents
 
 		o = new Obj(new Vec2D(
 					//Zoom:
-					(x / Vars.scaleFactor),
-					(y / Vars.scaleFactor)
+					(x / Vars.scaling_ZoomFactor),
+					(y / Vars.scaling_ZoomFactor)
 				),
 				Vars.currentVelocityPreset,
 				Vars.currentMassPreset,
@@ -112,6 +112,18 @@ public class GUIEvents
 		{
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
 
+			//Scaling:
+			out.write("scZ:"+Vars.scaling_ZoomFactor + "\n");
+			out.write("scDX:"+Vars.scaling_Delta.getX()+ "\n");
+			out.write("scDY:"+Vars.scaling_Delta.getY()+ "\n");
+			
+			//ProgrammData;
+			out.write("timestep:"+Vars.timeStep+ "\n");
+			out.write("pathsize:"+Vars.mainFrame.t_pathSize.getText()+ "\n");
+
+
+			
+			
 			if (Vars.mainFrame.cb_forceRadius.isSelected())
 			{
 				out.write("forceRadius\n");
@@ -120,7 +132,7 @@ public class GUIEvents
 			for (Obj o : Vars.activeObjects)
 			{
 
-				out.write(o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "\n");
+				out.write("o:" +o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "\n");
 			}
 
 			out.flush();
@@ -179,28 +191,76 @@ public class GUIEvents
 				{
 					Vars.mainFrame.cb_forceRadius.setSelected(true);
 					GUIEvents.forceRadius(true);
-					inText = in.readLine();
-				}
+				}else
+					if(inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ"))
+					{
+						
+						double d = Double.parseDouble(inText.split(":")[1]);
 
-				String[] split = inText.split("#");
+						Vars.scaling_ZoomFactor = d;
+						Vars.mainFrame.lastMouseWheelState = (int)(1/d);
+						Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + (int) (1/Vars.scaling_ZoomFactor));
 
-				double x = Double.parseDouble(split[0]);
-				double y = Double.parseDouble(split[1]);
+						
+					}else
+						if(inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX"))
+						{
+							
+							Vars.scaling_Delta.setX(Double.parseDouble(inText.split(":")[1]));
+							
+						}else
+							if(inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDY"))
+							{
+								Vars.scaling_Delta.setY(Double.parseDouble(inText.split(":")[1]));
+								
+							}else
+								if(inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep"))
+								{
+									Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
+									Vars.mainFrame.l_Timestep.setText("Timestep: " + Vars.timeStep);
+									Vars.mainFrame.t_timestep.setText(Vars.timeStep+"");
 
-				double vx = Double.parseDouble(split[2]);
-				double vy = Double.parseDouble(split[3]);
+									
+								}else
+									if(inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
+									{
+										Vars.mainFrame.t_pathSize.setText(""+Integer.parseInt(inText.split(":")[1]));
+										
+									}else
+								if(inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
+								{
+									//Object:
+									
+									inText = inText.substring(2);
+									
+									String[] split = inText.split("#");
 
-				double mass = Double.parseDouble(split[4]);
+									double x = Double.parseDouble(split[0]);
+									double y = Double.parseDouble(split[1]);
+
+									double vx = Double.parseDouble(split[2]);
+									double vy = Double.parseDouble(split[3]);
+
+									double mass = Double.parseDouble(split[4]);
 
 
-				Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass, ColorEnum.randomColor());
+									Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass, ColorEnum.randomColor());
 
-				System.out.println("Parsed Object: " + o.toString());
+									System.out.println("Parsed Object: " + o.toString());
 
-				Vars.bufferedObjects.add(o);
+									Vars.bufferedObjects.add(o);
+									
+								}else
+								{
+									System.out.println("Unknown Argurment: " + inText);
+								}
+
+
 			}
 
 			in.close();
+			
+			System.out.println(Vars.scaling_ZoomFactor);
 
 			Vars.lastFile = f;
 
@@ -217,71 +277,5 @@ public class GUIEvents
 		Vars.forceRadius = force;
 	}
 
-	public static void updateTimestep(int timestepfactor)
-	{
-
-		switch (timestepfactor)
-		{
-		case 0:
-		{
-			Vars.timeStep = 1;
-		}
-			break;
-		case 1:
-		{
-			Vars.timeStep = 0.1;
-		}
-			break;
-		case 2:
-		{
-			Vars.timeStep = 0.01;
-		}
-			break;
-		case 3:
-		{
-			Vars.timeStep = 0.001;
-		}
-			break;
-		case 4:
-		{
-			Vars.timeStep = 0.0001;
-		}
-			break;
-		case 5:
-		{
-			Vars.timeStep = 0.00001;
-		}
-			break;
-		case 6:
-		{
-			Vars.timeStep = 0.000001;
-		}
-			break;
-		case 7:
-		{
-			Vars.timeStep = 0.0000001;
-		}
-			break;
-		case 8:
-		{
-			Vars.timeStep = 0.00000001;
-		}
-			break;
-		case 9:
-		{
-			Vars.timeStep = 0.000000001;
-		}
-			break;
-		case 10:
-		{
-			Vars.timeStep = 0.0000000001;
-		}
-			break;
-
-		}
-
-		Vars.mainFrame.l_timestep.setText("" + String.format("%." + timestepfactor + "f", Vars.timeStep));
-
-	}
-
+	
 }
