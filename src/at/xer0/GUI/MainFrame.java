@@ -60,12 +60,10 @@ public class MainFrame extends JFrame implements Runnable
 	public JLabel l_massstab;
 	public JLabel l_Timestep;
 
-	
-	public  int lastMouseWheelState = 1;
-	public  Vec2D mouseClickPos = new Vec2D(0,0);
-	public  Vec2D  mouseReleasePos = new Vec2D(0,0);
+	public int lastMouseWheelState = 1;
+	public Vec2D mouseClickPos = new Vec2D(0, 0);
+	public Vec2D mouseReleasePos = new Vec2D(0, 0);
 	public JTextField t_timestep;
-
 
 	//
 
@@ -172,48 +170,47 @@ public class MainFrame extends JFrame implements Runnable
 				Vars.isResetRequested = true;
 			}
 		});
-		
+
 		l_massstab = new JLabel("Ma\u00DFstab = 1:1");
 		l_massstab.setBounds(10, 329, 178, 14);
-		
+
 		renderPanel = new RenderPanel();
-		renderPanel.addMouseWheelListener(new MouseWheelListener() {
-			public void mouseWheelMoved(MouseWheelEvent arg0) {
-				
-				
-				//Clear Points:
+		renderPanel.addMouseWheelListener(new MouseWheelListener()
+		{
+
+			public void mouseWheelMoved(MouseWheelEvent arg0)
+			{
+
+				// Clear Points:
 				Vars.clearPoints = true;
 
-				if(!Vars.isActive)
+				if (!Vars.isActive)
 				{
-					for(Obj o : Vars.activeObjects)
+					for (Obj o : Vars.activeObjects)
 					{
 						o.clearPoints();
 					}
 				}
-				
-				if(arg0.isShiftDown())
+
+				if (arg0.isShiftDown())
 				{
 					lastMouseWheelState += (arg0.getUnitsToScroll() * 1000000);
-				}
-				else
+				} else
 				{
 					lastMouseWheelState += arg0.getUnitsToScroll();
 				}
-				
-				if(lastMouseWheelState < 1)
+
+				if (lastMouseWheelState < 1)
 				{
 					lastMouseWheelState = 1;
 				}
-				
+
 				double d = lastMouseWheelState;
-				
-			
-				Vars.scaling_ZoomFactor = (double)(1/d);
-				
-				l_massstab.setText("Maßstab = 1:" + (int) (1/Vars.scaling_ZoomFactor));
-				
-		
+
+				Vars.scaling_ZoomFactor = (double) (1 / d);
+
+				l_massstab.setText("Maßstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
+
 			}
 		});
 		renderPanel.setBounds(218, 11, 846, 648);
@@ -222,55 +219,52 @@ public class MainFrame extends JFrame implements Runnable
 		{
 
 			@Override
-			public void mousePressed(MouseEvent arg0) {
-				
+			public void mousePressed(MouseEvent arg0)
+			{
+
 				if (SwingUtilities.isLeftMouseButton(arg0))
 				{
-					if(arg0.isControlDown())
+					if (arg0.isControlDown())
 					{
 						mouseClickPos.setX(arg0.getX());
 						mouseClickPos.setY(arg0.getY());
 
-					}
-					else
-					GUIEvents.addObject(arg0.getX(), arg0.getY());
+					} else
+						GUIEvents.addObject(arg0.getX(), arg0.getY());
 				}
 
-
 			}
+
 			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				
-				if(arg0.isControlDown())
+			public void mouseReleased(MouseEvent arg0)
+			{
+
+				if (arg0.isControlDown())
 				{
-					
-					//Clear Points:
+
+					// Clear Points:
 					Vars.clearPoints = true;
-					
-					if(!Vars.isActive)
+
+					if (!Vars.isActive)
 					{
-						for(Obj o : Vars.activeObjects)
+						for (Obj o : Vars.activeObjects)
 						{
 							o.clearPoints();
 						}
 					}
 
-					
 					mouseReleasePos.setX(arg0.getX());
 					mouseReleasePos.setY(arg0.getY());
-					
-					double fac = (int)(1/ Vars.scaling_ZoomFactor);
-					
+
+					double fac = (int) (1 / Vars.scaling_ZoomFactor);
+
 					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos.getX()));
 					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos.getY()));
 
 					Vars.scaling_Delta.setX(Vars.scaling_Delta.getX() + deltaX * fac);
 					Vars.scaling_Delta.setY(Vars.scaling_Delta.getY() + deltaY * fac);
-					
-					
 
-
-				}				
+				}
 			}
 		});
 
@@ -370,31 +364,56 @@ public class MainFrame extends JFrame implements Runnable
 
 		cb_forceRadius.setBounds(10, 273, 178, 23);
 		controlPanel.add(cb_forceRadius);
-		
-		t_pathSize = new JTextField();
 
-		t_pathSize.setText("300");
-		t_pathSize.setBounds(123, 300, 65, 20);
-		controlPanel.add(t_pathSize);
-		t_pathSize.setColumns(10);
-		
-		t_timestep = new JTextField();
-		t_timestep.addKeyListener(new KeyAdapter() {
+		t_pathSize = new JTextField();
+		t_pathSize.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				
 				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
 				{
+					int pathsize = 0;
+					
+					try
+					{
+						pathsize = Integer.parseInt(t_pathSize.getText());
+					}
+					catch(Exception ecc)
+					{
+						JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
+						return;
+					}
+					
+					Vars.pathSize = pathsize;
+				}
+				
+			}
+		});
+
+		t_pathSize.setText("300");
+		t_pathSize.setBounds(123, 300, 65, 20);
+		controlPanel.add(t_pathSize);
+		t_pathSize.setColumns(10);
+
+		t_timestep = new JTextField();
+		t_timestep.addKeyListener(new KeyAdapter()
+		{
+
+			@Override
+			public void keyPressed(KeyEvent arg0)
+			{
+
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
 					try
 					{
 						double d = Double.parseDouble(t_timestep.getText());
-						
+
 						Vars.timeStep = d;
-						
+
 						l_Timestep.setText("Timestep: " + Vars.timeStep);
-						
-						
-					}catch(Exception ex)
+
+					} catch (Exception ex)
 					{
 						JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
 						return;
@@ -406,8 +425,6 @@ public class MainFrame extends JFrame implements Runnable
 		t_timestep.setBounds(10, 152, 178, 22);
 		controlPanel.add(t_timestep);
 		t_timestep.setColumns(10);
-		
-		
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);

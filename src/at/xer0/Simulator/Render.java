@@ -1,6 +1,7 @@
 
 package at.xer0.Simulator;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
@@ -17,9 +18,9 @@ public class Render
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		//Render Origin at Center of screen:
+		// Render Origin at Center of screen:
 		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2, Vars.mainFrame.renderPanel.getHeight() / 2);
-		
+
 		renderPath(g);
 
 		for (Obj obj : Vars.activeObjects)
@@ -28,22 +29,28 @@ public class Render
 
 			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta.getX()) * Vars.scaling_ZoomFactor);
 			int y = (int) ((obj.getPosition().getY() + Vars.scaling_Delta.getY()) * Vars.scaling_ZoomFactor);
-			
-			int radius = (int) (obj.getMass() * (Vars.scaling_ZoomFactor/Double.parseDouble("1E23")));
-						
-			if(Vars.forceRadius)
+
+			int radius = (int) (obj.getMass() * (Vars.scaling_ZoomFactor / Double.parseDouble("1E23")));
+
+			if (Vars.forceRadius)
 			{
 				radius = 40;
 			}
 
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
-			
-			//Render Object:
-			g.fill(new Ellipse2D.Double(r_x , r_y , radius, radius));
+
+			// Render Object:
+			g.fill(new Ellipse2D.Double(r_x, r_y, radius, radius));
 			//
+			
+			//Render Text
+			g.setColor(Color.WHITE);
+			g.drawString(obj.getName(), r_x, r_y - 10);
 
 		}
+			
+		
 
 	}
 
@@ -57,8 +64,7 @@ public class Render
 			{
 				g.setColor(obj.getColor());
 
-				
-				//LinePath:
+				// LinePath:
 				for (int i = 0; i < obj.points.size(); i++)
 				{
 					try
@@ -66,14 +72,14 @@ public class Render
 						Point p1 = obj.points.get(i);
 						Point p2 = obj.points.get(i + 1);
 
-						g.drawLine((int)(p1.getX()), (int)(p1.getY()), (int)(p2.getX()), (int)(p2.getY()));
+						g.drawLine((int) (p1.getX()), (int) (p1.getY()), (int) (p2.getX()), (int) (p2.getY()));
 
 					} catch (Exception exx)
 					{
 					}
 
 				}
-			}else
+			} else
 			{
 				obj.clearPoints();
 			}

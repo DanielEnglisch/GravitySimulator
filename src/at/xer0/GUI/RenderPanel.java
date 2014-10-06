@@ -28,7 +28,7 @@ public class RenderPanel extends JPanel
 	{
 
 		Graphics2D gn = (Graphics2D) g;
-		
+
 		super.paintComponent(gn);
 
 		Render.renderFrame(gn);

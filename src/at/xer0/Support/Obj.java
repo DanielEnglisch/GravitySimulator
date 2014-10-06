@@ -12,8 +12,19 @@ public class Obj
 			acceleration = new Vec2D(0, 0);
 	private double mass;
 	private Color color;
-public int id = 0;
+	private String name = "";
 
+	
+	public String getName()
+	{
+		return name;
+	}
+
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 
 	public ArrayList<Point> points = new ArrayList<Point>();
 
@@ -27,17 +38,14 @@ public int id = 0;
 	 * @param color
 	 *            Color of Object
 	 */
-	public Obj(Vec2D iPos, Vec2D iVel, double mass, Color c)
+	public Obj(Vec2D iPos, Vec2D iVel, double mass)
 	{
 		super();
-		
-		id = Vars.ObjectID;
-		Vars.ObjectID++;
 
 		this.position = iPos;
 		this.velocity = iVel;
 		this.mass = mass;
-		this.color = c;
+		this.color = ColorEnum.randomColor();
 
 	}
 
@@ -45,14 +53,12 @@ public int id = 0;
 	{
 		this.mass = mass;
 
-		
-
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass  + "]";
+		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass + "]";
 	}
 
 	public Vec2D getPosition()

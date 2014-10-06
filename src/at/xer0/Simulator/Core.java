@@ -21,7 +21,6 @@ public class Core
 
 		System.out.println("GravitySimulator initialized!");
 
-		
 		// Hauptschleife
 		while (true)
 		{
@@ -100,7 +99,6 @@ public class Core
 			return;
 		};
 
-
 	}
 
 	public static void resetSimulation()
@@ -117,14 +115,14 @@ public class Core
 		Vars.isTimeReversed = false;
 		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
-		
+
 		Vars.scaling_ZoomFactor = 1;
-		Vars.scaling_Delta = new Vec2D(0,0);
-		
+		Vars.scaling_Delta = new Vec2D(0, 0);
+
 		Vars.mainFrame.lastMouseWheelState = 1;
-		Vars.mainFrame.mouseClickPos = new Vec2D(0,0);
-		Vars.mainFrame.mouseReleasePos = new Vec2D(0,0);
-		
+		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
+		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
+
 		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1");
 
 		addCutomObjects();

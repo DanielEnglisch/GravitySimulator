@@ -8,7 +8,7 @@ import at.xer0.Support.Vec2D;
 
 public class Logic
 {
-	
+
 	public static void tick()
 	{
 
@@ -34,26 +34,24 @@ public class Logic
 			deltaT = Vars.timeStep;
 		}
 
-		
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
 		{
-			
+
 			double ax = 0;
 			double ay = 0;
 
-			
 			for (Obj o2 : Vars.activeObjects)
 			{
 				if (o1 != o2)
 				{
-					
-						double deltaX = o1.getDeltaXY(o2).getX();
-						double deltaY = o1.getDeltaXY(o2).getY();
-						double r = o1.getDistanceTo(o2);
 
-						ax += (G * o2.getMass() * deltaX )/ Math.pow(r, 3);
-						ay += (G * o2.getMass() * deltaY )/ Math.pow(r, 3);
+					double deltaX = o1.getDeltaXY(o2).getX();
+					double deltaY = o1.getDeltaXY(o2).getY();
+					double r = o1.getDistanceTo(o2);
+
+					ax += (G * o2.getMass() * deltaX) / Math.pow(r, 3);
+					ay += (G * o2.getMass() * deltaY) / Math.pow(r, 3);
 				}
 			}
 
@@ -64,54 +62,43 @@ public class Logic
 		// #2:Geschwindigkeit-Schleife:
 		for (Obj o : Vars.activeObjects)
 		{
-			o.setVelocity(new Vec2D(
-					o.getVelocity().getX() + deltaT * o.getAcceleration().getX(),
-					o.getVelocity().getY() + deltaT * o.getAcceleration().getY()
-			));
+			o.setVelocity(new Vec2D(o.getVelocity().getX() + deltaT * o.getAcceleration().getX(), o.getVelocity().getY() + deltaT * o.getAcceleration().getY()));
 		}
 
 		// #3:Position-Schleife:
 		for (Obj o : Vars.activeObjects)
 		{
-			o.setPosition(new Vec2D(
-					o.getPosition().getX() + (deltaT * o.getVelocity().getX()) + ((1/2)*o.getAcceleration().getX() * Math.pow(deltaT,2)),
-					o.getPosition().getY() + (deltaT * o.getVelocity().getY()) + ((1/2)*o.getAcceleration().getY() * Math.pow(deltaT,2))
-			));
-			
+			o.setPosition(new Vec2D(o.getPosition().getX() + (deltaT * o.getVelocity().getX()) + ((1 / 2) * o.getAcceleration().getX() * Math.pow(deltaT, 2)), o.getPosition().getY() + (deltaT * o.getVelocity().getY()) + ((1 / 2) * o.getAcceleration().getY() * Math.pow(deltaT, 2))));
+
 		}
 
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
-}
+	}
 
 	private static void handlePath()
 	{
 
-
-		if(Vars.clearPoints)
+		if (Vars.clearPoints)
 		{
 			for (Obj o1 : Vars.activeObjects)
 			{
 				o1.clearPoints();
 			}
-			
+
 			Vars.clearPoints = false;
 
 		}
-		
+
 		for (Obj o1 : Vars.activeObjects)
 		{
 			if (Vars.mainFrame.cb_drawPath.isSelected())
 			{
 
-				
-
-				
-				int pathSize = 300;
+				int pathSize = Vars.pathSize;
 
 				try
 				{
-					pathSize = Integer.parseInt(Vars.mainFrame.t_pathSize.getText());
 
 					if (pathSize < 0)
 					{
@@ -141,16 +128,14 @@ public class Logic
 
 				}
 
-				//Zoom:
+				// Zoom:
 				Point p = new Point((int) (o1.getPosition().getX() * Vars.scaling_ZoomFactor), (int) (o1.getPosition().getY() * Vars.scaling_ZoomFactor));
-				
-				//Verschiebung:
 
-				
-				p.setX((int) (p.getX() + Vars.scaling_Delta.getX() * Vars.scaling_ZoomFactor) );
-				p.setY((int) (p.getY() + Vars.scaling_Delta.getY() * Vars.scaling_ZoomFactor) );
+				// Verschiebung:
 
-				
+				p.setX((int) (p.getX() + Vars.scaling_Delta.getX() * Vars.scaling_ZoomFactor));
+				p.setY((int) (p.getY() + Vars.scaling_Delta.getY() * Vars.scaling_ZoomFactor));
+
 				boolean add = true;
 
 				for (Point pp : o1.points)
@@ -166,11 +151,10 @@ public class Logic
 					o1.addPoint(p);
 				}
 
-				
 			}
-			
+
 		}
-		
+
 	}
 
 	public static void checkCollision()
@@ -185,9 +169,8 @@ public class Logic
 
 					if (distance <= 10)
 					{
-						System.out.println("COLLISION");
-						
-						
+						//System.out.println("COLLISION");
+
 					}
 
 				}

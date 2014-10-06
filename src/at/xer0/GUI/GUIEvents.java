@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import at.xer0.Support.ColorEnum;
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
@@ -20,7 +19,7 @@ public class GUIEvents
 
 	public static void startStop()
 	{
-		
+
 		Vars.isActive = !Vars.isActive;
 
 		if (Vars.isActive)
@@ -43,25 +42,19 @@ public class GUIEvents
 
 	public static void addObject(int x, int y)
 	{
-		//Verschiebung:
-		x-= Vars.scaling_Delta.getX() * Vars.scaling_ZoomFactor;
-		y-= Vars.scaling_Delta.getY() * Vars.scaling_ZoomFactor;
+		// Verschiebung:
+		x -= Vars.scaling_Delta.getX() * Vars.scaling_ZoomFactor;
+		y -= Vars.scaling_Delta.getY() * Vars.scaling_ZoomFactor;
 
-		//Origin:
+		// Origin:
 		x -= (Vars.mainFrame.renderPanel.getWidth() / 2);
 		y -= (Vars.mainFrame.renderPanel.getHeight() / 2);
-
 
 		Obj o = null;
 
 		o = new Obj(new Vec2D(
-					//Zoom:
-					(x / Vars.scaling_ZoomFactor),
-					(y / Vars.scaling_ZoomFactor)
-				),
-				Vars.currentVelocityPreset,
-				Vars.currentMassPreset,
-				Vars.currentColorPreset);
+		// Zoom:
+		(x / Vars.scaling_ZoomFactor), (y / Vars.scaling_ZoomFactor)), Vars.currentVelocityPreset, Vars.currentMassPreset);
 
 		Vars.bufferedObjects.add(o);
 
@@ -85,7 +78,6 @@ public class GUIEvents
 		}
 
 	}
-
 
 	public static void saveConf()
 	{
@@ -112,18 +104,15 @@ public class GUIEvents
 		{
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
 
-			//Scaling:
-			out.write("scZ:"+Vars.scaling_ZoomFactor + "\n");
-			out.write("scDX:"+Vars.scaling_Delta.getX()+ "\n");
-			out.write("scDY:"+Vars.scaling_Delta.getY()+ "\n");
-			
-			//ProgrammData;
-			out.write("timestep:"+Vars.timeStep+ "\n");
-			out.write("pathsize:"+Vars.mainFrame.t_pathSize.getText()+ "\n");
+			// Scaling:
+			out.write("scZ:" + Vars.scaling_ZoomFactor + "\n");
+			out.write("scDX:" + Vars.scaling_Delta.getX() + "\n");
+			out.write("scDY:" + Vars.scaling_Delta.getY() + "\n");
 
+			// ProgrammData;
+			out.write("timestep:" + Vars.timeStep + "\n");
+			out.write("pathsize:" + Vars.pathSize + "\n");
 
-			
-			
 			if (Vars.mainFrame.cb_forceRadius.isSelected())
 			{
 				out.write("forceRadius\n");
@@ -132,7 +121,7 @@ public class GUIEvents
 			for (Obj o : Vars.activeObjects)
 			{
 
-				out.write("o:" +o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "\n");
+				out.write("o:" + o.getPosition().getX() + "#" + o.getPosition().getY() + "#" + o.getVelocity().getX() + "#" + o.getVelocity().getY() + "#" + o.getMass() + "\n");
 			}
 
 			out.flush();
@@ -191,75 +180,79 @@ public class GUIEvents
 				{
 					Vars.mainFrame.cb_forceRadius.setSelected(true);
 					GUIEvents.forceRadius(true);
-				}else
-					if(inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ"))
+				} else if (inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ"))
+				{
+
+					double d = Double.parseDouble(inText.split(":")[1]);
+
+					Vars.scaling_ZoomFactor = d;
+					Vars.mainFrame.lastMouseWheelState = (int) (1 / d);
+					Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
+
+				} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX"))
+				{
+
+					Vars.scaling_Delta.setX(Double.parseDouble(inText.split(":")[1]));
+
+				} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDY"))
+				{
+					Vars.scaling_Delta.setY(Double.parseDouble(inText.split(":")[1]));
+
+				} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep"))
+				{
+					Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
+					Vars.mainFrame.l_Timestep.setText("Timestep: " + Vars.timeStep);
+					Vars.mainFrame.t_timestep.setText(Vars.timeStep + "");
+
+				} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
+				{
+					Vars.mainFrame.t_pathSize.setText("" + Integer.parseInt(inText.split(":")[1]));
+					Vars.pathSize = Integer.parseInt(inText.split(":")[1]);
+
+
+				} else if (inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
+				{
+					// Object:
+
+					inText = inText.substring(2);
+
+					String[] split = inText.split("#");
+
+					double x = Double.parseDouble(split[0]);
+					double y = Double.parseDouble(split[1]);
+
+					double vx = Double.parseDouble(split[2]);
+					double vy = Double.parseDouble(split[3]);
+
+					double mass = Double.parseDouble(split[4]);
+					
+					String name = "";
+					
+					if(split.length >= 6)
 					{
-						
-						double d = Double.parseDouble(inText.split(":")[1]);
+						name = split[5];
+					}
 
-						Vars.scaling_ZoomFactor = d;
-						Vars.mainFrame.lastMouseWheelState = (int)(1/d);
-						Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + (int) (1/Vars.scaling_ZoomFactor));
+					Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass);
+					
+					o.setName(name);
 
-						
-					}else
-						if(inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX"))
-						{
-							
-							Vars.scaling_Delta.setX(Double.parseDouble(inText.split(":")[1]));
-							
-						}else
-							if(inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDY"))
-							{
-								Vars.scaling_Delta.setY(Double.parseDouble(inText.split(":")[1]));
-								
-							}else
-								if(inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep"))
-								{
-									Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
-									Vars.mainFrame.l_Timestep.setText("Timestep: " + Vars.timeStep);
-									Vars.mainFrame.t_timestep.setText(Vars.timeStep+"");
+					System.out.println("Parsed Object: " + o.toString());
 
-									
-								}else
-									if(inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
-									{
-										Vars.mainFrame.t_pathSize.setText(""+Integer.parseInt(inText.split(":")[1]));
-										
-									}else
-								if(inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
-								{
-									//Object:
-									
-									inText = inText.substring(2);
-									
-									String[] split = inText.split("#");
+					Vars.bufferedObjects.add(o);
 
-									double x = Double.parseDouble(split[0]);
-									double y = Double.parseDouble(split[1]);
-
-									double vx = Double.parseDouble(split[2]);
-									double vy = Double.parseDouble(split[3]);
-
-									double mass = Double.parseDouble(split[4]);
-
-
-									Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass, ColorEnum.randomColor());
-
-									System.out.println("Parsed Object: " + o.toString());
-
-									Vars.bufferedObjects.add(o);
-									
-								}else
-								{
-									System.out.println("Unknown Argurment: " + inText);
-								}
-
+				} else
+				{
+					System.out.println("Unknown Argurment: " + inText);
+					JOptionPane.showMessageDialog(null, "Invalid file format!");
+					in.close();
+					return;
+				}
 
 			}
 
 			in.close();
-			
+
 			System.out.println(Vars.scaling_ZoomFactor);
 
 			Vars.lastFile = f;
@@ -277,5 +270,4 @@ public class GUIEvents
 		Vars.forceRadius = force;
 	}
 
-	
 }
