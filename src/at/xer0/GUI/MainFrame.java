@@ -32,6 +32,7 @@ import javax.swing.border.EmptyBorder;
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
+import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -64,6 +65,8 @@ public class MainFrame extends JFrame implements Runnable
 	public Vec2D mouseClickPos = new Vec2D(0, 0);
 	public Vec2D mouseReleasePos = new Vec2D(0, 0);
 	public JTextField t_timestep;
+	private JTextField t_yPos;
+	private JTextField t_xPos;
 
 	//
 
@@ -84,7 +87,7 @@ public class MainFrame extends JFrame implements Runnable
 
 		JLabel l_newObject = new JLabel("Object Presets:");
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
-		l_newObject.setBounds(10, 509, 178, 14);
+		l_newObject.setBounds(10, 394, 178, 14);
 
 		t_mass = new JTextField();
 		t_mass.addKeyListener(new KeyAdapter()
@@ -97,12 +100,12 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 		t_mass.setText(Vars.preset_Mass + "");
-		t_mass.setBounds(85, 531, 103, 20);
+		t_mass.setBounds(85, 419, 103, 20);
 		t_mass.setColumns(10);
 
 		t_xVelocity = new JTextField();
 		t_xVelocity.setText(Vars.preset_Velocity.getX() + "");
-		t_xVelocity.setBounds(85, 556, 103, 20);
+		t_xVelocity.setBounds(85, 444, 103, 20);
 
 		t_xVelocity.addKeyListener(new KeyAdapter()
 		{
@@ -116,7 +119,7 @@ public class MainFrame extends JFrame implements Runnable
 
 		t_yVelocity = new JTextField();
 		t_yVelocity.setText(Vars.preset_Velocity.getY() + "");
-		t_yVelocity.setBounds(85, 581, 103, 20);
+		t_yVelocity.setBounds(85, 469, 103, 20);
 		t_yVelocity.setColumns(10);
 
 		t_yVelocity.addKeyListener(new KeyAdapter()
@@ -130,13 +133,13 @@ public class MainFrame extends JFrame implements Runnable
 		});
 
 		JLabel l_mass = new JLabel("Mass:");
-		l_mass.setBounds(10, 534, 65, 14);
+		l_mass.setBounds(10, 422, 65, 14);
 
 		JLabel l_xVelocity = new JLabel("x Velocity:");
-		l_xVelocity.setBounds(10, 559, 65, 14);
+		l_xVelocity.setBounds(10, 447, 65, 14);
 
 		JLabel l_yVelocity = new JLabel("y Velocity:");
-		l_yVelocity.setBounds(10, 584, 65, 14);
+		l_yVelocity.setBounds(10, 472, 65, 14);
 
 		JButton b_ApplyObject = new JButton("Apply Preset");
 		b_ApplyObject.addActionListener(new ActionListener()
@@ -167,7 +170,7 @@ public class MainFrame extends JFrame implements Runnable
 				System.out.println("New Preset: Velocity " + Vars.preset_Velocity.toString() + " - Mass:" + Vars.preset_Mass);
 			}
 		});
-		b_ApplyObject.setBounds(10, 614, 178, 23);
+		b_ApplyObject.setBounds(10, 500, 178, 23);
 
 		l_Timestep = new JLabel("Timestep: 0.0001");
 		l_Timestep.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -185,7 +188,8 @@ public class MainFrame extends JFrame implements Runnable
 		});
 
 		l_massstab = new JLabel("Ma\u00DFstab = 1:1");
-		l_massstab.setBounds(10, 449, 178, 14);
+		l_massstab.setHorizontalAlignment(SwingConstants.CENTER);
+		l_massstab.setBounds(10, 369, 178, 14);
 
 		renderPanel = new RenderPanel();
 		renderPanel.addMouseWheelListener(new MouseWheelListener()
@@ -371,7 +375,7 @@ public class MainFrame extends JFrame implements Runnable
 		cb_drawPath = new JCheckBox("Draw Path");
 		cb_drawPath.setSelected(true);
 		cb_drawPath.setBackground(Color.WHITE);
-		cb_drawPath.setBounds(10, 339, 107, 23);
+		cb_drawPath.setBounds(106, 311, 86, 23);
 		controlPanel.add(cb_drawPath);
 
 		cb_forceRadius = new JCheckBox("Force Radius");
@@ -391,7 +395,7 @@ public class MainFrame extends JFrame implements Runnable
 		l_pathsize.setFont(new Font("Tahoma", Font.BOLD, 13));
 		l_pathsize.setBounds(10, 157, 176, 16);
 
-		cb_forceRadius.setBounds(10, 311, 178, 23);
+		cb_forceRadius.setBounds(10, 311, 103, 23);
 		controlPanel.add(cb_forceRadius);
 
 		t_pathSize = new JTextField();
@@ -479,8 +483,58 @@ public class MainFrame extends JFrame implements Runnable
 		cb_showNames = new JCheckBox("Show names");
 		cb_showNames.setSelected(true);
 		cb_showNames.setBackground(Color.WHITE);
-		cb_showNames.setBounds(10, 367, 113, 25);
+		cb_showNames.setBounds(10, 337, 94, 25);
 		controlPanel.add(cb_showNames);
+		
+		t_yPos = new JTextField();
+
+		t_yPos.setText("0");
+		t_yPos.setBounds(85, 583, 103, 20);
+		controlPanel.add(t_yPos);
+		t_yPos.setColumns(10);
+		
+		t_xPos = new JTextField();
+
+		t_xPos.setText("0");
+		t_xPos.setBounds(85, 561, 103, 20);
+		controlPanel.add(t_xPos);
+		t_xPos.setColumns(10);
+		
+		final JLabel l_xPos = new JLabel("x Position:");
+		l_xPos.setBounds(10, 561, 65, 14);
+		controlPanel.add(l_xPos);
+		
+		final JLabel l_yPos = new JLabel("y Position:");
+		l_yPos.setBounds(10, 586, 65, 14);
+		controlPanel.add(l_yPos);
+		
+		JButton btnPlaceObject = new JButton("Place Object");
+		btnPlaceObject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				double x = 0;
+				double y = 0;
+				
+				try
+				{
+					x = Double.parseDouble(t_xPos.getText());
+					y = Double.parseDouble(t_yPos.getText());
+
+				}
+				catch(Exception ee)
+				{
+					ee.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Keine gültigen Werte!");
+					return;
+				}
+				
+				GUIEvents.addObject(x, y);
+				
+
+			}
+		});
+		btnPlaceObject.setBounds(10, 614, 178, 23);
+		controlPanel.add(btnPlaceObject);
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);

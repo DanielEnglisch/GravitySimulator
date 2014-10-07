@@ -39,6 +39,18 @@ public class GUIEvents
 			Vars.mainFrame.b_nextStep.setEnabled(true);
 		}
 	}
+	
+	public static void addObject(double x, double y)
+	{
+		
+		Obj o = null;
+
+		o = new Obj(new Vec2D(x, y), Vars.preset_Velocity, Vars.preset_Mass);
+
+		Vars.bufferedObjects.add(o);
+
+		System.out.println("Added Object: " + o.toString());
+	}
 
 	public static void addObject(int x, int y)
 	{
