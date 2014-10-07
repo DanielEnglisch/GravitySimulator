@@ -23,16 +23,7 @@ public class Logic
 		double deltaT;
 		double G = Vars.G;
 
-		// Wenn die Zeit rückwerts laufen soll
-		if (Vars.isTimeReversed)
-		{
-			// Soll DeltaT negativ sein.
-			deltaT = Vars.timeStep * (-1);
-		} else
-		{
-			// Sonnst positiv
-			deltaT = Vars.timeStep;
-		}
+		deltaT = Vars.timeStep;
 
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
@@ -169,7 +160,7 @@ public class Logic
 
 					if (distance <= 10)
 					{
-						//System.out.println("COLLISION");
+						// System.out.println("COLLISION");
 
 					}
 

@@ -43,14 +43,16 @@ public class Render
 			// Render Object:
 			g.fill(new Ellipse2D.Double(r_x, r_y, radius, radius));
 			//
-			
-			//Render Text
-			g.setColor(Color.WHITE);
-			g.drawString(obj.getName(), r_x, r_y - 10);
+
+			// Render Text
+
+			if (Vars.mainFrame.cb_showNames.isSelected())
+			{
+				g.setColor(Color.WHITE);
+				g.drawString(obj.getName(), r_x, r_y - 10);
+			}
 
 		}
-			
-		
 
 	}
 

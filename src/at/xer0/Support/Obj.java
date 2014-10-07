@@ -3,6 +3,7 @@ package at.xer0.Support;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Obj
 {
@@ -14,13 +15,11 @@ public class Obj
 	private Color color;
 	private String name = "";
 
-	
 	public String getName()
 	{
 		return name;
 	}
 
-	
 	public void setName(String name)
 	{
 		this.name = name;
@@ -45,7 +44,7 @@ public class Obj
 		this.position = iPos;
 		this.velocity = iVel;
 		this.mass = mass;
-		this.color = ColorEnum.randomColor();
+		this.color = randomColor();
 
 	}
 
@@ -123,6 +122,16 @@ public class Obj
 	public void clearPoints()
 	{
 		this.points.clear();
+	}
+
+	public static Color randomColor()
+	{
+		Random rand = new Random();
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+
+		return new Color(r, g, b);
 	}
 
 }

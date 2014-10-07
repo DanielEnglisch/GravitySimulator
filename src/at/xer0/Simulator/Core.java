@@ -112,8 +112,6 @@ public class Core
 
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
 		Vars.mainFrame.b_nextStep.setEnabled(true);
-		Vars.isTimeReversed = false;
-		Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
 		Vars.scaling_ZoomFactor = 1;

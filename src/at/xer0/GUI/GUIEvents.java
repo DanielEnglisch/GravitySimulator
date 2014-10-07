@@ -54,29 +54,11 @@ public class GUIEvents
 
 		o = new Obj(new Vec2D(
 		// Zoom:
-		(x / Vars.scaling_ZoomFactor), (y / Vars.scaling_ZoomFactor)), Vars.currentVelocityPreset, Vars.currentMassPreset);
+		(x / Vars.scaling_ZoomFactor), (y / Vars.scaling_ZoomFactor)), Vars.preset_Velocity, Vars.preset_Mass);
 
 		Vars.bufferedObjects.add(o);
 
 		System.out.println("Added Object: " + o.toString());
-	}
-
-	public static void reverseTime()
-	{
-		Vars.isTimeReversed = !Vars.isTimeReversed;
-
-		if (Vars.isTimeReversed)
-		{
-			Vars.mainFrame.b_ReverseTime.setText("Normalize Time");
-			Vars.mainFrame.b_nextStep.setText(">");
-			System.out.println("Reversed Time!");
-		} else
-		{
-			Vars.mainFrame.b_ReverseTime.setText("Reverse Time");
-			Vars.mainFrame.b_nextStep.setText(">");
-			System.out.println("Normalized Time!");
-		}
-
 	}
 
 	public static void saveConf()
@@ -206,8 +188,12 @@ public class GUIEvents
 
 				} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
 				{
-					Vars.mainFrame.t_pathSize.setText("" + Integer.parseInt(inText.split(":")[1]));
+					
 					Vars.pathSize = Integer.parseInt(inText.split(":")[1]);
+
+					Vars.mainFrame.t_pathSize.setText("" + Vars.pathSize);
+					Vars.mainFrame.l_pathsize.setText("Timestep: " + Vars.pathSize);
+
 
 
 				} else if (inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
@@ -225,16 +211,16 @@ public class GUIEvents
 					double vy = Double.parseDouble(split[3]);
 
 					double mass = Double.parseDouble(split[4]);
-					
+
 					String name = "";
-					
-					if(split.length >= 6)
+
+					if (split.length >= 6)
 					{
 						name = split[5];
 					}
 
 					Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass);
-					
+
 					o.setName(name);
 
 					System.out.println("Parsed Object: " + o.toString());
