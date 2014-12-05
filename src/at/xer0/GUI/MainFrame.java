@@ -56,10 +56,10 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_showNames;
 
 	public JTextField t_pathSize;
-	public JLabel l_massstab;
+	public JLabel l_maﬂstabLabel;
 	public JLabel l_Timestep;
 	public JLabel l_pathsize;
-	
+	public JLabel l_massstab;
 
 	public int lastMouseWheelState = 1;
 	public Vec2D mouseClickPos = new Vec2D(0, 0);
@@ -67,6 +67,7 @@ public class MainFrame extends JFrame implements Runnable
 	public JTextField t_timestep;
 	private JTextField t_yPos;
 	private JTextField t_xPos;
+	private JTextField t_massstabInput;
 
 	//
 
@@ -187,9 +188,9 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 
-		l_massstab = new JLabel("Ma\u00DFstab = 1:1");
-		l_massstab.setHorizontalAlignment(SwingConstants.CENTER);
-		l_massstab.setBounds(10, 369, 178, 14);
+		l_maﬂstabLabel = new JLabel("Ma\u00DFstab = 1:");
+		l_maﬂstabLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		l_maﬂstabLabel.setBounds(10, 369, 91, 14);
 
 		renderPanel = new RenderPanel();
 		renderPanel.addMouseWheelListener(new MouseWheelListener()
@@ -225,8 +226,6 @@ public class MainFrame extends JFrame implements Runnable
 				double d = lastMouseWheelState;
 
 				Vars.scaling_ZoomFactor = (double) (1 / d);
-
-				l_massstab.setText("Maﬂstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
 
 			}
 		});
@@ -290,7 +289,7 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.setBounds(10, 11, 198, 648);
 		controlPanel.setLayout(null);
 
-		controlPanel.add(l_massstab);
+		controlPanel.add(l_maﬂstabLabel);
 
 		controlPanel.add(b_StartStop);
 		controlPanel.add(l_newObject);
@@ -483,68 +482,116 @@ public class MainFrame extends JFrame implements Runnable
 		cb_showNames = new JCheckBox("Show names");
 		cb_showNames.setSelected(true);
 		cb_showNames.setBackground(Color.WHITE);
-		cb_showNames.setBounds(10, 337, 94, 25);
+		cb_showNames.setBounds(10, 337, 178, 25);
 		controlPanel.add(cb_showNames);
-		
+
 		t_yPos = new JTextField();
 
 		t_yPos.setText("0");
 		t_yPos.setBounds(85, 583, 103, 20);
 		controlPanel.add(t_yPos);
 		t_yPos.setColumns(10);
-		
+
 		t_xPos = new JTextField();
 
 		t_xPos.setText("0");
 		t_xPos.setBounds(85, 561, 103, 20);
 		controlPanel.add(t_xPos);
 		t_xPos.setColumns(10);
-		
+
 		final JLabel l_xPos = new JLabel("x Position:");
 		l_xPos.setBounds(10, 561, 65, 14);
 		controlPanel.add(l_xPos);
-		
+
 		final JLabel l_yPos = new JLabel("y Position:");
 		l_yPos.setBounds(10, 586, 65, 14);
 		controlPanel.add(l_yPos);
-		
+
 		JButton btnPlaceObject = new JButton("Place Object");
-		btnPlaceObject.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
+		btnPlaceObject.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent arg0)
+			{
+
 				double x = 0;
 				double y = 0;
-				
+
 				try
 				{
 					x = Double.parseDouble(t_xPos.getText());
 					y = Double.parseDouble(t_yPos.getText());
 
-				}
-				catch(Exception ee)
+				} catch (Exception ee)
 				{
 					ee.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Keine g¸ltigen Werte!");
 					return;
 				}
-				
+
 				GUIEvents.addObject(x, y);
-				
 
 			}
 		});
 		btnPlaceObject.setBounds(10, 614, 178, 23);
 		controlPanel.add(btnPlaceObject);
 
+		t_massstabInput = new JTextField();
+		t_massstabInput.addKeyListener(new KeyAdapter()
+		{
+
+			@Override
+			public void keyPressed(KeyEvent arg0)
+			{
+
+				t_massstabInput.setForeground(Color.RED);
+
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					double d = 1;
+
+					try
+					{
+						d = Double.parseDouble(t_massstabInput.getText());
+						t_massstabInput.setForeground(Color.BLACK);
+
+					} catch (Exception ex)
+					{
+						JOptionPane.showMessageDialog(null, "Keine g¸ltigen Werte!");
+						return;
+					}
+
+					if (d < 1)
+					{
+						JOptionPane.showMessageDialog(null, "Keine g¸ltigen Werte!");
+						return;
+					}
+
+					// Reset Color
+					Vars.scaling_ZoomFactor = (double) (1 / d);
+
+				}
+
+			}
+		});
+		t_massstabInput.setBounds(85, 366, 103, 20);
+		controlPanel.add(t_massstabInput);
+		t_massstabInput.setColumns(10);
+
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
-		l_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), 130, 14);
+		l_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), 200, 14);
 		renderPanel.add(l_Time);
 
 		l_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
 		l_Objects.setForeground(Color.WHITE);
-		l_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), 102, 14);
+		l_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), 200, 14);
 		renderPanel.add(l_Objects);
+
+		l_massstab = new JLabel("Ma\u00DFstab 1:1");
+		l_massstab.setForeground(Color.WHITE);
+		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2), 43 - (renderPanel.getHeight() / 2), 200, 14);
+		renderPanel.add(l_massstab);
 
 		// JFrame:
 		setBackground(Color.BLACK);

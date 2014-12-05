@@ -131,6 +131,8 @@ public class Core
 	{
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.activeObjects.size());
+		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
+
 	}
 
 	public static int randInt(int min, int max)
