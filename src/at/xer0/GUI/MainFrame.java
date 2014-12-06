@@ -60,13 +60,14 @@ public class MainFrame extends JFrame implements Runnable
 	public JLabel l_pathsize;
 	public JLabel l_massstab;
 
-	public int lastMouseWheelState = 1;
+	public double lastMouseWheelState = 1;
 	public Vec2D mouseClickPos = new Vec2D(0, 0);
 	public Vec2D mouseReleasePos = new Vec2D(0, 0);
 	public JTextField t_timestep;
 	private JTextField t_yPos;
 	private JTextField t_xPos;
 	public JTextField t_massstabInput;
+	private JMenuItem mntmScreenshot;
 
 	//
 
@@ -680,6 +681,18 @@ public class MainFrame extends JFrame implements Runnable
 
 		JSeparator separator_1 = new JSeparator();
 		mnFile.add(separator_1);
+		
+		mntmScreenshot = new JMenuItem("Screenshot");
+		mntmScreenshot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				GUIEvents.takeScreenShot();
+			}
+		});
+		mnFile.add(mntmScreenshot);
+		
+		JSeparator separator_2 = new JSeparator();
+		mnFile.add(separator_2);
 		mnFile.add(mntmCloseSimulator);
 		setContentPane(masterPanel);
 	}

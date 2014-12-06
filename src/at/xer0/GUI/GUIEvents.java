@@ -1,10 +1,13 @@
 
 package at.xer0.GUI;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -134,6 +137,31 @@ public class GUIEvents
 		if (restart)
 		{
 			Vars.isActive = true;
+		}
+
+	}
+	
+	public static void takeScreenShot()
+	{
+		BufferedImage bi = new BufferedImage(Vars.mainFrame.renderPanel.getWidth(), Vars.mainFrame.renderPanel.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+		Vars.mainFrame.renderPanel.paint(bi.getGraphics());
+
+		File outputfile = null;
+
+		JFileChooser fc = new JFileChooser();
+		fc.setDialogTitle("Select a file");
+
+		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+		{
+			outputfile = fc.getSelectedFile();
+		}
+
+		try
+		{
+			ImageIO.write(bi, "jpg", outputfile);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 
 	}

@@ -11,11 +11,9 @@ public class Logic
 
 	public static void tick()
 	{
-
 		checkCollision();
 		simpleAlgorithm();
 		handlePath();
-
 	}
 
 	public static void simpleAlgorithm()
@@ -28,7 +26,6 @@ public class Logic
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
 		{
-
 			double ax = 0;
 			double ay = 0;
 
