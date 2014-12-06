@@ -103,6 +103,7 @@ public class Core
 
 	public static void resetSimulation()
 	{
+
 		Vars.isActive = false;
 
 		Vars.activeObjects.clear();
@@ -122,16 +123,20 @@ public class Core
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
 
 		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1");
+		Vars.mainFrame.t_massstabInput.setText("1");
 
+		
+		
 		addCutomObjects();
 
 	}
-
+	
+	
 	public static void updateGUIVars()
 	{
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.activeObjects.size());
-		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
+		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) );
 
 	}
 

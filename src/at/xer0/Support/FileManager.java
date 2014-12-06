@@ -36,6 +36,8 @@ public class FileManager
 					Vars.scaling_ZoomFactor = d;
 					Vars.mainFrame.lastMouseWheelState = (int) (1 / d);
 					Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
+					Vars.mainFrame.t_massstabInput.setText(""+(int) (1 / Vars.scaling_ZoomFactor));
+
 
 				} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX"))
 				{

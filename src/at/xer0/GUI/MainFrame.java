@@ -56,7 +56,6 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_showNames;
 
 	public JTextField t_pathSize;
-	public JLabel l_maﬂstabLabel;
 	public JLabel l_Timestep;
 	public JLabel l_pathsize;
 	public JLabel l_massstab;
@@ -67,7 +66,7 @@ public class MainFrame extends JFrame implements Runnable
 	public JTextField t_timestep;
 	private JTextField t_yPos;
 	private JTextField t_xPos;
-	private JTextField t_massstabInput;
+	public JTextField t_massstabInput;
 
 	//
 
@@ -188,7 +187,7 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 
-		l_maﬂstabLabel = new JLabel("Ma\u00DFstab = 1:");
+		JLabel l_maﬂstabLabel = new JLabel("Ma\u00DFstab = 1:");
 		l_maﬂstabLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		l_maﬂstabLabel.setBounds(10, 369, 91, 14);
 
@@ -537,6 +536,7 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(btnPlaceObject);
 
 		t_massstabInput = new JTextField();
+		t_massstabInput.setText("1");
 		t_massstabInput.addKeyListener(new KeyAdapter()
 		{
 
@@ -569,6 +569,7 @@ public class MainFrame extends JFrame implements Runnable
 
 					// Reset Color
 					Vars.scaling_ZoomFactor = (double) (1 / d);
+					Vars.clearPoints = true;
 
 				}
 
@@ -580,17 +581,17 @@ public class MainFrame extends JFrame implements Runnable
 
 		l_Time = new JLabel("Time: " + Vars.time);
 		l_Time.setForeground(Color.WHITE);
-		l_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), 200, 14);
+		l_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), renderPanel.getWidth()-10, 14);
 		renderPanel.add(l_Time);
 
 		l_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
 		l_Objects.setForeground(Color.WHITE);
-		l_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), 200, 14);
+		l_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), renderPanel.getWidth()-10, 14);
 		renderPanel.add(l_Objects);
 
 		l_massstab = new JLabel("Ma\u00DFstab 1:1");
 		l_massstab.setForeground(Color.WHITE);
-		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2), 43 - (renderPanel.getHeight() / 2), 200, 14);
+		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2), 43 - (renderPanel.getHeight() / 2), renderPanel.getWidth()-10, 14);
 		renderPanel.add(l_massstab);
 
 		// JFrame:
