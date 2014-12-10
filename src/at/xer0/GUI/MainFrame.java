@@ -26,13 +26,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import at.xer0.Support.Obj;
 import at.xer0.Support.Vars;
 import at.xer0.Support.Vec2D;
-import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame implements Runnable
 {
@@ -73,6 +73,10 @@ public class MainFrame extends JFrame implements Runnable
 
 	public MainFrame()
 	{
+		
+		GUIEvents.initGlobalKeyEvents();
+		
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/32x32.png")));
 		b_StartStop = new JButton("Start Simulation");
 		b_StartStop.setToolTipText("Start");
@@ -231,6 +235,7 @@ public class MainFrame extends JFrame implements Runnable
 		});
 		renderPanel.setBounds(218, 11, 846, 648);
 		renderPanel.setIgnoreRepaint(true);
+		renderPanel.setFocusable(false);
 		renderPanel.addMouseListener(new MouseAdapter()
 		{
 
@@ -307,6 +312,7 @@ public class MainFrame extends JFrame implements Runnable
 		masterPanel.setBackground(new Color(238, 232, 170));
 		masterPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		masterPanel.setLayout(null);
+		masterPanel.setFocusable(false);
 		masterPanel.add(controlPanel);
 		masterPanel.add(renderPanel);
 
@@ -537,7 +543,7 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(btnPlaceObject);
 
 		t_massstabInput = new JTextField();
-		t_massstabInput.setText("1");
+		t_massstabInput.setText("1000");
 		t_massstabInput.addKeyListener(new KeyAdapter()
 		{
 
@@ -656,7 +662,7 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 
-		JMenuItem mntmReloadLastFile = new JMenuItem("Reload Configuration");
+		JMenuItem mntmReloadLastFile = new JMenuItem("Reload Configuration (Strg-R)");
 		mntmReloadLastFile.addActionListener(new ActionListener()
 		{
 
@@ -682,11 +688,11 @@ public class MainFrame extends JFrame implements Runnable
 		JSeparator separator_1 = new JSeparator();
 		mnFile.add(separator_1);
 		
-		mntmScreenshot = new JMenuItem("Screenshot");
+		mntmScreenshot = new JMenuItem("Screenshot (Strg-S)");
 		mntmScreenshot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				GUIEvents.takeScreenShot();
+				GUIEvents.takeScreenShot(true);
 			}
 		});
 		mnFile.add(mntmScreenshot);

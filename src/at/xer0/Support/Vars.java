@@ -10,7 +10,7 @@ public class Vars
 {
 
 	public static MainFrame mainFrame = null;
-	public static String version = "0.96b";
+	public static String version = "0.97b";
 
 	public static boolean isActive = false;
 	public static boolean nextStep = false;
@@ -46,7 +46,7 @@ public class Vars
 
 	public static Vec2D scaling_Delta = new Vec2D(0, 0);
 
-	public static boolean forceRadius = false;
+	public static boolean forceRadius = true;
 
 	public static int pathSize = 300;
 

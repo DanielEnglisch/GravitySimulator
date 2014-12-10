@@ -17,7 +17,7 @@ public class Core
 		Vars.mainFrame = new MainFrame();
 		new Thread(Vars.mainFrame).start();
 
-		addCutomObjects();
+		resetSimulation();
 
 		System.out.println("GravitySimulator initialized!");
 
@@ -105,25 +105,28 @@ public class Core
 	{
 
 		Vars.isActive = false;
+		
+		Vars.scaling_ZoomFactor = 0.001;
+
 
 		Vars.activeObjects.clear();
 		Vars.time = 0;
 		Vars.mainFrame.cb_drawPath.setSelected(true);
-		Vars.mainFrame.cb_forceRadius.setSelected(false);
+		Vars.mainFrame.cb_forceRadius.setSelected(true);
 
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
 		Vars.mainFrame.b_nextStep.setEnabled(true);
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
-		Vars.scaling_ZoomFactor = 1;
+		
 		Vars.scaling_Delta = new Vec2D(0, 0);
 
-		Vars.mainFrame.lastMouseWheelState = 1;
+		Vars.mainFrame.lastMouseWheelState = 1000;
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
 
-		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1");
-		Vars.mainFrame.t_massstabInput.setText("1");
+		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1000");
+		Vars.mainFrame.t_massstabInput.setText("1000");
 
 		
 		
