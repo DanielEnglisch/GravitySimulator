@@ -59,6 +59,7 @@ public class MainFrame extends JFrame implements Runnable
 	public JLabel l_Timestep;
 	public JLabel l_pathsize;
 	public JLabel l_massstab;
+	public final JLabel l_steps;
 
 	public double lastMouseWheelState = 1;
 	public Vec2D mouseClickPos = new Vec2D(0, 0);
@@ -67,7 +68,6 @@ public class MainFrame extends JFrame implements Runnable
 	private JTextField t_yPos;
 	private JTextField t_xPos;
 	public JTextField t_massstabInput;
-	private JMenuItem mntmScreenshot;
 
 	//
 
@@ -80,7 +80,7 @@ public class MainFrame extends JFrame implements Runnable
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/32x32.png")));
 		b_StartStop = new JButton("Start Simulation");
 		b_StartStop.setToolTipText("Start");
-		b_StartStop.setBounds(10, 11, 178, 35);
+		b_StartStop.setBounds(10, 11, 178, 71);
 		b_StartStop.addActionListener(new ActionListener()
 		{
 
@@ -180,17 +180,6 @@ public class MainFrame extends JFrame implements Runnable
 		l_Timestep = new JLabel("Timestep: 0.0001");
 		l_Timestep.setFont(new Font("Tahoma", Font.BOLD, 13));
 		l_Timestep.setBounds(10, 95, 178, 14);
-
-		JButton b_Clear = new JButton("Reset Simulator");
-		b_Clear.setBounds(10, 59, 178, 23);
-		b_Clear.addActionListener(new ActionListener()
-		{
-
-			public void actionPerformed(ActionEvent e)
-			{
-				Vars.isResetRequested = true;
-			}
-		});
 
 		JLabel l_maﬂstabLabel = new JLabel("Ma\u00DFstab = 1:");
 		l_maﬂstabLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -306,7 +295,6 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(l_yVelocity);
 		controlPanel.add(b_ApplyObject);
 		controlPanel.add(l_Timestep);
-		controlPanel.add(b_Clear);
 
 		masterPanel = new JPanel();
 		masterPanel.setBackground(new Color(238, 232, 170));
@@ -329,7 +317,7 @@ public class MainFrame extends JFrame implements Runnable
 		b_nextStep.setBounds(10, 279, 178, 23);
 		controlPanel.add(b_nextStep);
 
-		final JLabel l_steps = new JLabel("Steps: 1");
+		 l_steps = new JLabel("Steps: 1");
 		l_steps.setFont(new Font("Tahoma", Font.BOLD, 13));
 		l_steps.setBounds(10, 219, 178, 14);
 
@@ -684,22 +672,30 @@ public class MainFrame extends JFrame implements Runnable
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 		mnFile.add(mntmAbout);
-
-		JSeparator separator_1 = new JSeparator();
-		mnFile.add(separator_1);
-		
-		mntmScreenshot = new JMenuItem("Screenshot (Strg-S)");
-		mntmScreenshot.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				GUIEvents.takeScreenShot(true);
-			}
-		});
-		mnFile.add(mntmScreenshot);
 		
 		JSeparator separator_2 = new JSeparator();
 		mnFile.add(separator_2);
 		mnFile.add(mntmCloseSimulator);
+		
+		JMenu mnActions = new JMenu("Actions");
+		menuBar.add(mnActions);
+		
+		JMenuItem mntmResetSimulator = new JMenuItem("Reset Simulator");
+		mntmResetSimulator.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Vars.isResetRequested = true;
+			}
+		});
+		mnActions.add(mntmResetSimulator);
+		
+		JMenuItem mntmTakeScreenshot = new JMenuItem("Take Screenshot (Strg-S)");
+		mntmTakeScreenshot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIEvents.takeScreenShot(true);
+
+			}
+		});
+		mnActions.add(mntmTakeScreenshot);
 		setContentPane(masterPanel);
 	}
 

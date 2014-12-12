@@ -106,11 +106,31 @@ public class Core
 
 		Vars.isActive = false;
 		
+		//Darstellungsvars:
 		Vars.scaling_ZoomFactor = 0.001;
-
+		Vars.mainFrame.lastMouseWheelState = 1000;
+		Vars.scaling_Delta = new Vec2D(0, 0);
+		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1000");
+		Vars.mainFrame.t_massstabInput.setText("1000");
+		//-----------------
+		
+		//Timestep,Pathsize,Steps + Labels
+		Vars.mainFrame.l_Timestep.setText("Timestep: 0.00001");
+		Vars.mainFrame.t_timestep.setText("0.00001");
+		Vars.timeStep = 0.00001;
+		
+		Vars.mainFrame.l_pathsize.setText("Pathsize: 300");
+		Vars.mainFrame.t_pathSize.setText("300");
+		Vars.pathSize = 300;
+		
+		Vars.mainFrame.l_steps.setText("Steps: 1");
+		Vars.mainFrame.t_steps.setText("1");
+		Vars.steps = 1;
+		//-------------------------------
 
 		Vars.activeObjects.clear();
 		Vars.time = 0;
+		
 		Vars.mainFrame.cb_drawPath.setSelected(true);
 		Vars.mainFrame.cb_forceRadius.setSelected(true);
 
@@ -118,15 +138,10 @@ public class Core
 		Vars.mainFrame.b_nextStep.setEnabled(true);
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
-		
-		Vars.scaling_Delta = new Vec2D(0, 0);
-
-		Vars.mainFrame.lastMouseWheelState = 1000;
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
 
-		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1000");
-		Vars.mainFrame.t_massstabInput.setText("1000");
+
 
 		
 		
