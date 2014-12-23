@@ -10,7 +10,7 @@ public class Vars
 {
 
 	public static MainFrame mainFrame = null;
-	public static String version = "0.97b";
+	public static String version = "0.98a";
 
 	public static boolean isActive = false;
 	public static boolean nextStep = false;

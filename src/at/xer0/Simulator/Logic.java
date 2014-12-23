@@ -44,11 +44,9 @@ public class Logic
 			}
 
 			o1.setAcceleration(new Vec2D(ax, ay));
-			//System.out.println(o1.getAcceleration());
-
+			// System.out.println(o1.getAcceleration());
 
 		}
-		
 
 		// #2:Geschwindigkeit-Schleife:
 		for (Obj o : Vars.activeObjects)

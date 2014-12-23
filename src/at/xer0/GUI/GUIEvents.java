@@ -144,7 +144,7 @@ public class GUIEvents
 		}
 
 	}
-	
+
 	public static void takeScreenShot(boolean quickSave)
 	{
 		BufferedImage bi = new BufferedImage(Vars.mainFrame.renderPanel.getWidth(), Vars.mainFrame.renderPanel.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
@@ -152,36 +152,33 @@ public class GUIEvents
 
 		File outputfile = null;
 
-		
-		if(quickSave)
+		if (quickSave)
 		{
 			try
 			{
 				File f = new File(System.getProperty("java.class.path"));
 				File dir = f.getAbsoluteFile().getParentFile();
 				String path = dir.toString();
-				
-				outputfile = new File(path,"" + Core.randInt(0, 10000000) + ".jpg");
-				
+
+				outputfile = new File(path, "" + Core.randInt(0, 10000000) + ".jpg");
+
 				System.out.println("FILE: " + outputfile.getAbsolutePath());
-				
+
 			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
-		}
-		else
+		} else
 		{
 			JFileChooser fc = new JFileChooser();
 			fc.setDialogTitle("Select a file");
 
 			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-			{	
+			{
 				outputfile = fc.getSelectedFile();
 			}
 		}
-		
-		
+
 		try
 		{
 			ImageIO.write(bi, "jpg", outputfile);
@@ -205,41 +202,45 @@ public class GUIEvents
 		}
 
 	}
-	
+
 	public static void initGlobalKeyEvents()
 	{
-		KeyboardFocusManager.getCurrentKeyboardFocusManager()
-		  .addKeyEventDispatcher(new KeyEventDispatcher() {
-		      @Override
-		      public boolean dispatchKeyEvent(KeyEvent arg0) {
-		    	  		    	
-		    	  
-		    	  if(arg0.getID() != KeyEvent.KEY_PRESSED)
-		    	  {
-		    		  return false;
-		    	  }
-		    	  
-		    	  if(arg0.getKeyCode() == KeyEvent.VK_R && arg0.isControlDown())
-					{
-						GUIEvents.reloadConfig();
-					}
-		    	  else
-		    	  
-		    	   if(arg0.getKeyCode() == KeyEvent.VK_S && arg0.isShiftDown())
-					{
-		    		   System.out.println("QuickScreenshot");
-		    		   GUIEvents.takeScreenShot(true);
-					}
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher()
+		{
 
-		    	  
-					
-		        return false;
-		      }
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent arg0)
+			{
+
+				if (arg0.getID() != KeyEvent.KEY_PRESSED)
+				{
+					return false;
+				}
+
+				if (arg0.getKeyCode() == KeyEvent.VK_R && arg0.isControlDown())
+				{
+					GUIEvents.reloadConfig();
+				} else
+
+				if (arg0.getKeyCode() == KeyEvent.VK_S && arg0.isShiftDown())
+				{
+					System.out.println("QuickScreenshot");
+					GUIEvents.takeScreenShot(true);
+				}
+
+				return false;
+			}
 		});
 	}
 
 	public static void reloadConfig()
 	{
+		if (Vars.lastFile == null)
+		{
+			loadConf();
+			return;
+		}
+
 		FileManager.loadConfigFromFile(Vars.lastFile);
 	}
 

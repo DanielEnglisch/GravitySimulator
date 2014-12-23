@@ -14,12 +14,12 @@ public class Render
 {
 
 	public static void renderFrame(Graphics2D g)
-	{		
-		
+	{
+
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		//Render Origin at Center of screen:
+		// Render Origin at Center of screen:
 		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2, Vars.mainFrame.renderPanel.getHeight() / 2);
 
 		renderPath(g);
@@ -73,7 +73,7 @@ public class Render
 					try
 					{
 						Point p1 = obj.points.get(i);
-						Point p2 = obj.points.get(i /*+ 1*/);
+						Point p2 = obj.points.get(i /* + 1 */);
 
 						g.drawLine((int) (p1.getX()), (int) (p1.getY()), (int) (p2.getX()), (int) (p2.getY()));
 

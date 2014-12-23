@@ -105,32 +105,32 @@ public class Core
 	{
 
 		Vars.isActive = false;
-		
-		//Darstellungsvars:
+
+		// Darstellungsvars:
 		Vars.scaling_ZoomFactor = 0.001;
 		Vars.mainFrame.lastMouseWheelState = 1000;
 		Vars.scaling_Delta = new Vec2D(0, 0);
-		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:1000");
+		Vars.mainFrame.l_massstab.setText("Scale = 1:1000m");
 		Vars.mainFrame.t_massstabInput.setText("1000");
-		//-----------------
-		
-		//Timestep,Pathsize,Steps + Labels
+		// -----------------
+
+		// Timestep,Pathsize,Steps + Labels
 		Vars.mainFrame.l_Timestep.setText("Timestep: 0.00001");
 		Vars.mainFrame.t_timestep.setText("0.00001");
 		Vars.timeStep = 0.00001;
-		
+
 		Vars.mainFrame.l_pathsize.setText("Pathsize: 300");
 		Vars.mainFrame.t_pathSize.setText("300");
 		Vars.pathSize = 300;
-		
+
 		Vars.mainFrame.l_steps.setText("Steps: 1");
 		Vars.mainFrame.t_steps.setText("1");
 		Vars.steps = 1;
-		//-------------------------------
+		// -------------------------------
 
 		Vars.activeObjects.clear();
 		Vars.time = 0;
-		
+
 		Vars.mainFrame.cb_drawPath.setSelected(true);
 		Vars.mainFrame.cb_forceRadius.setSelected(true);
 
@@ -141,20 +141,15 @@ public class Core
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
 
-
-
-		
-		
 		addCutomObjects();
 
 	}
-	
-	
+
 	public static void updateGUIVars()
 	{
 		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
 		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.activeObjects.size());
-		Vars.mainFrame.l_massstab.setText("Maﬂstab = 1:" + String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) );
+		Vars.mainFrame.l_massstab.setText("Scale = 1:" + String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) + "m");
 
 	}
 
