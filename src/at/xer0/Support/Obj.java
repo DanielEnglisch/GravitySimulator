@@ -47,6 +47,41 @@ public class Obj
 		this.color = randomColor();
 
 	}
+	public Obj(Vec2D iPos, Vec2D iVel, double mass, String name)
+	{
+		super();
+
+		this.position = iPos;
+		this.velocity = iVel;
+		this.mass = mass;
+		this.color = randomColor();
+		this.name = name;
+
+	}
+	
+	
+	public Obj(double x, double y, double vx, double vy, double mass)
+	{
+		super();
+
+		this.position = new Vec2D(x,y);
+		this.velocity = new Vec2D(vx,vy);
+		this.mass = mass;
+		this.color = randomColor();
+
+	}
+	
+	public Obj(double x, double y, double vx, double vy, double mass, String name)
+	{
+		super();
+
+		this.position = new Vec2D(x,y);
+		this.velocity = new Vec2D(vx,vy);
+		this.mass = mass;
+		this.color = randomColor();
+		this.name = name;
+
+	}
 
 	public void setMass(double mass)
 	{
@@ -57,7 +92,7 @@ public class Obj
 	@Override
 	public String toString()
 	{
-		return "Obj [position=" + position + ", velocity=" + velocity + ", mass=" + mass + "]";
+		return "Obj { " + name + "} " + "[position=" + position + ", velocity=" + velocity + ", mass=" + mass + "]";
 	}
 
 	public Vec2D getPosition()

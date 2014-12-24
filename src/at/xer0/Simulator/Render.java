@@ -31,12 +31,9 @@ public class Render
 			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta.getX()) * Vars.scaling_ZoomFactor);
 			int y = (int) ((obj.getPosition().getY() + Vars.scaling_Delta.getY()) * Vars.scaling_ZoomFactor);
 
-			int radius = (int) (obj.getMass() * (Vars.scaling_ZoomFactor / Double.parseDouble("1E23")));
-
-			if (Vars.forceRadius)
-			{
-				radius = 40;
-			}
+			//Fixed Radius:
+			int radius = 25;
+			
 
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
@@ -50,7 +47,7 @@ public class Render
 			if (Vars.mainFrame.cb_showNames.isSelected())
 			{
 				g.setColor(Color.WHITE);
-				g.drawString(obj.getName(), r_x, r_y - 10);
+				g.drawString(obj.getName(), r_x - obj.getName().length(), r_y - 10);
 			}
 
 		}

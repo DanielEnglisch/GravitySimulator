@@ -10,7 +10,7 @@ public class Vars
 {
 
 	public static MainFrame mainFrame = null;
-	public static String version = "0.98a";
+	public static String version = "0.98b";
 
 	public static boolean isActive = false;
 	public static boolean nextStep = false;
@@ -39,14 +39,13 @@ public class Vars
 	public static Vec2D preset_Velocity = new Vec2D(0, 0);
 	public static Vec2D preset_Position = new Vec2D(0, 0);
 	public static double preset_Mass = Double.parseDouble("6E24");
+	public static String preset_Name = "";
 
 	public static double G = 6.67384 * Math.pow(10, -11);
 
 	public static double scaling_ZoomFactor = 1;
 
 	public static Vec2D scaling_Delta = new Vec2D(0, 0);
-
-	public static boolean forceRadius = true;
 
 	public static int pathSize = 300;
 

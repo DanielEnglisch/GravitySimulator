@@ -2,14 +2,15 @@
 package at.xer0.Support;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-
-import at.xer0.GUI.GUIEvents;
 
 public class FileManager
 {
@@ -24,91 +25,10 @@ public class FileManager
 
 			while (in.ready())
 			{
-				String inText = in.readLine();
-
-				System.out.println("StreamRead" + inText);
-
-				if (inText.equals("forceRadius"))
-				{
-					Vars.mainFrame.cb_forceRadius.setSelected(true);
-					GUIEvents.forceRadius(true);
-				} else if (inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ"))
-				{
-
-					double d = Double.parseDouble(inText.split(":")[1]);
-
-					Vars.scaling_ZoomFactor = d;
-					Vars.mainFrame.lastMouseWheelState = (int) (1 / d);
-					Vars.mainFrame.l_massstab.setText("Maßstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
-					Vars.mainFrame.t_massstabInput.setText("" + (int) (1 / Vars.scaling_ZoomFactor));
-
-				} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX"))
-				{
-
-					Vars.scaling_Delta.setX(Double.parseDouble(inText.split(":")[1]));
-
-				} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDY"))
-				{
-					Vars.scaling_Delta.setY(Double.parseDouble(inText.split(":")[1]));
-
-				} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep"))
-				{
-					Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
-					Vars.mainFrame.l_Timestep.setText("Timestep: " + Vars.timeStep);
-					Vars.mainFrame.t_timestep.setText(Vars.timeStep + "");
-
-				} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
-				{
-
-					Vars.pathSize = Integer.parseInt(inText.split(":")[1]);
-
-					Vars.mainFrame.t_pathSize.setText("" + Vars.pathSize);
-					Vars.mainFrame.l_pathsize.setText("Pathsize: " + Vars.pathSize);
-
-				} else if (inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
-				{
-					// Object:
-
-					inText = inText.substring(2);
-
-					String[] split = inText.split("#");
-
-					double x = Double.parseDouble(split[0]);
-					double y = Double.parseDouble(split[1]);
-
-					double vx = Double.parseDouble(split[2]);
-					double vy = Double.parseDouble(split[3]);
-
-					double mass = Double.parseDouble(split[4]);
-
-					String name = "";
-
-					if (split.length >= 6)
-					{
-						name = split[5];
-					}
-
-					Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass);
-
-					o.setName(name);
-
-					System.out.println("Parsed Object: " + o.toString());
-
-					Vars.bufferedObjects.add(o);
-
-				} else
-				{
-					System.out.println("Unknown Argurment: " + inText);
-					JOptionPane.showMessageDialog(null, "Invalid file format!");
-					in.close();
-					return;
-				}
-
+				parseLine(in.readLine());
 			}
 
 			in.close();
-
-			System.out.println(Vars.scaling_ZoomFactor);
 
 			Vars.lastFile = f;
 
@@ -130,89 +50,11 @@ public class FileManager
 
 			while (in.ready())
 			{
-				String inText = in.readLine();
-
-				if (inText.equals("forceRadius"))
-				{
-					Vars.mainFrame.cb_forceRadius.setSelected(true);
-					GUIEvents.forceRadius(true);
-				} else if (inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ"))
-				{
-
-					double d = Double.parseDouble(inText.split(":")[1]);
-
-					Vars.scaling_ZoomFactor = d;
-					Vars.mainFrame.lastMouseWheelState = (int) (1 / d);
-					Vars.mainFrame.l_massstab.setText("Maßstab = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
-					Vars.mainFrame.t_massstabInput.setText("" + (int) (1 / Vars.scaling_ZoomFactor));
-
-				} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX"))
-				{
-
-					Vars.scaling_Delta.setX(Double.parseDouble(inText.split(":")[1]));
-
-				} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDY"))
-				{
-					Vars.scaling_Delta.setY(Double.parseDouble(inText.split(":")[1]));
-
-				} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep"))
-				{
-					Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
-					Vars.mainFrame.l_Timestep.setText("Timestep: " + Vars.timeStep);
-					Vars.mainFrame.t_timestep.setText(Vars.timeStep + "");
-
-				} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
-				{
-
-					Vars.pathSize = Integer.parseInt(inText.split(":")[1]);
-
-					Vars.mainFrame.t_pathSize.setText("" + Vars.pathSize);
-					Vars.mainFrame.l_pathsize.setText("Pathsize: " + Vars.pathSize);
-
-				} else if (inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
-				{
-					// Object:
-
-					inText = inText.substring(2);
-
-					String[] split = inText.split("#");
-
-					double x = Double.parseDouble(split[0]);
-					double y = Double.parseDouble(split[1]);
-
-					double vx = Double.parseDouble(split[2]);
-					double vy = Double.parseDouble(split[3]);
-
-					double mass = Double.parseDouble(split[4]);
-
-					String name = "";
-
-					if (split.length >= 6)
-					{
-						name = split[5];
-					}
-
-					Obj o = new Obj(new Vec2D(x, y), new Vec2D(vx, vy), mass);
-
-					o.setName(name);
-
-					System.out.println("Parsed Object: " + o.toString());
-
-					Vars.bufferedObjects.add(o);
-
-				} else
-				{
-					System.out.println("Unknown Argurment: " + inText);
-					JOptionPane.showMessageDialog(null, "Invalid file format!");
-					in.close();
-					return;
-				}
-
+				parseLine(in.readLine());
 			}
 
 			in.close();
 
-			System.out.println(Vars.scaling_ZoomFactor);
 
 		} catch (Exception e)
 		{
@@ -221,4 +63,177 @@ public class FileManager
 
 		}
 	}
+	
+	public static void parseLine(String line)
+	{
+		String inText = line;
+
+		if (inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ"))
+		{
+
+			double d = Double.parseDouble(inText.split(":")[1]);
+
+			Vars.scaling_ZoomFactor = d;
+			Vars.mainFrame.lastMouseWheelState = (int) (1 / d);
+			Vars.mainFrame.l_massstab.setText("Scale = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
+			Vars.mainFrame.t_massstabInput.setText("" + (int) (1 / Vars.scaling_ZoomFactor));
+
+		} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX"))
+		{
+
+			Vars.scaling_Delta.setX(Double.parseDouble(inText.split(":")[1]));
+
+		} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDY"))
+		{
+			Vars.scaling_Delta.setY(Double.parseDouble(inText.split(":")[1]));
+
+		} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep"))
+		{
+			Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
+			Vars.mainFrame.l_Timestep.setText("Timestep: " + Vars.timeStep);
+			Vars.mainFrame.t_timestep.setText(Vars.timeStep + "");
+
+		} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
+		{
+
+			Vars.pathSize = Integer.parseInt(inText.split(":")[1]);
+
+			Vars.mainFrame.t_pathSize.setText("" + Vars.pathSize);
+			Vars.mainFrame.l_pathsize.setText("Pathsize: " + Vars.pathSize);
+
+		} else if (inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
+		{
+			// Object:
+
+			inText = inText.substring(2);
+
+			
+			Obj o = parseObject(inText);
+			
+			System.out.println("Parsed Object: " + o.toString());
+
+			Vars.bufferedObjects.add(o);
+
+		} else
+		{
+			JOptionPane.showMessageDialog(null, "There was an error parsing the file!\nUnknown argurment: " + inText);
+			
+		}
+
+	}
+	
+	public static Obj parseObject(String line)
+	{
+		
+		//x-22#y-22#vx-44#vy-44#m-66#n-NAME
+		
+		String[] args = line.split("#");
+		
+		double 
+		x =0,
+		y = 0,
+		vx = 0,
+		vy = 0,
+		m = 0;
+		
+		String name = "";
+		
+		for(String s : args)
+		{
+			System.out.println("Obj Argurment: " + s);
+			
+			String[] spt = s.split(",");
+			String att = spt[0];
+			String key = spt[1];
+			
+			if(att.equals("x"))
+			{
+				x = Double.parseDouble(key);
+			}else if(att.equals("y"))
+			{
+				y = Double.parseDouble(key);
+			}else if(att.equals("vx"))
+			{
+				vx = Double.parseDouble(key);
+			}else if(att.equals("vy"))
+			{
+				vy = Double.parseDouble(key);
+			}else if(att.equals("m"))
+			{
+				m = Double.parseDouble(key);
+			}else if(att.equals("n"))
+			{
+				name = key;
+			}
+		}
+		
+
+		return new Obj(x,y,vx,vy,m,name);
+	}
+	
+	public static void saveConfiguration()
+	{
+		boolean restart = false;
+		if (Vars.isActive)
+		{
+			Vars.isActive = false;
+			restart = true;
+		}
+
+		JFileChooser fc = new JFileChooser();
+		fc.setDialogTitle("Select an output file");
+
+		File file = new File(".");
+
+		int res = fc.showSaveDialog(Vars.mainFrame);
+
+		if (res == JFileChooser.APPROVE_OPTION)
+		{
+			file = fc.getSelectedFile();
+		}
+
+		try
+		{
+			BufferedWriter out = new BufferedWriter(new FileWriter(file));
+
+			// Scaling:
+			out.write("scZ:" + Vars.scaling_ZoomFactor + "\n");
+			out.write("scDX:" + Vars.scaling_Delta.getX() + "\n");
+			out.write("scDY:" + Vars.scaling_Delta.getY() + "\n");
+
+			// ProgrammData;
+			out.write("timestep:" + Vars.timeStep + "\n");
+			out.write("pathsize:" + Vars.pathSize + "\n");
+
+			for (Obj o : Vars.activeObjects)
+			{
+				out.write("o:x," + o.getPosition().getX() + "#y," + o.getPosition().getY() + "#vx," + o.getVelocity().getX() + "#vy," + o.getVelocity().getY() + "#m," + o.getMass());
+				if(!o.getName().equals(""))
+				{
+					out.write("#n," + o.getName());
+				}
+				out.write("\n");
+			}
+
+			out.flush();
+			out.close();
+
+			if (res == JFileChooser.APPROVE_OPTION)
+			{
+				JOptionPane.showMessageDialog(null, "Successfully saved configuration!");
+			}
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		if (restart)
+		{
+			Vars.isActive = true;
+		}
+
+	}
+
+	
 }

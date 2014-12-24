@@ -132,7 +132,6 @@ public class Core
 		Vars.time = 0;
 
 		Vars.mainFrame.cb_drawPath.setSelected(true);
-		Vars.mainFrame.cb_forceRadius.setSelected(true);
 
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
 		Vars.mainFrame.b_nextStep.setEnabled(true);
