@@ -19,7 +19,9 @@ public class Logic
 	public static void simpleAlgorithm()
 	{
 		double deltaT;
+		
 		double G = Vars.G;
+		double rExponent = Vars.r;
 
 		deltaT = Vars.timeStep;
 
@@ -38,8 +40,8 @@ public class Logic
 					double deltaY = o1.getDeltaXY(o2).getY();
 					double r = o1.getDistanceTo(o2);
 
-					ax += (G * o2.getMass() * deltaX) / Math.pow(r, 3);
-					ay += (G * o2.getMass() * deltaY) / Math.pow(r, 3);
+					ax += (G * o2.getMass() * deltaX) / Math.pow(r, rExponent);
+					ay += (G * o2.getMass() * deltaY) / Math.pow(r, rExponent);
 				}
 			}
 

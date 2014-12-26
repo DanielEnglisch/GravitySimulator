@@ -10,7 +10,7 @@ public class Vars
 {
 
 	public static MainFrame mainFrame = null;
-	public static String version = "0.98b";
+	public static String version = "0.99a";
 
 	public static boolean isActive = false;
 	public static boolean nextStep = false;
@@ -42,6 +42,7 @@ public class Vars
 	public static String preset_Name = "";
 
 	public static double G = 6.67384 * Math.pow(10, -11);
+	public static double r = 3;
 
 	public static double scaling_ZoomFactor = 1;
 

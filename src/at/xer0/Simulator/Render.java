@@ -72,7 +72,7 @@ public class Render
 						Point p1 = obj.points.get(i);
 						Point p2 = obj.points.get(i /* + 1 */);
 
-						g.drawLine((int) (p1.getX()), (int) (p1.getY()), (int) (p2.getX()), (int) (p2.getY()));
+						g.drawLine((p1.getX()), (p1.getY()), (p2.getX()), (p2.getY()));
 
 					} catch (Exception exx)
 					{

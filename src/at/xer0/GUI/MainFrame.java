@@ -119,6 +119,7 @@ public class MainFrame extends JFrame implements Runnable
 		b_StartStop.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				GUIEvents.startStop();
@@ -185,6 +186,7 @@ public class MainFrame extends JFrame implements Runnable
 		b_ApplyObject.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 
@@ -227,6 +229,7 @@ public class MainFrame extends JFrame implements Runnable
 		b_nextStep.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				Vars.nextStep = true;
@@ -394,6 +397,7 @@ public class MainFrame extends JFrame implements Runnable
 		btnPlaceObject.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 
@@ -450,7 +454,7 @@ public class MainFrame extends JFrame implements Runnable
 					}
 
 					// Reset Color
-					Vars.scaling_ZoomFactor = (double) (1 / d);
+					Vars.scaling_ZoomFactor = 1 / d;
 					Vars.clearPoints = true;
 
 				}
@@ -549,6 +553,7 @@ public class MainFrame extends JFrame implements Runnable
 		renderPanel.addMouseWheelListener(new MouseWheelListener()
 		{
 
+			@Override
 			public void mouseWheelMoved(MouseWheelEvent arg0)
 			{
 
@@ -578,7 +583,7 @@ public class MainFrame extends JFrame implements Runnable
 
 				double d = lastMouseWheelState;
 
-				Vars.scaling_ZoomFactor = (double) (1 / d);
+				Vars.scaling_ZoomFactor = 1 / d;
 
 			}
 		});
@@ -652,6 +657,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmLoadConfiguration.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				GUIEvents.loadConf();
@@ -663,6 +669,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmSaveConfiguration.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				FileManager.saveConfiguration();
@@ -674,6 +681,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmCloseSimulator.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				System.exit(0);
@@ -684,6 +692,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmAbout.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				JOptionPane.showMessageDialog(null, "x0 Gravity Simulator version " + Vars.version + "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
@@ -694,6 +703,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmReloadLastFile.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 
@@ -724,17 +734,29 @@ public class MainFrame extends JFrame implements Runnable
 		mntmResetSimulator.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				Vars.isResetRequested = true;
 			}
 		});
+		
+		JMenuItem mntmEditGformula = new JMenuItem("Edit G-Formula");
+		mntmEditGformula.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				new FormulaEditor();
+				
+			}
+		});
+		mnActions.add(mntmEditGformula);
 		mnActions.add(mntmResetSimulator);
 
 		JMenuItem mntmTakeScreenshot = new JMenuItem("Take Screenshot (Strg-S)");
 		mntmTakeScreenshot.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				GUIEvents.takeScreenShot(true);
@@ -750,6 +772,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmOrbits.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 
@@ -763,6 +786,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmElliptic.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 
@@ -778,6 +802,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmEqualMass.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 
@@ -791,6 +816,7 @@ public class MainFrame extends JFrame implements Runnable
 		mntmDifferentMass.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 

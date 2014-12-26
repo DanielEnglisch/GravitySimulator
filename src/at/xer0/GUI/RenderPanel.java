@@ -24,6 +24,7 @@ public class RenderPanel extends JPanel
 
 	}
 
+	@Override
 	public void paintComponent(Graphics g)
 	{
 
