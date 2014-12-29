@@ -1,5 +1,5 @@
 
-package at.xer0.GUI;
+package at.xer0.GravitySimulator.GUI;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import at.xer0.Simulator.Render;
+import at.xer0.GravitySimulator.Simulator.Render;
 
 public class RenderPanel extends JPanel
 {

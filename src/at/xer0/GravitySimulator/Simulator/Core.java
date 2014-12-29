@@ -1,12 +1,12 @@
 
-package at.xer0.Simulator;
+package at.xer0.GravitySimulator.Simulator;
 
 import java.util.Random;
 
-import at.xer0.GUI.MainFrame;
-import at.xer0.Support.Obj;
-import at.xer0.Support.Vars;
-import at.xer0.Support.Vec2D;
+import at.xer0.GravitySimulator.GUI.MainFrame;
+import at.xer0.GravitySimulator.Objects.Obj;
+import at.xer0.GravitySimulator.Objects.Vec2D;
+import at.xer0.GravitySimulator.Support.Vars;
 
 public class Core
 {
@@ -91,15 +91,7 @@ public class Core
 
 	}
 
-	public static void addCutomObjects()
-	{
 
-		if (!Vars.customObjects)
-		{
-			return;
-		};
-
-	}
 
 	public static void resetSimulation()
 	{
@@ -139,8 +131,6 @@ public class Core
 
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
-
-		addCutomObjects();
 
 	}
 

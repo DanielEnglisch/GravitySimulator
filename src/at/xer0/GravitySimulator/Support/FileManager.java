@@ -1,5 +1,5 @@
 
-package at.xer0.Support;
+package at.xer0.GravitySimulator.Support;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
+import at.xer0.GravitySimulator.Objects.Obj;
 
 public class FileManager
 {

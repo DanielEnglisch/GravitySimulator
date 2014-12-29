@@ -1,10 +1,10 @@
 
-package at.xer0.Simulator;
+package at.xer0.GravitySimulator.Simulator;
 
-import at.xer0.Support.Obj;
-import at.xer0.Support.Point;
-import at.xer0.Support.Vars;
-import at.xer0.Support.Vec2D;
+import at.xer0.GravitySimulator.Objects.Obj;
+import at.xer0.GravitySimulator.Objects.Point;
+import at.xer0.GravitySimulator.Objects.Vec2D;
+import at.xer0.GravitySimulator.Support.Vars;
 
 public class Logic
 {

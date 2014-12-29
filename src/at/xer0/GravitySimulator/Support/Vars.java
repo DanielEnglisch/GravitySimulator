@@ -1,10 +1,12 @@
 
-package at.xer0.Support;
+package at.xer0.GravitySimulator.Support;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import at.xer0.GUI.MainFrame;
+import at.xer0.GravitySimulator.GUI.MainFrame;
+import at.xer0.GravitySimulator.Objects.Obj;
+import at.xer0.GravitySimulator.Objects.Vec2D;
 
 public class Vars
 {
@@ -15,8 +17,6 @@ public class Vars
 	public static boolean isActive = false;
 	public static boolean nextStep = false;
 	public static boolean isResetRequested = false;
-	public static boolean isRenderPaused = false;
-	public static boolean customObjects = false;
 
 	public static boolean clearPoints = false;
 

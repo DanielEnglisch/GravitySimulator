@@ -1,14 +1,14 @@
 
-package at.xer0.Simulator;
+package at.xer0.GravitySimulator.Simulator;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 
-import at.xer0.Support.Obj;
-import at.xer0.Support.Point;
-import at.xer0.Support.Vars;
+import at.xer0.GravitySimulator.Objects.Obj;
+import at.xer0.GravitySimulator.Objects.Point;
+import at.xer0.GravitySimulator.Support.Vars;
 
 public class Render
 {

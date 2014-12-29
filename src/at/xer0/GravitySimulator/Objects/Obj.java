@@ -1,5 +1,5 @@
 
-package at.xer0.Support;
+package at.xer0.GravitySimulator.Objects;
 
 import java.awt.Color;
 import java.util.ArrayList;

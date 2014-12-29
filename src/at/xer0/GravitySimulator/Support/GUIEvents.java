@@ -1,5 +1,5 @@
 
-package at.xer0.GUI;
+package at.xer0.GravitySimulator.Support;
 
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -11,11 +11,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
-import at.xer0.Simulator.Core;
-import at.xer0.Support.FileManager;
-import at.xer0.Support.Obj;
-import at.xer0.Support.Vars;
-import at.xer0.Support.Vec2D;
+import at.xer0.GravitySimulator.Objects.Obj;
+import at.xer0.GravitySimulator.Objects.Vec2D;
+import at.xer0.GravitySimulator.Simulator.Core;
 
 public class GUIEvents
 {

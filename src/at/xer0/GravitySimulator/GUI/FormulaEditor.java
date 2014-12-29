@@ -1,4 +1,4 @@
-package at.xer0.GUI;
+package at.xer0.GravitySimulator.GUI;
 
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import at.xer0.Support.Vars;
+import at.xer0.GravitySimulator.Support.Vars;
 
 
 public class FormulaEditor extends JFrame

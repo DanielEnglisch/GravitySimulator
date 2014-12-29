@@ -1,5 +1,5 @@
 
-package at.xer0.Support;
+package at.xer0.GravitySimulator.Objects;
 
 public class Vec2D
 {
