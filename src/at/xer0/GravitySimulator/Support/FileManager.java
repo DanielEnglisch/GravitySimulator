@@ -92,7 +92,6 @@ public class FileManager
 		} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep"))
 		{
 			Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
-			Vars.mainFrame.l_Timestep.setText("Timestep: " + Vars.timeStep);
 			Vars.mainFrame.t_timestep.setText(Vars.timeStep + "");
 
 		} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize"))
@@ -101,7 +100,6 @@ public class FileManager
 			Vars.pathSize = Integer.parseInt(inText.split(":")[1]);
 
 			Vars.mainFrame.t_pathSize.setText("" + Vars.pathSize);
-			Vars.mainFrame.l_pathsize.setText("Pathsize: " + Vars.pathSize);
 
 		} else if (inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:"))
 		{

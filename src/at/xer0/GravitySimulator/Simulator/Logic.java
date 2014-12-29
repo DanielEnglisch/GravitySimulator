@@ -18,12 +18,11 @@ public class Logic
 
 	public static void simpleAlgorithm()
 	{
-		double deltaT;
 		
+		double deltaT = Vars.timeStep;
 		double G = Vars.G;
 		double rExponent = Vars.r;
 
-		deltaT = Vars.timeStep;
 
 		// #1:Beschleunigung-Schleife:
 		for (Obj o1 : Vars.activeObjects)
@@ -46,21 +45,25 @@ public class Logic
 			}
 
 			o1.setAcceleration(new Vec2D(ax, ay));
-			// System.out.println(o1.getAcceleration());
 
 		}
 
 		// #2:Geschwindigkeit-Schleife:
 		for (Obj o : Vars.activeObjects)
 		{
-			o.setVelocity(new Vec2D(o.getVelocity().getX() + deltaT * o.getAcceleration().getX(), o.getVelocity().getY() + deltaT * o.getAcceleration().getY()));
+			o.setVelocity(new Vec2D(o.getVelocity().getX() + deltaT * o.getAcceleration().getX(),
+					o.getVelocity().getY() + deltaT * o.getAcceleration().getY()));
 		}
 
 		// #3:Position-Schleife:
 		for (Obj o : Vars.activeObjects)
 		{
-			o.setPosition(new Vec2D(o.getPosition().getX() + (deltaT * o.getVelocity().getX()) + ((1 / 2) * o.getAcceleration().getX() * Math.pow(deltaT, 2)), o.getPosition().getY() + (deltaT * o.getVelocity().getY()) + ((1 / 2) * o.getAcceleration().getY() * Math.pow(deltaT, 2))));
-
+			o.setPosition(
+					new Vec2D(
+							o.getPosition().getX() + (deltaT * o.getVelocity().getX()) + ((1 / 2) * o.getAcceleration().getX() * Math.pow(deltaT, 2)),
+							o.getPosition().getY() + (deltaT * o.getVelocity().getY()) + ((1 / 2) * o.getAcceleration().getY() * Math.pow(deltaT, 2))
+							)
+					);
 		}
 
 		// Nur für die Zeit Anzeige Relevant:

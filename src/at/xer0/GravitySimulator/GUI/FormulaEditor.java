@@ -1,6 +1,7 @@
 package at.xer0.GravitySimulator.GUI;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -26,7 +27,7 @@ public class FormulaEditor extends JFrame
 
 	public FormulaEditor()
 	{
-
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/gravsim64.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 228, 128);
 		this.setTitle("Edit Formula");
@@ -34,6 +35,7 @@ public class FormulaEditor extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setResizable(false);
 		
 		txt_G = new JTextField();
 		txt_G.setText(Vars.G+"");

@@ -65,10 +65,10 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_drawPath;
 	public JCheckBox cb_showNames;
 
-	public JLabel l_Timestep;
-	public JLabel l_pathsize;
+	private JLabel l_Timestep;
+	private JLabel l_pathsize;
 	public JLabel l_massstab;
-	public JLabel l_steps;
+	private JLabel l_steps;
 
 	public double lastMouseWheelState = 1;
 	public Vec2D mouseClickPos = new Vec2D(0, 0);
@@ -81,7 +81,7 @@ public class MainFrame extends JFrame implements Runnable
 	public MainFrame()
 	{
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/32x32.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/gravsim64.png")));
 
 		GUIEvents.initGlobalKeyEvents();
 
@@ -129,7 +129,7 @@ public class MainFrame extends JFrame implements Runnable
 
 		JLabel l_newObject = new JLabel("Object Presets:");
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
-		l_newObject.setBounds(10, 378, 178, 14);
+		l_newObject.setBounds(10, 338, 178, 14);
 
 		t_mass = new JTextField();
 		t_mass.addKeyListener(new KeyAdapter()
@@ -139,15 +139,43 @@ public class MainFrame extends JFrame implements Runnable
 			public void keyPressed(KeyEvent arg0)
 			{
 				t_mass.setForeground(Color.RED);
+				
+				
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					double mass = -1;
+					
+					try
+					{
+						mass = Double.parseDouble(t_mass.getText());
+					}
+					catch(Exception e)
+					{
+						JOptionPane.showMessageDialog(null, "Invalid input!");
+						return;
+					}
+					
+					if(mass > 0)
+					{
+						Vars.preset_Mass = mass;
+						t_mass.setForeground(Color.BLACK);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Mass must be greater than 0!");
+						return;
+					}
+				}
+				
 			}
 		});
 		t_mass.setText(Vars.preset_Mass + "");
-		t_mass.setBounds(85, 403, 103, 20);
+		t_mass.setBounds(85, 363, 103, 20);
 		t_mass.setColumns(10);
 
 		t_xVelocity = new JTextField();
 		t_xVelocity.setText(Vars.preset_Velocity.getX() + "");
-		t_xVelocity.setBounds(85, 428, 103, 20);
+		t_xVelocity.setBounds(85, 394, 103, 20);
 
 		t_xVelocity.addKeyListener(new KeyAdapter()
 		{
@@ -156,12 +184,32 @@ public class MainFrame extends JFrame implements Runnable
 			public void keyPressed(KeyEvent arg0)
 			{
 				t_xVelocity.setForeground(Color.RED);
+				
+				
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					double vx = 0;
+					
+					try
+					{
+						vx = Double.parseDouble(t_xVelocity.getText());
+					}
+					catch(Exception e)
+					{
+						JOptionPane.showMessageDialog(null, "Invalid input!");
+						return;
+					}
+					
+						Vars.preset_Velocity.setX(vx);
+						t_xVelocity.setForeground(Color.BLACK);
+					
+				}
 			}
 		});
 
 		t_yVelocity = new JTextField();
 		t_yVelocity.setText(Vars.preset_Velocity.getY() + "");
-		t_yVelocity.setBounds(85, 453, 103, 20);
+		t_yVelocity.setBounds(85, 425, 103, 20);
 		t_yVelocity.setColumns(10);
 
 		t_yVelocity.addKeyListener(new KeyAdapter()
@@ -171,60 +219,45 @@ public class MainFrame extends JFrame implements Runnable
 			public void keyPressed(KeyEvent arg0)
 			{
 				t_yVelocity.setForeground(Color.RED);
+				
+				
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					double vy = 0;
+					
+					try
+					{
+						vy = Double.parseDouble(t_yVelocity.getText());
+					}
+					catch(Exception e)
+					{
+						JOptionPane.showMessageDialog(null, "Invalid input!");
+						return;
+					}
+					
+						Vars.preset_Velocity.setY(vy);
+						t_yVelocity.setForeground(Color.BLACK);
+					
+				}
 			}
 		});
 
 		JLabel l_mass = new JLabel("Mass:");
-		l_mass.setBounds(10, 406, 65, 14);
+		l_mass.setBounds(10, 366, 65, 14);
 
 		JLabel l_xVelocity = new JLabel("x Velocity:");
-		l_xVelocity.setBounds(10, 431, 65, 14);
+		l_xVelocity.setBounds(10, 397, 65, 14);
 
 		JLabel l_yVelocity = new JLabel("y Velocity:");
-		l_yVelocity.setBounds(10, 456, 65, 14);
+		l_yVelocity.setBounds(10, 428, 65, 14);
 
-		JButton b_ApplyObject = new JButton("Apply Preset");
-		b_ApplyObject.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-
-				try
-				{
-					double xVel = Double.parseDouble(t_xVelocity.getText());
-					double yVel = Double.parseDouble(t_yVelocity.getText());
-					double mass = Double.parseDouble(t_mass.getText());
-					String name = t_nameField.getText();
-					
-					Vars.preset_Velocity = new Vec2D(xVel, yVel);
-					Vars.preset_Mass = mass;
-					Vars.preset_Name = name;
-
-					t_mass.setForeground(Color.BLACK);
-					t_xVelocity.setForeground(Color.BLACK);
-					t_yVelocity.setForeground(Color.BLACK);
-					t_nameField.setForeground(Color.BLACK);
-
-				} catch (Exception e)
-				{
-					JOptionPane.showMessageDialog(null, "Invalid input!");
-					return;
-				}
-
-				System.out.println("New Preset: Velocity " + Vars.preset_Velocity.toString() + " - Mass:" + Vars.preset_Mass + " - Name: " + Vars.preset_Name);
-			}
-		});
-		b_ApplyObject.setBounds(10, 506, 178, 23);
-
-		l_Timestep = new JLabel("Timestep: 0.0001");
-		l_Timestep.setFont(new Font("Tahoma", Font.BOLD, 13));
-		l_Timestep.setBounds(10, 93, 178, 14);
+		l_Timestep = new JLabel("Timestep:");
+		l_Timestep.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		l_Timestep.setBounds(10, 109, 65, 14);
 
 		JLabel l_maßstabLabel = new JLabel("Scale = 1:");
 		l_maßstabLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		l_maßstabLabel.setBounds(10, 353, 91, 14);
+		l_maßstabLabel.setBounds(10, 300, 91, 14);
 
 		b_nextStep = new JButton(">");
 		b_nextStep.addActionListener(new ActionListener()
@@ -237,11 +270,11 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 		b_nextStep.setFont(new Font("Tahoma", Font.BOLD, 14));
-		b_nextStep.setBounds(10, 265, 178, 23);
+		b_nextStep.setBounds(10, 208, 178, 23);
 
-		l_steps = new JLabel("Steps: 1");
-		l_steps.setFont(new Font("Tahoma", Font.BOLD, 13));
-		l_steps.setBounds(10, 209, 178, 14);
+		l_steps = new JLabel("Steps:");
+		l_steps.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		l_steps.setBounds(10, 179, 49, 14);
 
 		t_steps = new JTextField();
 		t_steps.addKeyListener(new KeyAdapter()
@@ -273,7 +306,6 @@ public class MainFrame extends JFrame implements Runnable
 					}
 
 					Vars.steps = steps;
-					l_steps.setText("Steps: " + Vars.steps);
 					t_steps.setForeground(Color.BLACK);
 
 				}
@@ -281,17 +313,17 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 		t_steps.setText("1");
-		t_steps.setBounds(10, 234, 178, 20);
+		t_steps.setBounds(85, 177, 103, 20);
 		t_steps.setColumns(10);
 
 		cb_drawPath = new JCheckBox("Draw Path");
 		cb_drawPath.setSelected(true);
 		cb_drawPath.setBackground(Color.WHITE);
-		cb_drawPath.setBounds(10, 295, 182, 23);
+		cb_drawPath.setBounds(10, 242, 182, 23);
 
-		l_pathsize = new JLabel("Pathsize: 300");
-		l_pathsize.setFont(new Font("Tahoma", Font.BOLD, 13));
-		l_pathsize.setBounds(10, 151, 176, 16);
+		l_pathsize = new JLabel("Pathsize:");
+		l_pathsize.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		l_pathsize.setBounds(10, 134, 65, 16);
 
 		t_pathSize = new JTextField();
 		t_pathSize.addKeyListener(new KeyAdapter()
@@ -324,8 +356,6 @@ public class MainFrame extends JFrame implements Runnable
 					}
 
 					Vars.pathSize = pathsize;
-					l_pathsize.setText("Pathsize: " + Vars.pathSize);
-
 					t_pathSize.setForeground(Color.BLACK);
 
 				}
@@ -334,7 +364,7 @@ public class MainFrame extends JFrame implements Runnable
 		});
 
 		t_pathSize.setText("300");
-		t_pathSize.setBounds(10, 178, 178, 20);
+		t_pathSize.setBounds(85, 133, 103, 20);
 		t_pathSize.setColumns(10);
 
 		t_timestep = new JTextField();
@@ -355,8 +385,6 @@ public class MainFrame extends JFrame implements Runnable
 
 						Vars.timeStep = d;
 
-						l_Timestep.setText("Timestep: " + Vars.timeStep);
-
 						t_timestep.setForeground(Color.BLACK);
 
 					} catch (Exception ex)
@@ -368,31 +396,31 @@ public class MainFrame extends JFrame implements Runnable
 			}
 		});
 		t_timestep.setText("0.0001");
-		t_timestep.setBounds(10, 118, 178, 22);
+		t_timestep.setBounds(85, 106, 103, 22);
 		t_timestep.setColumns(10);
 
 		cb_showNames = new JCheckBox("Show names");
 		cb_showNames.setSelected(true);
 		cb_showNames.setBackground(Color.WHITE);
-		cb_showNames.setBounds(10, 321, 178, 25);
+		cb_showNames.setBounds(10, 268, 178, 25);
 
 		t_yPos = new JTextField();
 
 		t_yPos.setText("0");
-		t_yPos.setBounds(85, 571, 103, 20);
+		t_yPos.setBounds(85, 530, 103, 20);
 		t_yPos.setColumns(10);
 
 		t_xPos = new JTextField();
 
 		t_xPos.setText("0");
-		t_xPos.setBounds(85, 540, 103, 20);
+		t_xPos.setBounds(85, 499, 103, 20);
 		t_xPos.setColumns(10);
 
 		final JLabel l_xPos = new JLabel("x Position:");
-		l_xPos.setBounds(10, 543, 65, 14);
+		l_xPos.setBounds(10, 502, 65, 14);
 
 		final JLabel l_yPos = new JLabel("y Position:");
-		l_yPos.setBounds(10, 574, 65, 14);
+		l_yPos.setBounds(10, 533, 65, 14);
 
 		JButton btnPlaceObject = new JButton("Place Object");
 		btnPlaceObject.addActionListener(new ActionListener()
@@ -420,7 +448,7 @@ public class MainFrame extends JFrame implements Runnable
 
 			}
 		});
-		btnPlaceObject.setBounds(10, 602, 178, 35);
+		btnPlaceObject.setBounds(10, 561, 178, 30);
 
 		t_massstabInput = new JTextField();
 		t_massstabInput.setText("1000");
@@ -462,7 +490,7 @@ public class MainFrame extends JFrame implements Runnable
 
 			}
 		});
-		t_massstabInput.setBounds(85, 350, 103, 20);
+		t_massstabInput.setBounds(85, 297, 103, 20);
 		t_massstabInput.setColumns(10);
 
 		l_Time = new JLabel("Time: " + Vars.time);
@@ -499,7 +527,6 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(l_mass);
 		controlPanel.add(l_xVelocity);
 		controlPanel.add(l_yVelocity);
-		controlPanel.add(b_ApplyObject);
 		controlPanel.add(l_Timestep);
 		controlPanel.add(b_nextStep);
 		controlPanel.add(t_steps);
@@ -517,12 +544,12 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(t_massstabInput);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(10, 481, 65, 14);
+		lblName.setBounds(10, 461, 65, 14);
 		controlPanel.add(lblName);
 		
 		t_nameField = new JTextField();
 		t_nameField.setText("");
-		t_nameField.setBounds(85, 478, 103, 20);
+		t_nameField.setBounds(85, 458, 103, 20);
 		t_nameField.addKeyListener(new KeyAdapter()
 		{
 
@@ -530,11 +557,51 @@ public class MainFrame extends JFrame implements Runnable
 			public void keyPressed(KeyEvent arg0)
 			{
 				t_nameField.setForeground(Color.RED);
+				
+				
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					String name = "";
+					
+					try
+					{
+						name = t_nameField.getText();
+					}
+					catch(Exception e)
+					{
+						JOptionPane.showMessageDialog(null, "Invalid input!");
+						return;
+					}
+					
+						Vars.preset_Name = name;
+						t_nameField.setForeground(Color.BLACK);
+					
+				}
 			}
 		});
 		
 		controlPanel.add(t_nameField);
 		t_nameField.setColumns(10);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 486, 178, 2);
+		controlPanel.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(10, 325, 178, 2);
+		controlPanel.add(separator_1);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(10, 164, 178, 2);
+		controlPanel.add(separator_2);
+		
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setBounds(10, 93, 178, 2);
+		controlPanel.add(separator_3);
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setBounds(10, 242, 178, 2);
+		controlPanel.add(separator_4);
 
 	}
 
@@ -585,6 +652,8 @@ public class MainFrame extends JFrame implements Runnable
 				double d = lastMouseWheelState;
 
 				Vars.scaling_ZoomFactor = 1 / d;
+				t_massstabInput.setText(String.format("%.0f", (1/Vars.scaling_ZoomFactor)));
+				
 
 			}
 		});

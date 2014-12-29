@@ -50,4 +50,5 @@ public class Vars
 
 	public static int pathSize = 300;
 
+
 }

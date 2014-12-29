@@ -26,6 +26,15 @@ public class Render
 
 		for (Obj obj : Vars.activeObjects)
 		{
+			
+			if(obj.getName().equals("x0"))
+			{
+				obj.setColor(Obj.randomColor());
+
+			}
+			
+
+			
 			g.setColor(obj.getColor());
 
 			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta.getX()) * Vars.scaling_ZoomFactor);

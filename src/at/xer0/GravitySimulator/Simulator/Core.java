@@ -106,16 +106,12 @@ public class Core
 		Vars.mainFrame.t_massstabInput.setText("1000");
 		// -----------------
 
-		// Timestep,Pathsize,Steps + Labels
-		Vars.mainFrame.l_Timestep.setText("Timestep: 0.00001");
 		Vars.mainFrame.t_timestep.setText("0.00001");
 		Vars.timeStep = 0.00001;
 
-		Vars.mainFrame.l_pathsize.setText("Pathsize: 300");
 		Vars.mainFrame.t_pathSize.setText("300");
 		Vars.pathSize = 300;
 
-		Vars.mainFrame.l_steps.setText("Steps: 1");
 		Vars.mainFrame.t_steps.setText("1");
 		Vars.steps = 1;
 		// -------------------------------
@@ -131,6 +127,7 @@ public class Core
 
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
+	
 
 	}
 
@@ -148,5 +145,7 @@ public class Core
 		int i1 = r.nextInt(max - min + 1) + min;
 		return i1;
 	}
+	
+
 
 }
