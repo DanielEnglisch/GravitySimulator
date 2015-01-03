@@ -123,7 +123,7 @@ public class Core
 
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
 		Vars.mainFrame.b_nextStep.setEnabled(true);
-		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
+		Vars.mainFrame.r_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
@@ -133,8 +133,10 @@ public class Core
 
 	public static void updateGUIVars()
 	{
-		Vars.mainFrame.l_Time.setText("Time: " + String.format("%.5f", Vars.time));
-		Vars.mainFrame.l_Objects.setText("Objects: " + Vars.activeObjects.size());
+		Vars.mainFrame.r_Time.setText("Time: " + fmt(Vars.time) + "s");
+		Vars.mainFrame.r_Timestep.setText("Timestep: " + fmt(Vars.timeStep) + "s");
+
+		Vars.mainFrame.r_Objects.setText("Objects: " + Vars.activeObjects.size());
 		Vars.mainFrame.l_massstab.setText("Scale = 1:" + String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) + "m");
 
 	}
@@ -146,6 +148,13 @@ public class Core
 		return i1;
 	}
 	
+	public static String fmt(double d)
+	{
+	    if(d == (long) d)
+	        return String.format("%d",(long)d);
+	    else
+	        return String.format("%s",d);
+	}
 
 
 }

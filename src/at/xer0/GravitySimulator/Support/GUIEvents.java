@@ -77,7 +77,7 @@ public class GUIEvents
 	
 	public static void takeScreenShot(boolean quickSave)
 	{
-		BufferedImage bi = new BufferedImage(Vars.mainFrame.renderPanel.getWidth(), Vars.mainFrame.renderPanel.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage bi = new BufferedImage(Vars.mainFrame.renderPanel.getWidth(), Vars.mainFrame.renderPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Vars.mainFrame.renderPanel.paint(bi.getGraphics());
 
 		File outputfile = null;
@@ -90,7 +90,7 @@ public class GUIEvents
 				File dir = f.getAbsoluteFile().getParentFile();
 				String path = dir.toString();
 
-				outputfile = new File(path, "" + Core.randInt(0, 10000000) + ".jpg");
+				outputfile = new File(path, "" + Core.randInt(0, 10000000) + ".png");
 
 				System.out.println("FILE: " + outputfile.getAbsolutePath());
 
@@ -111,7 +111,7 @@ public class GUIEvents
 
 		try
 		{
-			ImageIO.write(bi, "jpg", outputfile);
+			ImageIO.write(bi, "png", outputfile);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -152,7 +152,7 @@ public class GUIEvents
 					GUIEvents.reloadConfig();
 				} else
 
-				if (arg0.getKeyCode() == KeyEvent.VK_S && arg0.isShiftDown())
+				if (arg0.getKeyCode() == KeyEvent.VK_S)
 				{
 					System.out.println("QuickScreenshot");
 					GUIEvents.takeScreenShot(true);

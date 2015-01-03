@@ -45,6 +45,8 @@ public class Logic
 			}
 
 			o1.setAcceleration(new Vec2D(ax, ay));
+			
+			
 
 		}
 

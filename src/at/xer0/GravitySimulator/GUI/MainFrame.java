@@ -51,9 +51,10 @@ public class MainFrame extends JFrame implements Runnable
 	
 	public JPanel renderPanel;
 	
-	public JLabel l_Time;
-	public JLabel l_Objects;
-	
+	public JLabel r_Time;
+	public JLabel r_Objects;
+	public JLabel r_Timestep;
+
 	public JButton b_StartStop;
 	public JButton b_nextStep;
 	
@@ -66,6 +67,7 @@ public class MainFrame extends JFrame implements Runnable
 	public JCheckBox cb_showNames;
 
 	private JLabel l_Timestep;
+
 	private JLabel l_pathsize;
 	public JLabel l_massstab;
 	private JLabel l_steps;
@@ -493,19 +495,24 @@ public class MainFrame extends JFrame implements Runnable
 		t_massstabInput.setBounds(85, 297, 103, 20);
 		t_massstabInput.setColumns(10);
 
-		l_Time = new JLabel("Time: " + Vars.time);
-		l_Time.setForeground(Color.WHITE);
-		l_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
-		renderPanel.add(l_Time);
+		r_Time = new JLabel("Time: " + Vars.time);
+		r_Time.setForeground(Color.WHITE);
+		r_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		renderPanel.add(r_Time);
+		
+		r_Timestep = new JLabel("Timestep: " + Vars.time);
+		r_Timestep.setForeground(Color.WHITE);
+		r_Timestep.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		renderPanel.add(r_Timestep);
 
-		l_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
-		l_Objects.setForeground(Color.WHITE);
-		l_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
-		renderPanel.add(l_Objects);
+		r_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
+		r_Objects.setForeground(Color.WHITE);
+		r_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 43 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		renderPanel.add(r_Objects);
 
 		l_massstab = new JLabel("Ma\u00DFstab 1:1");
 		l_massstab.setForeground(Color.WHITE);
-		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2), 43 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2), 59 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
 		renderPanel.add(l_massstab);
 
 		// MenuBar:
