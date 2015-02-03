@@ -42,12 +42,12 @@ public class Vars
 	public static String preset_Name = "";
 
 	public static double G = 6.67384 * Math.pow(10, -11);
-	public static double r = 3;
+	public static double rExponent = 2;
 
 	public static double scaling_ZoomFactor = 1;
-
 	public static Vec2D scaling_Delta = new Vec2D(0, 0);
 
+	
 	public static int pathSize = 300;
 
 

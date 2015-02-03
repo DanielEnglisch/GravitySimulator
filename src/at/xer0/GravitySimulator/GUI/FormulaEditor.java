@@ -78,13 +78,13 @@ public class FormulaEditor extends JFrame
 		contentPane.add(lblG);
 		
 		textField = new JTextField();
-		textField.setText(Vars.r + "");
+		textField.setText(Vars.rExponent + "");
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				textField.setForeground(Color.RED);
 				
-				double r = Vars.r;
+				double r = Vars.rExponent;
 				
 				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
 				{
@@ -98,9 +98,9 @@ public class FormulaEditor extends JFrame
 						return;
 					}
 					
-					Vars.r = r;
+					Vars.rExponent = r;
 					textField.setForeground(Color.BLACK);
-					System.out.println("r Exponent updated: " + Vars.r);
+					System.out.println("r Exponent updated: " + Vars.rExponent);
 
 				}
 

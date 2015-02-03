@@ -21,7 +21,7 @@ public class Logic
 		
 		double deltaT = Vars.timeStep;
 		double G = Vars.G;
-		double rExponent = Vars.r;
+		double rExponent = Vars.rExponent + 1;
 
 
 		// #1:Beschleunigung-Schleife:
