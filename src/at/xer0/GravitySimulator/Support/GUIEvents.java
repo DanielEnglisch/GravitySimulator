@@ -46,11 +46,17 @@ public class GUIEvents
 
 		Obj o = null;
 
-		o = new Obj(new Vec2D(x, y), Vars.preset_Velocity, Vars.preset_Mass, Vars.preset_Name);
+		Vec2D v = new Vec2D(Vars.preset_Velocity.getX(), Vars.preset_Velocity.getY());
+
+		o = new Obj(new Vec2D(x, y), v, Vars.preset_Mass, Vars.preset_Name);
 
 		Vars.bufferedObjects.add(o);
+		
+		
 
 		System.out.println("Added Object: " + o.toString());
+		
+		o = null;
 	}
 
 	public static void addObject(int x, int y)
@@ -64,14 +70,18 @@ public class GUIEvents
 		y -= (Vars.mainFrame.renderPanel.getHeight() / 2);
 
 		Obj o = null;
+		
+		Vec2D v = new Vec2D(Vars.preset_Velocity.getX(), Vars.preset_Velocity.getY());
 
 		o = new Obj(new Vec2D(
 		// Zoom:
-		(x / Vars.scaling_ZoomFactor), (y / Vars.scaling_ZoomFactor)), Vars.preset_Velocity, Vars.preset_Mass,  Vars.preset_Name);
+		(x / Vars.scaling_ZoomFactor), (y / Vars.scaling_ZoomFactor)), v, Vars.preset_Mass,  Vars.preset_Name);
 
 		Vars.bufferedObjects.add(o);
 
 		System.out.println("Added Object: " + o.toString());
+		
+		o = null;
 	}
 
 	

@@ -93,15 +93,17 @@ public class Obj
 
 	}
 
-	@Override
-	public String toString()
-	{
-		return "Obj { " + name + "} " + "[position=" + position + ", velocity=" + velocity + ", mass=" + mass + "]";
-	}
 
 	public Vec2D getPosition()
 	{
 		return position;
+	}
+
+	@Override
+	public String toString() {
+		return "Obj [position=" + position + ", velocity=" + velocity
+				+ ", acceleration=" + acceleration + ", mass=" + mass
+				+ ", name=" + name + "]";
 	}
 
 	public void setPosition(Vec2D position)

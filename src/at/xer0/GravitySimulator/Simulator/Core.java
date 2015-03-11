@@ -52,7 +52,7 @@ public class Core
 
 				Vars.bufferedObjects.clear();
 			}
-
+			
 			// Wenn die Simulation läuft:
 			if (Vars.isActive)
 			{

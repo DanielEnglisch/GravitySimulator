@@ -11,7 +11,6 @@ public class Logic
 
 	public static void tick()
 	{
-		checkCollision();
 		simpleAlgorithm();
 		handlePath();
 	}
@@ -45,8 +44,7 @@ public class Logic
 			}
 
 			o1.setAcceleration(new Vec2D(ax, ay));
-			
-			
+						
 
 		}
 
@@ -70,6 +68,8 @@ public class Logic
 
 		// Nur für die Zeit Anzeige Relevant:
 		Vars.time += deltaT;
+		
+		
 	}
 
 	private static void handlePath()
