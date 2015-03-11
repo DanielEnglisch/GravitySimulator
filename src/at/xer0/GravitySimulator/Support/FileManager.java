@@ -184,7 +184,9 @@ public class FileManager
 		fc.setDialogTitle("Select an output file");
 
 		File file = new File(".");
+		fc.setCurrentDirectory(file);
 
+		
 		int res = fc.showSaveDialog(Vars.mainFrame);
 
 		if (res == JFileChooser.APPROVE_OPTION)

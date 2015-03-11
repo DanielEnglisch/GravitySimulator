@@ -87,7 +87,10 @@ public class GUIEvents
 			try
 			{
 				File f = new File(System.getProperty("java.class.path"));
-				File dir = f.getAbsoluteFile().getParentFile();
+				File dir = new File(f.getAbsoluteFile().getParentFile(),"screenshots");
+				
+				dir.mkdirs();
+				
 				String path = dir.toString();
 
 				outputfile = new File(path, "" + Core.randInt(0, 10000000) + ".png");
@@ -124,6 +127,8 @@ public class GUIEvents
 
 		JFileChooser fc = new JFileChooser();
 		fc.setDialogTitle("Select a file");
+		fc.setCurrentDirectory(new File("."));
+
 
 		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{

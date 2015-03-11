@@ -54,7 +54,7 @@ public class Render
 			// Render Text
 
 			if (Vars.mainFrame.cb_showNames.isSelected())
-			{
+			{ 
 				g.setColor(Color.WHITE);
 				g.drawString(obj.getName(), r_x - obj.getName().length(), r_y - 10);
 			}
