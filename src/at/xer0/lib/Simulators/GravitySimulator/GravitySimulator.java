@@ -9,6 +9,8 @@ public class GravitySimulator{
 	boolean isCloseRequested = false;
 	boolean isActive = false;
 	
+	 View view = null;
+	
 	 double time = 0;
 	 double timeStep = 0;
 	 int operations = 0;
@@ -26,6 +28,12 @@ public class GravitySimulator{
 	
 	public double getG() {
 		return G;
+	}
+	
+	public void enableView()
+	{
+		this.view = new View(this.activeObjects);
+		new Thread(this.view).start();
 	}
 
 	public void setG(double g) {
@@ -163,6 +171,9 @@ class Logic implements Runnable
 				
 				
 			}
+			
+			if(gs.view != null)
+			gs.view.getContentPane().repaint();
 		}
 		
 	}

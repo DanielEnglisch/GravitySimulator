@@ -1,7 +1,22 @@
 package at.xer0.lib.Simulators.GravitySimulator;
 
+import java.awt.Color;
+import java.util.Random;
+
 
 public class SObject {
+	
+	public Color color = randomColor();
+			
+			public static Color randomColor()
+			{
+				Random rand = new Random();
+				float r = rand.nextFloat();
+				float g = rand.nextFloat();
+				float b = rand.nextFloat();
+
+				return new Color(r, g, b);
+			}
 	
 	private Vec3D 	position = new Vec3D(0,0,0),
 					velocity = new Vec3D(0,0,0),
@@ -9,7 +24,7 @@ public class SObject {
 	
 	@Override
 	public String toString() {
-		return "''" + name + "'' [position=" + position + ", velocity=" + velocity + ", acceleration=" + acceleration + ", mass=" + mass + "]";
+		return "-" + name + "- [position=" + position + ", velocity=" + velocity + ", acceleration=" + acceleration + ", mass=" + mass + "]";
 	}
 
 	private double mass = 0;
