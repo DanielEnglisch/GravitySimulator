@@ -21,7 +21,6 @@ public class RenderPanel extends JPanel
 		setLayout(null);
 		setBounds(218, 11, 666, 649);
 		setIgnoreRepaint(true);
-
 	}
 
 	@Override
