@@ -167,7 +167,7 @@ public class GUIEvents
 					GUIEvents.reloadConfig();
 				} else
 
-				if (arg0.getKeyCode() == KeyEvent.VK_S)
+				if (arg0.getKeyCode() == KeyEvent.VK_S && arg0.isControlDown())
 				{
 					System.out.println("QuickScreenshot");
 					GUIEvents.takeScreenShot(true);

@@ -11,7 +11,12 @@ public class GravitySimulator{
 	
 	 View view = null;
 	
-	 double time = 0;
+	 public View getView() {
+		return view;
+	}
+
+
+	double time = 0;
 	 double timeStep = 0;
 	 int operations = 0;
 	 
