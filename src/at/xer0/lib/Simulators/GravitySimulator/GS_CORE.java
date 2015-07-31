@@ -1,33 +1,30 @@
 package at.xer0.lib.Simulators.GravitySimulator;
 
 public class GS_CORE {
-	
-	public static void main(String[] args) throws InterruptedException
-	{
-		//Create GravitySimulator Object
-		GravitySimulator gs = new GravitySimulator(0.001);
-		
-		//Add Objects to simulate
-		gs.addObject(new SObject(new Vec3D(0,0,0), new Vec3D(0,0,0),1E12,"o1"));
-		gs.addObject(new SObject(new Vec3D(0,200,0), new Vec3D(0.6,0,0),10,"o2"));
-		gs.addObject(new SObject(new Vec3D(0,300,0), new Vec3D(.3,0,0),10,"o3"));
 
-		//Log existing objects
-		gs.logObjects();
+	public static void main(String[] args) throws InterruptedException {
+		// Create GravitySimulator Object
+		GravitySimulator gs1 = new GravitySimulator(0.001);
 
-		//Enable GUI
-		gs.enableView();
-		Thread.sleep(2000);
+		// Add Objects to simulate
+		gs1.addObject(new SObject(new Vec3D(0, 0, 0), new Vec3D(0, 0, 0), 1E12, "o1"));
+		gs1.addObject(new SObject(new Vec3D(0, 200, 0), new Vec3D(0.6, 0, 0),10, "o2"));
+		gs1.addObject(new SObject(new Vec3D(0, 300, 0), new Vec3D(.3, 0, 0),10, "o3"));
 
-		//Start Simulation
-		gs.startSimulation();
-			
 
-		
+		gs1.startSimulation();
+		// Enable GUI
+		 gs1.enableView();
+		 
+		 Thread.sleep(3000);
+			gs1.logObjects();
+
+
+
+
 	}
-	
-	public static void log(String s)
-	{
+
+	public static void log(String s) {
 		System.out.println(s);
 	}
 

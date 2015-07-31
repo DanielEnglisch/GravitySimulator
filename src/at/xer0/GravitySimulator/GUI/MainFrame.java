@@ -1,4 +1,3 @@
-
 package at.xer0.GravitySimulator.GUI;
 
 import java.awt.Color;
@@ -35,8 +34,7 @@ import at.xer0.GravitySimulator.Support.FileManager;
 import at.xer0.GravitySimulator.Support.GUIEvents;
 import at.xer0.GravitySimulator.Support.Vars;
 
-public class MainFrame extends JFrame implements Runnable
-{
+public class MainFrame extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel masterPanel;
@@ -48,21 +46,21 @@ public class MainFrame extends JFrame implements Runnable
 	private JTextField t_xPos;
 
 	// Public GUI
-	
+
 	public JPanel renderPanel;
-	
+
 	public JLabel r_Time;
 	public JLabel r_Objects;
 	public JLabel r_Timestep;
 
 	public JButton b_StartStop;
 	public JButton b_nextStep;
-	
+
 	public JTextField t_steps;
 	public JTextField t_pathSize;
 	public JTextField t_timestep;
 	public JTextField t_massstabInput;
-	
+
 	public JCheckBox cb_drawPath;
 	public JCheckBox cb_showNames;
 
@@ -77,13 +75,12 @@ public class MainFrame extends JFrame implements Runnable
 	public Vec2D mouseReleasePos = new Vec2D(0, 0);
 	private JTextField t_nameField;
 
-
 	//
 
-	public MainFrame()
-	{
+	public MainFrame() {
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/gravsim64.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				MainFrame.class.getResource("/img/gravsim64.png")));
 
 		GUIEvents.initGlobalKeyEvents();
 
@@ -105,26 +102,21 @@ public class MainFrame extends JFrame implements Runnable
 		initControlPanel();
 
 	}
-	
+
 	@Override
-	public void run()
-	{
+	public void run() {
 		setVisible(true);
 	}
 
-
-	private void initControlPanel()
-	{
+	private void initControlPanel() {
 
 		b_StartStop = new JButton("Start Simulation");
 		b_StartStop.setToolTipText("Start");
 		b_StartStop.setBounds(10, 11, 178, 71);
-		b_StartStop.addActionListener(new ActionListener()
-		{
+		b_StartStop.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				GUIEvents.startStop();
 			}
 		});
@@ -134,41 +126,36 @@ public class MainFrame extends JFrame implements Runnable
 		l_newObject.setBounds(10, 338, 178, 14);
 
 		t_mass = new JTextField();
-		t_mass.addKeyListener(new KeyAdapter()
-		{
+		t_mass.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0)
-			{
+			public void keyPressed(KeyEvent arg0) {
 				t_mass.setForeground(Color.RED);
-				
-				
-				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					double mass = -1;
-					
-					try
-					{
+
+					try {
 						mass = Double.parseDouble(t_mass.getText());
-					}
-					catch(Exception e)
-					{
+					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
-					
-					if(mass > 0)
-					{
+
+					/*if (mass > 0) {
 						Vars.preset_Mass = mass;
 						t_mass.setForeground(Color.BLACK);
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(null, "Mass must be greater than 0!");
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Mass must be greater than 0!");
 						return;
-					}
+					}*/
+					//Negative mass:
+					Vars.preset_Mass = mass;
+					t_mass.setForeground(Color.BLACK);
 				}
 				
+
 			}
 		});
 		t_mass.setText(Vars.preset_Mass + "");
@@ -179,32 +166,25 @@ public class MainFrame extends JFrame implements Runnable
 		t_xVelocity.setText(Vars.preset_Velocity.getX() + "");
 		t_xVelocity.setBounds(85, 394, 103, 20);
 
-		t_xVelocity.addKeyListener(new KeyAdapter()
-		{
+		t_xVelocity.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0)
-			{
+			public void keyPressed(KeyEvent arg0) {
 				t_xVelocity.setForeground(Color.RED);
-				
-				
-				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					double vx = 0;
-					
-					try
-					{
+
+					try {
 						vx = Double.parseDouble(t_xVelocity.getText());
-					}
-					catch(Exception e)
-					{
+					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
-					
-						Vars.preset_Velocity.setX(vx);
-						t_xVelocity.setForeground(Color.BLACK);
-					
+
+					Vars.preset_Velocity.setX(vx);
+					t_xVelocity.setForeground(Color.BLACK);
+
 				}
 			}
 		});
@@ -214,32 +194,25 @@ public class MainFrame extends JFrame implements Runnable
 		t_yVelocity.setBounds(85, 425, 103, 20);
 		t_yVelocity.setColumns(10);
 
-		t_yVelocity.addKeyListener(new KeyAdapter()
-		{
+		t_yVelocity.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0)
-			{
+			public void keyPressed(KeyEvent arg0) {
 				t_yVelocity.setForeground(Color.RED);
-				
-				
-				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					double vy = 0;
-					
-					try
-					{
+
+					try {
 						vy = Double.parseDouble(t_yVelocity.getText());
-					}
-					catch(Exception e)
-					{
+					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
-					
-						Vars.preset_Velocity.setY(vy);
-						t_yVelocity.setForeground(Color.BLACK);
-					
+
+					Vars.preset_Velocity.setY(vy);
+					t_yVelocity.setForeground(Color.BLACK);
+
 				}
 			}
 		});
@@ -262,12 +235,10 @@ public class MainFrame extends JFrame implements Runnable
 		l_maßstabLabel.setBounds(10, 300, 91, 14);
 
 		b_nextStep = new JButton(">");
-		b_nextStep.addActionListener(new ActionListener()
-		{
+		b_nextStep.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				Vars.nextStep = true;
 			}
 		});
@@ -279,30 +250,25 @@ public class MainFrame extends JFrame implements Runnable
 		l_steps.setBounds(10, 179, 49, 14);
 
 		t_steps = new JTextField();
-		t_steps.addKeyListener(new KeyAdapter()
-		{
+		t_steps.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent e)
-			{
+			public void keyPressed(KeyEvent e) {
 
 				t_steps.setForeground(Color.RED);
 
-				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					int steps = 1;
 
-					try
-					{
+					try {
 						steps = Integer.parseInt(t_steps.getText());
 
-						if (steps < 1)
-						{
-							JOptionPane.showMessageDialog(null, "Invalid input!");
+						if (steps < 1) {
+							JOptionPane.showMessageDialog(null,
+									"Invalid input!");
 							return;
 						}
-					} catch (Exception ex)
-					{
+					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
@@ -328,31 +294,26 @@ public class MainFrame extends JFrame implements Runnable
 		l_pathsize.setBounds(10, 134, 65, 16);
 
 		t_pathSize = new JTextField();
-		t_pathSize.addKeyListener(new KeyAdapter()
-		{
+		t_pathSize.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0)
-			{
+			public void keyPressed(KeyEvent arg0) {
 
 				t_pathSize.setForeground(Color.RED);
 
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					int pathsize = 0;
 
-					try
-					{
+					try {
 						pathsize = Integer.parseInt(t_pathSize.getText());
 
-						if (pathsize < 0)
-						{
-							JOptionPane.showMessageDialog(null, "Invalid input!");
+						if (pathsize < 0) {
+							JOptionPane.showMessageDialog(null,
+									"Invalid input!");
 							return;
 						}
 
-					} catch (Exception ecc)
-					{
+					} catch (Exception ecc) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
@@ -370,27 +331,22 @@ public class MainFrame extends JFrame implements Runnable
 		t_pathSize.setColumns(10);
 
 		t_timestep = new JTextField();
-		t_timestep.addKeyListener(new KeyAdapter()
-		{
+		t_timestep.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0)
-			{
+			public void keyPressed(KeyEvent arg0) {
 
 				t_timestep.setForeground(Color.RED);
 
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER)
-				{
-					try
-					{
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					try {
 						double d = Double.parseDouble(t_timestep.getText());
 
 						Vars.timeStep = d;
 
 						t_timestep.setForeground(Color.BLACK);
 
-					} catch (Exception ex)
-					{
+					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
@@ -425,23 +381,19 @@ public class MainFrame extends JFrame implements Runnable
 		l_yPos.setBounds(10, 533, 65, 14);
 
 		JButton btnPlaceObject = new JButton("Place Object");
-		btnPlaceObject.addActionListener(new ActionListener()
-		{
+		btnPlaceObject.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 
 				double x = 0;
 				double y = 0;
 
-				try
-				{
+				try {
 					x = Double.parseDouble(t_xPos.getText());
 					y = Double.parseDouble(t_yPos.getText());
 
-				} catch (Exception ee)
-				{
+				} catch (Exception ee) {
 					JOptionPane.showMessageDialog(null, "Invalid input!");
 					return;
 				}
@@ -454,32 +406,26 @@ public class MainFrame extends JFrame implements Runnable
 
 		t_massstabInput = new JTextField();
 		t_massstabInput.setText("1000");
-		t_massstabInput.addKeyListener(new KeyAdapter()
-		{
+		t_massstabInput.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0)
-			{
+			public void keyPressed(KeyEvent arg0) {
 
 				t_massstabInput.setForeground(Color.RED);
 
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					double d = 1;
 
-					try
-					{
+					try {
 						d = Double.parseDouble(t_massstabInput.getText());
 						t_massstabInput.setForeground(Color.BLACK);
 
-					} catch (Exception ex)
-					{
+					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
 
-					if (d < 1)
-					{
+					if (d < 1) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
@@ -497,22 +443,30 @@ public class MainFrame extends JFrame implements Runnable
 
 		r_Time = new JLabel("Time: " + Vars.time);
 		r_Time.setForeground(Color.WHITE);
-		r_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		r_Time.setBounds(10 - (renderPanel.getWidth() / 2),
+				11 - (renderPanel.getHeight() / 2),
+				renderPanel.getWidth() - 10, 14);
 		renderPanel.add(r_Time);
-		
+
 		r_Timestep = new JLabel("Timestep: " + Vars.time);
 		r_Timestep.setForeground(Color.WHITE);
-		r_Timestep.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		r_Timestep.setBounds(10 - (renderPanel.getWidth() / 2),
+				27 - (renderPanel.getHeight() / 2),
+				renderPanel.getWidth() - 10, 14);
 		renderPanel.add(r_Timestep);
 
 		r_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
 		r_Objects.setForeground(Color.WHITE);
-		r_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 43 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		r_Objects.setBounds(10 - (renderPanel.getWidth() / 2),
+				43 - (renderPanel.getHeight() / 2),
+				renderPanel.getWidth() - 10, 14);
 		renderPanel.add(r_Objects);
 
 		l_massstab = new JLabel("Ma\u00DFstab 1:1");
 		l_massstab.setForeground(Color.WHITE);
-		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2), 59 - (renderPanel.getHeight() / 2), renderPanel.getWidth() - 10, 14);
+		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2),
+				59 - (renderPanel.getHeight() / 2),
+				renderPanel.getWidth() - 10, 14);
 		renderPanel.add(l_massstab);
 
 		// MenuBar:
@@ -549,135 +503,114 @@ public class MainFrame extends JFrame implements Runnable
 		controlPanel.add(l_xPos);
 		controlPanel.add(btnPlaceObject);
 		controlPanel.add(t_massstabInput);
-		
+
 		JLabel lblName = new JLabel("Name:");
 		lblName.setBounds(10, 461, 65, 14);
 		controlPanel.add(lblName);
-		
+
 		t_nameField = new JTextField();
 		t_nameField.setText("");
 		t_nameField.setBounds(85, 458, 103, 20);
-		t_nameField.addKeyListener(new KeyAdapter()
-		{
+		t_nameField.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0)
-			{
+			public void keyPressed(KeyEvent arg0) {
 				t_nameField.setForeground(Color.RED);
-				
-				
-				if(arg0.getKeyCode() == KeyEvent.VK_ENTER)
-				{
+
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					String name = "";
-					
-					try
-					{
+
+					try {
 						name = t_nameField.getText();
-					}
-					catch(Exception e)
-					{
+					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Invalid input!");
 						return;
 					}
-					
-						Vars.preset_Name = name;
-						t_nameField.setForeground(Color.BLACK);
-					
+
+					Vars.preset_Name = name;
+					t_nameField.setForeground(Color.BLACK);
+
 				}
 			}
 		});
-		
+
 		controlPanel.add(t_nameField);
 		t_nameField.setColumns(10);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 486, 178, 2);
 		controlPanel.add(separator);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 325, 178, 2);
 		controlPanel.add(separator_1);
-		
+
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(10, 164, 178, 2);
 		controlPanel.add(separator_2);
-		
+
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(10, 93, 178, 2);
 		controlPanel.add(separator_3);
-		
+
 		JSeparator separator_4 = new JSeparator();
 		separator_4.setBounds(10, 242, 178, 2);
 		controlPanel.add(separator_4);
 
 	}
 
-	private InputStream getDemoInputStream(String name)
-	{
+	private InputStream getDemoInputStream(String name) {
 		return getClass().getResourceAsStream("/demofiles/" + name);
 	}
 
-	private void initMasterPanel()
-	{
+	private void initMasterPanel() {
 		masterPanel.add(controlPanel);
 		masterPanel.add(renderPanel);
 	}
 
-	private void initRenderPanel()
-	{
-		renderPanel.addMouseWheelListener(new MouseWheelListener()
-		{
+	private void initRenderPanel() {
+		renderPanel.addMouseWheelListener(new MouseWheelListener() {
 
 			@Override
-			public void mouseWheelMoved(MouseWheelEvent arg0)
-			{
+			public void mouseWheelMoved(MouseWheelEvent arg0) {
 
 				// Clear Points:
 				Vars.clearPoints = true;
 
-				if (!Vars.isActive)
-				{
-					for (Obj o : Vars.activeObjects)
-					{
+				if (!Vars.isActive) {
+					for (Obj o : Vars.activeObjects) {
 						o.clearPoints();
 					}
 				}
 
-				if (arg0.isShiftDown())
-				{
+				if (arg0.isShiftDown()) {
 					lastMouseWheelState += (arg0.getUnitsToScroll() * 1000000);
-				} else
-				{
+				} else {
 					lastMouseWheelState += arg0.getUnitsToScroll();
 				}
 
-				if (lastMouseWheelState < 1)
-				{
+				if (lastMouseWheelState < 1) {
 					lastMouseWheelState = 1;
 				}
 
 				double d = lastMouseWheelState;
 
 				Vars.scaling_ZoomFactor = 1 / d;
-				t_massstabInput.setText(String.format("%.0f", (1/Vars.scaling_ZoomFactor)));
-				
+				t_massstabInput.setText(String.format("%.0f",
+						(1 / Vars.scaling_ZoomFactor)));
 
 			}
 		});
 		renderPanel.setBounds(218, 11, 846, 648);
 		renderPanel.setIgnoreRepaint(true);
 		renderPanel.setFocusable(false);
-		renderPanel.addMouseListener(new MouseAdapter()
-		{
+		renderPanel.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mousePressed(MouseEvent arg0)
-			{
+			public void mousePressed(MouseEvent arg0) {
 
-				if (SwingUtilities.isLeftMouseButton(arg0))
-				{
-					if (arg0.isControlDown())
-					{
+				if (SwingUtilities.isLeftMouseButton(arg0)) {
+					if (arg0.isControlDown()) {
 						mouseClickPos.setX(arg0.getX());
 						mouseClickPos.setY(arg0.getY());
 
@@ -688,19 +621,15 @@ public class MainFrame extends JFrame implements Runnable
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
+			public void mouseReleased(MouseEvent arg0) {
 
-				if (arg0.isControlDown())
-				{
+				if (arg0.isControlDown()) {
 
 					// Clear Points:
 					Vars.clearPoints = true;
 
-					if (!Vars.isActive)
-					{
-						for (Obj o : Vars.activeObjects)
-						{
+					if (!Vars.isActive) {
+						for (Obj o : Vars.activeObjects) {
 							o.clearPoints();
 						}
 					}
@@ -710,11 +639,15 @@ public class MainFrame extends JFrame implements Runnable
 
 					double fac = (int) (1 / Vars.scaling_ZoomFactor);
 
-					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos.getX()));
-					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos.getY()));
+					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos
+							.getX()));
+					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos
+							.getY()));
 
-					Vars.scaling_Delta.setX(Vars.scaling_Delta.getX() + deltaX * fac);
-					Vars.scaling_Delta.setY(Vars.scaling_Delta.getY() + deltaY * fac);
+					Vars.scaling_Delta.setX(Vars.scaling_Delta.getX() + deltaX
+							* fac);
+					Vars.scaling_Delta.setY(Vars.scaling_Delta.getY() + deltaY
+							* fac);
 
 				}
 			}
@@ -722,8 +655,7 @@ public class MainFrame extends JFrame implements Runnable
 
 	}
 
-	private void setUpMenuBar()
-	{
+	private void setUpMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -731,64 +663,58 @@ public class MainFrame extends JFrame implements Runnable
 		menuBar.add(mnFile);
 
 		JMenuItem mntmLoadConfiguration = new JMenuItem("Load Configuration");
-		mntmLoadConfiguration.addActionListener(new ActionListener()
-		{
+		mntmLoadConfiguration.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				GUIEvents.loadConf();
 			}
 		});
 		mnFile.add(mntmLoadConfiguration);
 
 		JMenuItem mntmSaveConfiguration = new JMenuItem("Save Configuration");
-		mntmSaveConfiguration.addActionListener(new ActionListener()
-		{
+		mntmSaveConfiguration.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				FileManager.saveConfiguration();
 			}
 		});
 		mnFile.add(mntmSaveConfiguration);
 
 		JMenuItem mntmCloseSimulator = new JMenuItem("Close Simulator");
-		mntmCloseSimulator.addActionListener(new ActionListener()
-		{
+		mntmCloseSimulator.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
 
 		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(new ActionListener()
-		{
+		mntmAbout.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				JOptionPane.showMessageDialog(null, "x0 Gravity Simulator version " + Vars.version + "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"x0 Gravity Simulator version "
+										+ Vars.version
+										+ "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
 			}
 		});
 
-		JMenuItem mntmReloadLastFile = new JMenuItem("Reload Configuration (Strg-R)");
-		mntmReloadLastFile.addActionListener(new ActionListener()
-		{
+		JMenuItem mntmReloadLastFile = new JMenuItem(
+				"Reload Configuration (Strg-R)");
+		mntmReloadLastFile.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 
-				if (Vars.lastFile == null)
-				{
+				if (Vars.lastFile == null) {
 					GUIEvents.loadConf();
-				} else
-				{
+				} else {
 					GUIEvents.reloadConfig();
 				}
 
@@ -808,34 +734,30 @@ public class MainFrame extends JFrame implements Runnable
 		menuBar.add(mnActions);
 
 		JMenuItem mntmResetSimulator = new JMenuItem("Reset Simulator");
-		mntmResetSimulator.addActionListener(new ActionListener()
-		{
+		mntmResetSimulator.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				Vars.isResetRequested = true;
 			}
 		});
-		
+
 		JMenuItem mntmEditGformula = new JMenuItem("Edit G-Formula");
 		mntmEditGformula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				new FormulaEditor();
-				
+
 			}
 		});
 		mnActions.add(mntmEditGformula);
 		mnActions.add(mntmResetSimulator);
 
 		JMenuItem mntmTakeScreenshot = new JMenuItem("Take Screenshot (Strg-S)");
-		mntmTakeScreenshot.addActionListener(new ActionListener()
-		{
+		mntmTakeScreenshot.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				GUIEvents.takeScreenShot(true);
 
 			}
@@ -846,28 +768,26 @@ public class MainFrame extends JFrame implements Runnable
 		menuBar.add(mnDemo);
 
 		JMenuItem mntmOrbits = new JMenuItem("3 Orbits");
-		mntmOrbits.addActionListener(new ActionListener()
-		{
+		mntmOrbits.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 
-				FileManager.loadConfigFromInputStream(getDemoInputStream("3orbits.x0"));
+				FileManager
+						.loadConfigFromInputStream(getDemoInputStream("3orbits.x0"));
 			}
 		});
 
 		setContentPane(masterPanel);
 
 		JMenuItem mntmElliptic = new JMenuItem("2 Elliptic");
-		mntmElliptic.addActionListener(new ActionListener()
-		{
+		mntmElliptic.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 
-				FileManager.loadConfigFromInputStream(getDemoInputStream("2elliptic.x0"));
+				FileManager
+						.loadConfigFromInputStream(getDemoInputStream("2elliptic.x0"));
 
 			}
 		});
@@ -876,28 +796,26 @@ public class MainFrame extends JFrame implements Runnable
 		mnDemo.add(mntmElliptic);
 
 		JMenuItem mntmEqualMass = new JMenuItem("2 Equal Mass");
-		mntmEqualMass.addActionListener(new ActionListener()
-		{
+		mntmEqualMass.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 
-				FileManager.loadConfigFromInputStream(getDemoInputStream("2equalmass.x0"));
+				FileManager
+						.loadConfigFromInputStream(getDemoInputStream("2equalmass.x0"));
 
 			}
 		});
 		mnDemo.add(mntmEqualMass);
 
 		JMenuItem mntmDifferentMass = new JMenuItem("2 Different Mass");
-		mntmDifferentMass.addActionListener(new ActionListener()
-		{
+		mntmDifferentMass.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 
-				FileManager.loadConfigFromInputStream(getDemoInputStream("2differentmass.x0"));
+				FileManager
+						.loadConfigFromInputStream(getDemoInputStream("2differentmass.x0"));
 
 			}
 		});

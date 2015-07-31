@@ -3,41 +3,39 @@ package at.xer0.lib.Simulators.GravitySimulator;
 import java.awt.Color;
 import java.util.Random;
 
-
 public class SObject {
-	
-	public Color color = randomColor();
-			
-			public static Color randomColor()
-			{
-				Random rand = new Random();
-				float r = rand.nextFloat();
-				float g = rand.nextFloat();
-				float b = rand.nextFloat();
 
-				return new Color(r, g, b);
-			}
-	
-	private Vec3D 	position = new Vec3D(0,0,0),
-					velocity = new Vec3D(0,0,0),
-					acceleration = new Vec3D(0,0,0);
-	
+	public Color color = randomColor();
+
+	public static Color randomColor() {
+		Random rand = new Random();
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+
+		return new Color(r, g, b);
+	}
+
+	private Vec3D position = new Vec3D(0, 0, 0), velocity = new Vec3D(0, 0, 0),
+			acceleration = new Vec3D(0, 0, 0);
+
 	@Override
 	public String toString() {
-		return "-" + name + "- [position=" + position + ", velocity=" + velocity + ", acceleration=" + acceleration + ", mass=" + mass + "]";
+		return "-" + name + "- [position=" + position + ", velocity="
+				+ velocity + ", acceleration=" + acceleration + ", mass="
+				+ mass + "]";
 	}
 
 	private double mass = 0;
 	private String name = "";
-	
-	public SObject(Vec3D pos, Vec3D vel, double m, String s)
-	{
+
+	public SObject(Vec3D pos, Vec3D vel, double m, String s) {
 		this.position = pos;
 		this.velocity = vel;
 		this.mass = m;
 		this.name = s;
 	}
-	
+
 	public Vec3D getPosition() {
 		return position;
 	}
@@ -77,9 +75,8 @@ public class SObject {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Vec3D getDeltaXYZ(SObject o2)
-	{
+
+	public Vec3D getDeltaXYZ(SObject o2) {
 		double dx = o2.getPosition().getX() - position.getX();
 		double dy = o2.getPosition().getY() - position.getY();
 		double dz = o2.getPosition().getZ() - position.getZ();
@@ -87,12 +84,11 @@ public class SObject {
 		return new Vec3D(dx, dy, dz);
 	}
 
-	public double getDistanceTo(SObject o2)
-	{
+	public double getDistanceTo(SObject o2) {
 		Vec3D delta = getDeltaXYZ(o2);
 
-		return Math.sqrt(Math.pow(delta.getX(), 2) + Math.pow(delta.getY(), 2) + Math.pow(delta.getZ(), 2));
+		return Math.sqrt(Math.pow(delta.getX(), 2) + Math.pow(delta.getY(), 2)
+				+ Math.pow(delta.getZ(), 2));
 	}
-	
-	
+
 }

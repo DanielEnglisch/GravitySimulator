@@ -1,8 +1,8 @@
 package at.xer0.lib.Simulators.GravitySimulator;
 
 public class Vec2D {
-	
-	private double x,y;
+
+	private double x, y;
 
 	@Override
 	public String toString() {

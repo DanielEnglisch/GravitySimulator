@@ -1,4 +1,3 @@
-
 package at.xer0.GravitySimulator.Support;
 
 import java.io.File;
@@ -8,11 +7,12 @@ import at.xer0.GravitySimulator.GUI.MainFrame;
 import at.xer0.GravitySimulator.Objects.Obj;
 import at.xer0.GravitySimulator.Objects.Vec2D;
 
-public class Vars
-{
+public class Vars {
 
 	public static MainFrame mainFrame = null;
 	public static String version = "1.2";
+
+	public static boolean renderRequest = false;
 
 	public static boolean isActive = false;
 	public static boolean nextStep = false;
@@ -47,8 +47,6 @@ public class Vars
 	public static double scaling_ZoomFactor = 1;
 	public static Vec2D scaling_Delta = new Vec2D(0, 0);
 
-	
 	public static int pathSize = 300;
-
 
 }

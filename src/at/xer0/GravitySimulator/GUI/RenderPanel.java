@@ -1,4 +1,3 @@
-
 package at.xer0.GravitySimulator.GUI;
 
 import java.awt.Color;
@@ -9,13 +8,11 @@ import javax.swing.JPanel;
 
 import at.xer0.GravitySimulator.Simulator.Render;
 
-public class RenderPanel extends JPanel
-{
+public class RenderPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public RenderPanel()
-	{
+	public RenderPanel() {
 		setForeground(Color.WHITE);
 		setBackground(Color.BLACK);
 		setLayout(null);
@@ -24,8 +21,7 @@ public class RenderPanel extends JPanel
 	}
 
 	@Override
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 
 		Graphics2D gn = (Graphics2D) g;
 
@@ -34,5 +30,5 @@ public class RenderPanel extends JPanel
 		Render.renderFrame(gn);
 
 	}
-	
+
 }

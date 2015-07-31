@@ -1,8 +1,8 @@
 package at.xer0.lib.Simulators.GravitySimulator;
 
 public class Vec3D {
-	
-	private double x,y,z;
+
+	private double x, y, z;
 
 	@Override
 	public String toString() {
@@ -39,7 +39,5 @@ public class Vec3D {
 		this.y = y;
 		this.z = z;
 	}
-	
-	
 
 }

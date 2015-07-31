@@ -1,4 +1,3 @@
-
 package at.xer0.GravitySimulator.Simulator;
 
 import java.awt.Color;
@@ -10,39 +9,38 @@ import at.xer0.GravitySimulator.Objects.Obj;
 import at.xer0.GravitySimulator.Objects.Point;
 import at.xer0.GravitySimulator.Support.Vars;
 
-public class Render
-{
+public class Render {
 
-	public static void renderFrame(Graphics2D g)
-	{
+	public static void renderFrame(Graphics2D g) {
 
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
 		// Render Origin at Center of screen:
-		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2, Vars.mainFrame.renderPanel.getHeight() / 2);
+		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2,
+				Vars.mainFrame.renderPanel.getHeight() / 2);
 
 		renderPath(g);
 
-		for (Obj obj : Vars.activeObjects)
-		{
-			
-			if(obj.getName().equals("x0"))
-			{
+		for (int i = 0; i < Vars.activeObjects.size(); i++) {
+			Obj obj = Vars.activeObjects.get(i);
+
+			if (obj.getName().equals("x0")) {
 				obj.setColor(Obj.randomColor());
 
 			}
-			
 
-			
 			g.setColor(obj.getColor());
 
-			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta.getX()) * Vars.scaling_ZoomFactor);
-			int y = (int) ((obj.getPosition().getY() + Vars.scaling_Delta.getY()) * Vars.scaling_ZoomFactor);
+			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta
+					.getX()) * Vars.scaling_ZoomFactor);
+			int y = (int) ((obj.getPosition().getY() + Vars.scaling_Delta
+					.getY()) * Vars.scaling_ZoomFactor);
 
-			//Fixed Radius:
+			// Fixed Radius:
 			int radius = 25;
-			
 
 			int r_x = x - (radius / 2);
 			int r_y = y - (radius / 2);
@@ -53,43 +51,38 @@ public class Render
 
 			// Render Text
 
-			if (Vars.mainFrame.cb_showNames.isSelected())
-			{ 
+			if (Vars.mainFrame.cb_showNames.isSelected()) {
 				g.setColor(Color.WHITE);
-				g.drawString(obj.getName(), r_x - obj.getName().length(), r_y - 10);
+				g.drawString(obj.getName(), r_x - obj.getName().length(),
+						r_y - 10);
 			}
 
 		}
 
 	}
 
-	private static void renderPath(Graphics2D g)
-	{
+	private static void renderPath(Graphics2D g) {
 
-		for (Obj obj : Vars.activeObjects)
-		{
+		for (int e = 0; e < Vars.activeObjects.size(); e++) {
+			Obj obj = Vars.activeObjects.get(e);
 
-			if (Vars.mainFrame.cb_drawPath.isSelected())
-			{
+			if (Vars.mainFrame.cb_drawPath.isSelected()) {
 				g.setColor(obj.getColor());
 
 				// LinePath:
-				for (int i = 0; i < obj.points.size(); i++)
-				{
-					try
-					{
+				for (int i = 0; i < obj.points.size(); i++) {
+					try {
 						Point p1 = obj.points.get(i);
 						Point p2 = obj.points.get(i /* + 1 */);
 
-						g.drawLine((p1.getX()), (p1.getY()), (p2.getX()), (p2.getY()));
+						g.drawLine((p1.getX()), (p1.getY()), (p2.getX()),
+								(p2.getY()));
 
-					} catch (Exception exx)
-					{
+					} catch (Exception exx) {
 					}
 
 				}
-			} else
-			{
+			} else {
 				obj.clearPoints();
 			}
 

@@ -1,4 +1,3 @@
-
 package at.xer0.GravitySimulator.Simulator;
 
 import java.util.Random;
@@ -8,11 +7,9 @@ import at.xer0.GravitySimulator.Objects.Obj;
 import at.xer0.GravitySimulator.Objects.Vec2D;
 import at.xer0.GravitySimulator.Support.Vars;
 
-public class Core
-{
+public class Core {
 
-	public static void main(String[] args) throws InterruptedException
-	{
+	public static void main(String[] args) throws InterruptedException {
 		// Ladet und startet die GUI
 		Vars.mainFrame = new MainFrame();
 		new Thread(Vars.mainFrame).start();
@@ -22,20 +19,16 @@ public class Core
 		System.out.println("GravitySimulator initialized!");
 
 		// Hauptschleife
-		while (true)
-		{
+		while (true) {
 
-			if (Vars.isResetRequested)
-			{
+			if (Vars.isResetRequested) {
 				resetSimulation();
 				Vars.isResetRequested = false;
 			}
 
 			// Delete requested Object:
-			if (Vars.objectToDelete.size() != 0)
-			{
-				for (Obj no : Vars.objectToDelete)
-				{
+			if (Vars.objectToDelete.size() != 0) {
+				for (Obj no : Vars.objectToDelete) {
 					Vars.activeObjects.remove(no);
 				}
 
@@ -43,33 +36,27 @@ public class Core
 			}
 
 			// Add buffered Objects:
-			if (Vars.bufferedObjects.size() != 0)
-			{
-				for (Obj no : Vars.bufferedObjects)
-				{
+			if (Vars.bufferedObjects.size() != 0) {
+				for (Obj no : Vars.bufferedObjects) {
 					Vars.activeObjects.add(no);
 				}
 
 				Vars.bufferedObjects.clear();
 			}
-			
+
 			// Wenn die Simulation läuft:
-			if (Vars.isActive)
-			{
+			if (Vars.isActive) {
 				// Logik
 				Logic.tick();
 
-			} else
-			{
+			} else {
 				// Stepping Mode Active:
 
 				// Wenn der SingleStep Button gedrückt wurde,
-				if (Vars.nextStep)
-				{
+				if (Vars.nextStep) {
 					// Die Logic so oft ausführen, wie gewünscht:
 
-					for (int i = 0; i < Vars.steps; i++)
-					{
+					for (int i = 0; i < Vars.steps; i++) {
 						Logic.tick();
 					}
 
@@ -91,10 +78,7 @@ public class Core
 
 	}
 
-
-
-	public static void resetSimulation()
-	{
+	public static void resetSimulation() {
 
 		Vars.isActive = false;
 
@@ -123,38 +107,37 @@ public class Core
 
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
 		Vars.mainFrame.b_nextStep.setEnabled(true);
-		Vars.mainFrame.r_Time.setText("Time: " + String.format("%.5f", Vars.time));
+		Vars.mainFrame.r_Time.setText("Time: "
+				+ String.format("%.5f", Vars.time));
 
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
-	
 
 	}
 
-	public static void updateGUIVars()
-	{
+	public static void updateGUIVars() {
 		Vars.mainFrame.r_Time.setText("Time: " + fmt(Vars.time) + "s");
-		Vars.mainFrame.r_Timestep.setText("Timestep: " + fmt(Vars.timeStep) + "s");
+		Vars.mainFrame.r_Timestep.setText("Timestep: " + fmt(Vars.timeStep)
+				+ "s");
 
-		Vars.mainFrame.r_Objects.setText("Objects: " + Vars.activeObjects.size());
-		Vars.mainFrame.l_massstab.setText("Scale = 1:" + String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) + "m");
+		Vars.mainFrame.r_Objects.setText("Objects: "
+				+ Vars.activeObjects.size());
+		Vars.mainFrame.l_massstab.setText("Scale = 1:"
+				+ String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) + "m");
 
 	}
 
-	public static int randInt(int min, int max)
-	{
+	public static int randInt(int min, int max) {
 		Random r = new java.util.Random();
 		int i1 = r.nextInt(max - min + 1) + min;
 		return i1;
 	}
-	
-	public static String fmt(double d)
-	{
-	    if(d == (long) d)
-	        return String.format("%d",(long)d);
-	    else
-	        return String.format("%s",d);
-	}
 
+	public static String fmt(double d) {
+		if (d == (long) d)
+			return String.format("%d", (long) d);
+		else
+			return String.format("%s", d);
+	}
 
 }
