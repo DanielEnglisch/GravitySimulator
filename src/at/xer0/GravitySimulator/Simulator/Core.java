@@ -6,10 +6,23 @@ import at.xer0.GravitySimulator.GUI.MainFrame;
 import at.xer0.GravitySimulator.Objects.Obj;
 import at.xer0.GravitySimulator.Objects.Vec2D;
 import at.xer0.GravitySimulator.Support.Vars;
+import at.xer0.x0_Library.net.AppUpdater;
 
 public class Core {
+	
+	
 
 	public static void main(String[] args) throws InterruptedException {
+		
+		//Updater:
+		AppUpdater up = new AppUpdater	(	"http://xeroserver.org/api/gravsim/cs_gravsim.php",
+											"http://xeroserver.org/api/gravsim/GravitySimulator.jar",
+											"GravitySimulator.jar"
+										);
+		up.checkForUpdate();
+		
+				
+		
 		// Ladet und startet die GUI
 		Vars.mainFrame = new MainFrame();
 		new Thread(Vars.mainFrame).start();
