@@ -42,6 +42,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+#ECLIPSE================
+
 *.pydevproject
 .metadata
 .gradle
@@ -53,23 +55,31 @@ tmp/
 *~.nib
 local.properties
 .settings/
-bin/
 .loadpath
+
 # Eclipse Core
 .project
+
 # External tool builders
 .externalToolBuilders/
+
 # Locally stored "Eclipse launch configurations"
 *.launch
+
 # CDT-specific
 .cproject
+
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
 # Java annotation processor (APT)
 .factorypath
+
 # PDT-specific
 .buildpath
+
 # sbteclipse plugin
 .target
+
 # TeXlipse plugin
 .texlipse
