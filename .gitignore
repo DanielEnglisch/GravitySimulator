@@ -53,6 +53,7 @@ tmp/
 *~.nib
 local.properties
 .settings/
+bin/
 .loadpath
 # Eclipse Core
 .project
