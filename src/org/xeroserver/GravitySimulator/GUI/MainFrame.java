@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -23,7 +21,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -33,19 +30,32 @@ import org.xeroserver.GravitySimulator.Objects.Vec2D;
 import org.xeroserver.GravitySimulator.Support.FileManager;
 import org.xeroserver.GravitySimulator.Support.GUIEvents;
 import org.xeroserver.GravitySimulator.Support.Vars;
+import org.xeroserver.x0_Library.GUI.X0InputField;
 
 public class MainFrame extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel masterPanel;
-	private JTextField t_mass;
-	private JTextField t_xVelocity;
-	private JTextField t_yVelocity;
-	private JPanel controlPanel;
-	private JTextField t_yPos;
-	private JTextField t_xPos;
 
-	// Public GUI
+	private JPanel controlPanel;
+	
+	public X0InputField t_steps;
+	public X0InputField t_pathSize;
+	public X0InputField t_timestep;
+	public X0InputField t_massstabInput;
+	
+	private X0InputField t_xPos;
+	private X0InputField t_yPos;
+	
+	private X0InputField t_mass;
+	
+	private X0InputField t_xVelocity;
+	private X0InputField t_yVelocity;
+	
+	private X0InputField t_nameField;
+	
+
+
 
 	public JPanel renderPanel;
 
@@ -56,10 +66,7 @@ public class MainFrame extends JFrame implements Runnable {
 	public JButton b_StartStop;
 	public JButton b_nextStep;
 
-	public JTextField t_steps;
-	public JTextField t_pathSize;
-	public JTextField t_timestep;
-	public JTextField t_massstabInput;
+
 
 	public JCheckBox cb_drawPath;
 	public JCheckBox cb_showNames;
@@ -73,7 +80,6 @@ public class MainFrame extends JFrame implements Runnable {
 	public double lastMouseWheelState = 1;
 	public Vec2D mouseClickPos = new Vec2D(0, 0);
 	public Vec2D mouseReleasePos = new Vec2D(0, 0);
-	private JTextField t_nameField;
 
 	//
 
@@ -108,6 +114,7 @@ public class MainFrame extends JFrame implements Runnable {
 		setVisible(true);
 	}
 
+	@SuppressWarnings("serial")
 	private void initControlPanel() {
 
 		b_StartStop = new JButton("Start Simulation");
@@ -125,97 +132,60 @@ public class MainFrame extends JFrame implements Runnable {
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
 		l_newObject.setBounds(10, 338, 178, 14);
 
-		t_mass = new JTextField();
-		t_mass.addKeyListener(new KeyAdapter() {
-
+		
+		t_mass = new X0InputField(new int[]{X0InputField.DOUBLE})
+		{
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-				t_mass.setForeground(Color.RED);
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					double mass = -1;
-
-					try {
-						mass = Double.parseDouble(t_mass.getText());
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					/*if (mass > 0) {
-						Vars.preset_Mass = mass;
-						t_mass.setForeground(Color.BLACK);
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"Mass must be greater than 0!");
-						return;
-					}*/
-					//Negative mass:
-					Vars.preset_Mass = mass;
-					t_mass.setForeground(Color.BLACK);
-				}
-				
-
+			public void update()
+			{
+				Vars.preset_Mass = this.getDoubleValue();
+				Vars.logger.info("Updated Mass to " + Vars.preset_Mass);
 			}
-		});
+		};
+		
 		t_mass.setText(Vars.preset_Mass + "");
+		t_mass.setDisplayErrors(true);
+		
 		t_mass.setBounds(85, 363, 103, 20);
 		t_mass.setColumns(10);
 
-		t_xVelocity = new JTextField();
+		t_xVelocity = new X0InputField(new int[]{X0InputField.DOUBLE})
+		{
+			@Override
+			public void update()
+			{
+				Vars.preset_Velocity.setX(this.getDoubleValue());
+				Vars.logger.info("Updated x-Vel to " + Vars.preset_Velocity.getX());
+			}
+		};
+		
 		t_xVelocity.setText(Vars.preset_Velocity.getX() + "");
+		t_xVelocity.setDisplayErrors(true);
+		
+
 		t_xVelocity.setBounds(85, 394, 103, 20);
 
-		t_xVelocity.addKeyListener(new KeyAdapter() {
+		
 
+		t_yVelocity = new X0InputField(new int[]{X0InputField.DOUBLE})
+		{
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-				t_xVelocity.setForeground(Color.RED);
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					double vx = 0;
-
-					try {
-						vx = Double.parseDouble(t_xVelocity.getText());
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					Vars.preset_Velocity.setX(vx);
-					t_xVelocity.setForeground(Color.BLACK);
-
-				}
+			public void update()
+			{
+				Vars.preset_Velocity.setY(this.getDoubleValue());
+				Vars.logger.info("Updated y-Vel to " + Vars.preset_Velocity.getY());
 			}
-		});
-
-		t_yVelocity = new JTextField();
+		};
+		
 		t_yVelocity.setText(Vars.preset_Velocity.getY() + "");
+		t_yVelocity.setDisplayErrors(true);
+		
+		
+		
 		t_yVelocity.setBounds(85, 425, 103, 20);
 		t_yVelocity.setColumns(10);
 
-		t_yVelocity.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				t_yVelocity.setForeground(Color.RED);
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					double vy = 0;
-
-					try {
-						vy = Double.parseDouble(t_yVelocity.getText());
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					Vars.preset_Velocity.setY(vy);
-					t_yVelocity.setForeground(Color.BLACK);
-
-				}
-			}
-		});
+		
 
 		JLabel l_mass = new JLabel("Mass:");
 		l_mass.setBounds(10, 366, 65, 14);
@@ -249,38 +219,21 @@ public class MainFrame extends JFrame implements Runnable {
 		l_steps.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		l_steps.setBounds(10, 179, 49, 14);
 
-		t_steps = new JTextField();
-		t_steps.addKeyListener(new KeyAdapter() {
-
+		
+		t_steps = new X0InputField(new int[]{X0InputField.INT, X0InputField.NOT_ZERO, X0InputField.POSITIVE})
+		{
 			@Override
-			public void keyPressed(KeyEvent e) {
-
-				t_steps.setForeground(Color.RED);
-
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					int steps = 1;
-
-					try {
-						steps = Integer.parseInt(t_steps.getText());
-
-						if (steps < 1) {
-							JOptionPane.showMessageDialog(null,
-									"Invalid input!");
-							return;
-						}
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					Vars.steps = steps;
-					t_steps.setForeground(Color.BLACK);
-
-				}
-
+			public void update()
+			{
+				Vars.steps = this.getIntegerValue();
+				Vars.logger.info("Updated Steps to " + Vars.steps);
 			}
-		});
-		t_steps.setText("1");
+		};
+		
+		t_steps.setText(Vars.steps + "");
+		t_steps.setDisplayErrors(true);
+		
+		
 		t_steps.setBounds(85, 177, 103, 20);
 		t_steps.setColumns(10);
 
@@ -293,67 +246,34 @@ public class MainFrame extends JFrame implements Runnable {
 		l_pathsize.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		l_pathsize.setBounds(10, 134, 65, 16);
 
-		t_pathSize = new JTextField();
-		t_pathSize.addKeyListener(new KeyAdapter() {
-
+		t_pathSize = new X0InputField(new int[]{X0InputField.INT, X0InputField.POSITIVE})
+		{
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-
-				t_pathSize.setForeground(Color.RED);
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					int pathsize = 0;
-
-					try {
-						pathsize = Integer.parseInt(t_pathSize.getText());
-
-						if (pathsize < 0) {
-							JOptionPane.showMessageDialog(null,
-									"Invalid input!");
-							return;
-						}
-
-					} catch (Exception ecc) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					Vars.pathSize = pathsize;
-					t_pathSize.setForeground(Color.BLACK);
-
-				}
-
+			public void update()
+			{
+				Vars.pathSize = this.getIntegerValue();
+				Vars.logger.info("Updated Pathsize to " + Vars.pathSize);
 			}
-		});
-
-		t_pathSize.setText("300");
+		};
+		
+		t_pathSize.setText(Vars.pathSize + "");
+		t_pathSize.setDisplayErrors(true);
 		t_pathSize.setBounds(85, 133, 103, 20);
 		t_pathSize.setColumns(10);
 
-		t_timestep = new JTextField();
-		t_timestep.addKeyListener(new KeyAdapter() {
-
+		t_timestep = new X0InputField(new int[]{X0InputField.DOUBLE, X0InputField.NOT_ZERO})
+		{
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-
-				t_timestep.setForeground(Color.RED);
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					try {
-						double d = Double.parseDouble(t_timestep.getText());
-
-						Vars.timeStep = d;
-
-						t_timestep.setForeground(Color.BLACK);
-
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-				}
+			public void update()
+			{
+				Vars.timeStep = this.getDoubleValue();
+				Vars.logger.info("Updated TimeStep to " + Vars.timeStep);
 			}
-		});
-		t_timestep.setText("0.0001");
+		};
+		t_timestep.setDisplayErrors(true);
+		t_timestep.setText(Vars.timeStep + "");
+		
+		
 		t_timestep.setBounds(85, 106, 103, 22);
 		t_timestep.setColumns(10);
 
@@ -362,15 +282,35 @@ public class MainFrame extends JFrame implements Runnable {
 		cb_showNames.setBackground(Color.WHITE);
 		cb_showNames.setBounds(10, 268, 178, 25);
 
-		t_yPos = new JTextField();
+		t_yPos = new X0InputField(new int[]{X0InputField.DOUBLE})
+		{
+			@Override
+			public void update()
+			{
+				Vars.preset_Position.setY(this.getDoubleValue()); 
+				Vars.logger.info("Updated y-Pos to " + Vars.preset_Position.getY());
+			}
+		};
+		
+		t_yPos.setText(Vars.preset_Position.getY() + "");
+		t_yPos.setDisplayErrors(true);
 
-		t_yPos.setText("0");
 		t_yPos.setBounds(85, 530, 103, 20);
 		t_yPos.setColumns(10);
 
-		t_xPos = new JTextField();
+		t_xPos = new X0InputField(new int[]{X0InputField.DOUBLE})
+		{
+			@Override
+			public void update()
+			{
+				Vars.preset_Position.setX(this.getDoubleValue()); 
+				Vars.logger.info("Updated x-Pos to " + Vars.preset_Position.getX());
+			}
+		};
+		
+		t_xPos.setText(Vars.preset_Position.getX() + "");
+		t_xPos.setDisplayErrors(true);
 
-		t_xPos.setText("0");
 		t_xPos.setBounds(85, 499, 103, 20);
 		t_xPos.setColumns(10);
 
@@ -386,58 +326,32 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				double x = 0;
-				double y = 0;
-
-				try {
-					x = Double.parseDouble(t_xPos.getText());
-					y = Double.parseDouble(t_yPos.getText());
-
-				} catch (Exception ee) {
-					JOptionPane.showMessageDialog(null, "Invalid input!");
-					return;
-				}
-
-				GUIEvents.addObject(x, y);
+				GUIEvents.addObject(Vars.preset_Position.getX(), Vars.preset_Position.getY());
 
 			}
 		});
 		btnPlaceObject.setBounds(10, 561, 178, 30);
 
-		t_massstabInput = new JTextField();
-		t_massstabInput.setText("1000");
-		t_massstabInput.addKeyListener(new KeyAdapter() {
-
+		
+		t_massstabInput = new X0InputField(new int[]{X0InputField.DOUBLE, X0InputField.NOT_ZERO, X0InputField.POSITIVE})
+		{
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-
-				t_massstabInput.setForeground(Color.RED);
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					double d = 1;
-
-					try {
-						d = Double.parseDouble(t_massstabInput.getText());
-						t_massstabInput.setForeground(Color.BLACK);
-
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					if (d < 1) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					// Reset Color
-					Vars.scaling_ZoomFactor = 1 / d;
-					Vars.clearPoints = true;
-
-				}
+			public void update()
+			{
+				
+				// Reset Color
+				Vars.scaling_ZoomFactor = 1 / this.getDoubleValue();
+				Vars.clearPoints = true;
+				
+				Vars.logger.info("Updated Scaling  to 1:" + this.getDoubleValue());
 
 			}
-		});
+		};
+		
+		t_massstabInput.setText(Vars.timeStep + "");
+		t_massstabInput.setDisplayErrors(true);
+		
+
 		t_massstabInput.setBounds(85, 297, 103, 20);
 		t_massstabInput.setColumns(10);
 
@@ -508,31 +422,21 @@ public class MainFrame extends JFrame implements Runnable {
 		lblName.setBounds(10, 461, 65, 14);
 		controlPanel.add(lblName);
 
-		t_nameField = new JTextField();
-		t_nameField.setText("");
-		t_nameField.setBounds(85, 458, 103, 20);
-		t_nameField.addKeyListener(new KeyAdapter() {
-
+		t_nameField = new X0InputField()
+		{
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-				t_nameField.setForeground(Color.RED);
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					String name = "";
-
-					try {
-						name = t_nameField.getText();
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					Vars.preset_Name = name;
-					t_nameField.setForeground(Color.BLACK);
-
-				}
+			public void update()
+			{
+				Vars.preset_Name = this.getStringValue(); 
+				Vars.logger.info("Updated name to " + Vars.preset_Name);
 			}
-		});
+		};
+		
+		t_nameField.setText(Vars.preset_Name + "");
+		t_nameField.setDisplayErrors(true);
+
+		t_nameField.setBounds(85, 458, 103, 20);
+
 
 		controlPanel.add(t_nameField);
 		t_nameField.setColumns(10);

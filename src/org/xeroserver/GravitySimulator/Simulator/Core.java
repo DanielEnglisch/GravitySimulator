@@ -6,8 +6,7 @@ import org.xeroserver.GravitySimulator.GUI.MainFrame;
 import org.xeroserver.GravitySimulator.Objects.Obj;
 import org.xeroserver.GravitySimulator.Objects.Vec2D;
 import org.xeroserver.GravitySimulator.Support.Vars;
-
-import at.xer0.x0_Library.net.AppUpdater;
+import org.xeroserver.x0_Library.net.AppUpdater;
 
 public class Core {
 	

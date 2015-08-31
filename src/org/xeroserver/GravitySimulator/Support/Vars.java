@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import org.xeroserver.GravitySimulator.GUI.MainFrame;
 import org.xeroserver.GravitySimulator.Objects.Obj;
 import org.xeroserver.GravitySimulator.Objects.Vec2D;
-
-import at.xer0.x0_Library.Log.Logger;
+import org.xeroserver.x0_Library.Log.Logger;
 
 public class Vars {
 
 	public static MainFrame mainFrame = null;
-	public static String version = "1.35";
+	public static String version = "1.4";
 
-	public static Logger logger = new Logger("GravitySimulator");
+	public static Logger logger = new Logger("GravitySimulator", Logger.NORMAL);
 	
 	public static boolean renderRequest = false;
 
@@ -26,7 +25,6 @@ public class Vars {
 
 	public static File lastFile = null;
 
-	// Steps to do in SingleStepMode (by default 1)
 	public static int steps = 1;
 
 	// ActiveObjects:

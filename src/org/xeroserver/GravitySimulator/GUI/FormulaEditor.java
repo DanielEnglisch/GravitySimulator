@@ -1,26 +1,23 @@
 package org.xeroserver.GravitySimulator.GUI;
 
-import java.awt.Color;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import org.xeroserver.GravitySimulator.Support.Vars;
+import org.xeroserver.x0_Library.GUI.X0InputField;
 
 public class FormulaEditor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txt_G;
-	private JTextField textField;
+	private X0InputField txt_G;
+	private X0InputField txt_R;
 
+	@SuppressWarnings("serial")
 	public FormulaEditor() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				MainFrame.class.getResource("/img/gravsim64.png")));
@@ -33,36 +30,21 @@ public class FormulaEditor extends JFrame {
 		contentPane.setLayout(null);
 		this.setResizable(false);
 
-		txt_G = new JTextField();
-		txt_G.setText(Vars.G + "");
-
-		txt_G.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-
-				txt_G.setForeground(Color.RED);
-
-				double G = Vars.G;
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					try {
-
-						G = Double.parseDouble(txt_G.getText());
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
+		txt_G = new X0InputField(new int[]{X0InputField.DOUBLE})
+				{
+					@Override
+					public void update()
+					{
+						Vars.G = this.getDoubleValue();
+						Vars.logger.info("Updated G to " + Vars.G);
 					}
-
-					Vars.G = G;
-					txt_G.setForeground(Color.BLACK);
-
-					Vars.logger.info("G updated: " + Vars.G);
-
-				}
-
-			}
-		});
+				};
+				
+		txt_G.setText(Vars.G + "");
+		txt_G.setDisplayErrors(true);
+		
+		
+		
 		txt_G.setBounds(60, 11, 108, 20);
 		contentPane.add(txt_G);
 		txt_G.setColumns(10);
@@ -71,36 +53,24 @@ public class FormulaEditor extends JFrame {
 		lblG.setBounds(21, 14, 29, 14);
 		contentPane.add(lblG);
 
-		textField = new JTextField();
-		textField.setText(Vars.rExponent + "");
-		textField.addKeyListener(new KeyAdapter() {
+		
+		txt_R = new X0InputField(new int[]{X0InputField.DOUBLE})
+		{
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-				textField.setForeground(Color.RED);
-
-				double r = Vars.rExponent;
-
-				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					try {
-
-						r = Double.parseDouble(textField.getText());
-
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Invalid input!");
-						return;
-					}
-
-					Vars.rExponent = r;
-					textField.setForeground(Color.BLACK);
-					System.out.println("r Exponent updated: " + Vars.rExponent);
-
-				}
-
+			public void update()
+			{
+				Vars.rExponent = this.getDoubleValue();
+				Vars.logger.info("Updated R-Exponent to " + Vars.rExponent);
 			}
-		});
-		textField.setBounds(60, 42, 108, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		};
+		txt_R.setText(Vars.rExponent + "");
+		txt_R.setDisplayErrors(true);
+		
+		
+
+		txt_R.setBounds(60, 42, 108, 20);
+		contentPane.add(txt_R);
+		txt_R.setColumns(10);
 
 		JLabel lblRe = new JLabel("r^E:");
 		lblRe.setBounds(21, 45, 29, 14);
