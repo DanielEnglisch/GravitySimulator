@@ -30,7 +30,7 @@ public class FormulaEditor extends JFrame {
 		contentPane.setLayout(null);
 		this.setResizable(false);
 
-		txt_G = new X0InputField(new int[]{X0InputField.DOUBLE})
+		txt_G = new X0InputField(new int[]{X0InputField.DOUBLE},true)
 				{
 					@Override
 					public void update()
@@ -41,7 +41,6 @@ public class FormulaEditor extends JFrame {
 				};
 				
 		txt_G.setText(Vars.G + "");
-		txt_G.setDisplayErrors(true);
 		
 		
 		
@@ -54,7 +53,7 @@ public class FormulaEditor extends JFrame {
 		contentPane.add(lblG);
 
 		
-		txt_R = new X0InputField(new int[]{X0InputField.DOUBLE})
+		txt_R = new X0InputField(new int[]{X0InputField.DOUBLE},true)
 		{
 			@Override
 			public void update()
@@ -64,7 +63,6 @@ public class FormulaEditor extends JFrame {
 			}
 		};
 		txt_R.setText(Vars.rExponent + "");
-		txt_R.setDisplayErrors(true);
 		
 		
 
