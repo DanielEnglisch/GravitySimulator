@@ -55,8 +55,6 @@ public class MainFrame extends JFrame implements Runnable {
 	private X0InputField t_nameField;
 	
 
-
-
 	public JPanel renderPanel;
 
 	public JLabel r_Time;
@@ -106,7 +104,7 @@ public class MainFrame extends JFrame implements Runnable {
 		initRenderPanel();
 		initMasterPanel();
 		initControlPanel();
-
+		
 	}
 
 	@Override
