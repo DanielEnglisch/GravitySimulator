@@ -13,11 +13,13 @@ public class RenderPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public RenderPanel() {
+
 		setForeground(Color.WHITE);
 		setBackground(Color.BLACK);
 		setLayout(null);
-		setBounds(218, 11, 666, 649);
 		setIgnoreRepaint(true);
+		setBounds(218, 11, 846, 648);
+		setFocusable(false);
 	}
 
 	@Override

@@ -41,20 +41,17 @@ public class Logic {
 
 		// #2:Geschwindigkeit-Schleife:
 		for (Obj o : Vars.activeObjects) {
-			o.setVelocity(new Vec2D(o.getVelocity().getX() + deltaT
-					* o.getAcceleration().getX(), o.getVelocity().getY()
-					+ deltaT * o.getAcceleration().getY()));
+			o.setVelocity(new Vec2D(o.getVelocity().getX() + deltaT * o.getAcceleration().getX(),
+					o.getVelocity().getY() + deltaT * o.getAcceleration().getY()));
 		}
 
 		// #3:Position-Schleife:
 		for (Obj o : Vars.activeObjects) {
-			o.setPosition(new Vec2D(o.getPosition().getX()
-					+ (deltaT * o.getVelocity().getX())
-					+ ((1 / 2) * o.getAcceleration().getX() * Math.pow(deltaT,
-							2)), o.getPosition().getY()
-					+ (deltaT * o.getVelocity().getY())
-					+ ((1 / 2) * o.getAcceleration().getY() * Math.pow(deltaT,
-							2))));
+			o.setPosition(new Vec2D(
+					o.getPosition().getX() + (deltaT * o.getVelocity().getX())
+							+ ((1 / 2) * o.getAcceleration().getX() * Math.pow(deltaT, 2)),
+					o.getPosition().getY() + (deltaT * o.getVelocity().getY())
+							+ ((1 / 2) * o.getAcceleration().getY() * Math.pow(deltaT, 2))));
 		}
 
 		// Nur für die Zeit Anzeige Relevant:
@@ -103,16 +100,13 @@ public class Logic {
 				}
 
 				// Zoom:
-				Point p = new Point(
-						(int) (o1.getPosition().getX() * Vars.scaling_ZoomFactor),
+				Point p = new Point((int) (o1.getPosition().getX() * Vars.scaling_ZoomFactor),
 						(int) (o1.getPosition().getY() * Vars.scaling_ZoomFactor));
 
 				// Verschiebung:
 
-				p.setX((int) (p.getX() + Vars.scaling_Delta.getX()
-						* Vars.scaling_ZoomFactor));
-				p.setY((int) (p.getY() + Vars.scaling_Delta.getY()
-						* Vars.scaling_ZoomFactor));
+				p.setX((int) (p.getX() + Vars.scaling_Delta.getX() * Vars.scaling_ZoomFactor));
+				p.setY((int) (p.getY() + Vars.scaling_Delta.getY() * Vars.scaling_ZoomFactor));
 
 				boolean add = true;
 

@@ -35,59 +35,63 @@ import org.xeroserver.x0_Library.GUI.X0InputField;
 public class MainFrame extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel masterPanel;
 
+	// Panels
+	private JPanel masterPanel;
 	private JPanel controlPanel;
-	
+	public JPanel renderPanel;
+
+	// t - Text Field
 	public X0InputField t_steps;
 	public X0InputField t_pathSize;
 	public X0InputField t_timestep;
 	public X0InputField t_massstabInput;
-	
 	private X0InputField t_xPos;
 	private X0InputField t_yPos;
-	
 	private X0InputField t_mass;
-	
 	private X0InputField t_xVelocity;
 	private X0InputField t_yVelocity;
-	
 	private X0InputField t_nameField;
-	
 
-	public JPanel renderPanel;
+	// rl - Render Label
+	public JLabel rl_massstab;
+	public JLabel rl_Time;
+	public JLabel rl_Objects;
+	public JLabel rl_Timestep;
 
-	public JLabel r_Time;
-	public JLabel r_Objects;
-	public JLabel r_Timestep;
+	// l - Label
+	private JLabel l_timestep;
+	private JLabel l_pathsize;
+	private JLabel l_steps;
 
+	// b - Button
 	public JButton b_StartStop;
 	public JButton b_nextStep;
 
-
-
+	// cb - Check Box
 	public JCheckBox cb_drawPath;
 	public JCheckBox cb_showNames;
 
-	private JLabel l_Timestep;
-
-	private JLabel l_pathsize;
-	public JLabel l_massstab;
-	private JLabel l_steps;
-
+	// Mouse Click related
 	public double lastMouseWheelState = 1;
 	public Vec2D mouseClickPos = new Vec2D(0, 0);
 	public Vec2D mouseReleasePos = new Vec2D(0, 0);
 
-	//
-
 	public MainFrame() {
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				MainFrame.class.getResource("/img/gravsim64.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/gravsim64.png")));
 
 		GUIEvents.initGlobalKeyEvents();
 
+		initPanels();
+
+		populateRenderPanel();
+		populateMasterPanel();
+		populateControlPanel();
+
+	}
+
+	private void initPanels() {
 		masterPanel = new JPanel();
 		masterPanel.setBackground(new Color(238, 232, 170));
 		masterPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -100,11 +104,6 @@ public class MainFrame extends JFrame implements Runnable {
 		controlPanel.setLayout(null);
 
 		renderPanel = new RenderPanel();
-
-		initRenderPanel();
-		initMasterPanel();
-		initControlPanel();
-		
 	}
 
 	@Override
@@ -113,7 +112,7 @@ public class MainFrame extends JFrame implements Runnable {
 	}
 
 	@SuppressWarnings("serial")
-	private void initControlPanel() {
+	private void populateControlPanel() {
 
 		b_StartStop = new JButton("Start Simulation");
 		b_StartStop.setToolTipText("Start");
@@ -130,57 +129,43 @@ public class MainFrame extends JFrame implements Runnable {
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
 		l_newObject.setBounds(10, 338, 178, 14);
 
-		
-		t_mass = new X0InputField(new int[]{X0InputField.DOUBLE},true)
-		{
+		t_mass = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
 			@Override
-			public void update()
-			{
+			public void update() {
 				Vars.preset_Mass = this.getDoubleValue();
 				Vars.logger.info("Updated Mass to " + Vars.preset_Mass);
 			}
 		};
-		
+
 		t_mass.setText(Vars.preset_Mass + "");
-		
+
 		t_mass.setBounds(85, 363, 103, 20);
 		t_mass.setColumns(10);
 
-		t_xVelocity = new X0InputField(new int[]{X0InputField.DOUBLE},true)
-		{
+		t_xVelocity = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
 			@Override
-			public void update()
-			{
+			public void update() {
 				Vars.preset_Velocity.setX(this.getDoubleValue());
 				Vars.logger.info("Updated x-Vel to " + Vars.preset_Velocity.getX());
 			}
 		};
-		
+
 		t_xVelocity.setText(Vars.preset_Velocity.getX() + "");
-		
 
 		t_xVelocity.setBounds(85, 394, 103, 20);
 
-		
-
-		t_yVelocity = new X0InputField(new int[]{X0InputField.DOUBLE},true)
-		{
+		t_yVelocity = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
 			@Override
-			public void update()
-			{
+			public void update() {
 				Vars.preset_Velocity.setY(this.getDoubleValue());
 				Vars.logger.info("Updated y-Vel to " + Vars.preset_Velocity.getY());
 			}
 		};
-		
+
 		t_yVelocity.setText(Vars.preset_Velocity.getY() + "");
-		
-		
-		
+
 		t_yVelocity.setBounds(85, 425, 103, 20);
 		t_yVelocity.setColumns(10);
-
-		
 
 		JLabel l_mass = new JLabel("Mass:");
 		l_mass.setBounds(10, 366, 65, 14);
@@ -191,9 +176,9 @@ public class MainFrame extends JFrame implements Runnable {
 		JLabel l_yVelocity = new JLabel("y Velocity:");
 		l_yVelocity.setBounds(10, 428, 65, 14);
 
-		l_Timestep = new JLabel("Timestep:");
-		l_Timestep.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		l_Timestep.setBounds(10, 109, 65, 14);
+		l_timestep = new JLabel("Timestep:");
+		l_timestep.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		l_timestep.setBounds(10, 109, 65, 14);
 
 		JLabel l_maﬂstabLabel = new JLabel("Scale = 1:");
 		l_maﬂstabLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -214,20 +199,16 @@ public class MainFrame extends JFrame implements Runnable {
 		l_steps.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		l_steps.setBounds(10, 179, 49, 14);
 
-		
-		t_steps = new X0InputField(new int[]{X0InputField.INT, X0InputField.NOT_ZERO, X0InputField.POSITIVE},true)
-		{
+		t_steps = new X0InputField(new int[] { X0InputField.INT, X0InputField.NOT_ZERO, X0InputField.POSITIVE }, true) {
 			@Override
-			public void update()
-			{
+			public void update() {
 				Vars.steps = this.getIntegerValue();
 				Vars.logger.info("Updated Steps to " + Vars.steps);
 			}
 		};
-		
+
 		t_steps.setText(Vars.steps + "");
-		
-		
+
 		t_steps.setBounds(85, 177, 103, 20);
 		t_steps.setColumns(10);
 
@@ -240,32 +221,27 @@ public class MainFrame extends JFrame implements Runnable {
 		l_pathsize.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		l_pathsize.setBounds(10, 134, 65, 16);
 
-		t_pathSize = new X0InputField(new int[]{X0InputField.INT, X0InputField.POSITIVE},true)
-		{
+		t_pathSize = new X0InputField(new int[] { X0InputField.INT, X0InputField.POSITIVE }, true) {
 			@Override
-			public void update()
-			{
+			public void update() {
 				Vars.pathSize = this.getIntegerValue();
 				Vars.logger.info("Updated Pathsize to " + Vars.pathSize);
 			}
 		};
-		
+
 		t_pathSize.setText(Vars.pathSize + "");
 		t_pathSize.setBounds(85, 133, 103, 20);
 		t_pathSize.setColumns(10);
 
-		t_timestep = new X0InputField(new int[]{X0InputField.DOUBLE, X0InputField.NOT_ZERO},true)
-		{
+		t_timestep = new X0InputField(new int[] { X0InputField.DOUBLE, X0InputField.NOT_ZERO }, true) {
 			@Override
-			public void update()
-			{
+			public void update() {
 				Vars.timeStep = this.getDoubleValue();
 				Vars.logger.info("Updated TimeStep to " + Vars.timeStep);
 			}
 		};
 		t_timestep.setText(Vars.timeStep + "");
-		
-		
+
 		t_timestep.setBounds(85, 106, 103, 22);
 		t_timestep.setColumns(10);
 
@@ -274,31 +250,27 @@ public class MainFrame extends JFrame implements Runnable {
 		cb_showNames.setBackground(Color.WHITE);
 		cb_showNames.setBounds(10, 268, 178, 25);
 
-		t_yPos = new X0InputField(new int[]{X0InputField.DOUBLE},true)
-		{
+		t_yPos = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
 			@Override
-			public void update()
-			{
-				Vars.preset_Position.setY(this.getDoubleValue()); 
+			public void update() {
+				Vars.preset_Position.setY(this.getDoubleValue());
 				Vars.logger.info("Updated y-Pos to " + Vars.preset_Position.getY());
 			}
 		};
-		
+
 		t_yPos.setText(Vars.preset_Position.getY() + "");
 
 		t_yPos.setBounds(85, 530, 103, 20);
 		t_yPos.setColumns(10);
 
-		t_xPos = new X0InputField(new int[]{X0InputField.DOUBLE},true)
-		{
+		t_xPos = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
 			@Override
-			public void update()
-			{
-				Vars.preset_Position.setX(this.getDoubleValue()); 
+			public void update() {
+				Vars.preset_Position.setX(this.getDoubleValue());
 				Vars.logger.info("Updated x-Pos to " + Vars.preset_Position.getX());
 			}
 		};
-		
+
 		t_xPos.setText(Vars.preset_Position.getX() + "");
 
 		t_xPos.setBounds(85, 499, 103, 20);
@@ -322,55 +294,48 @@ public class MainFrame extends JFrame implements Runnable {
 		});
 		btnPlaceObject.setBounds(10, 561, 178, 30);
 
-		
-		t_massstabInput = new X0InputField(new int[]{X0InputField.DOUBLE, X0InputField.NOT_ZERO, X0InputField.POSITIVE},true)
-		{
+		t_massstabInput = new X0InputField(
+				new int[] { X0InputField.DOUBLE, X0InputField.NOT_ZERO, X0InputField.POSITIVE }, true) {
 			@Override
-			public void update()
-			{
-				
+			public void update() {
+
 				// Reset Color
 				Vars.scaling_ZoomFactor = 1 / this.getDoubleValue();
 				Vars.clearPoints = true;
-				
+
 				Vars.logger.info("Updated Scaling  to 1:" + this.getDoubleValue());
 
 			}
 		};
-		
+
 		t_massstabInput.setText(Vars.timeStep + "");
-		
 
 		t_massstabInput.setBounds(85, 297, 103, 20);
 		t_massstabInput.setColumns(10);
 
-		r_Time = new JLabel("Time: " + Vars.time);
-		r_Time.setForeground(Color.WHITE);
-		r_Time.setBounds(10 - (renderPanel.getWidth() / 2),
-				11 - (renderPanel.getHeight() / 2),
+		rl_Time = new JLabel("Time: " + Vars.time);
+		rl_Time.setForeground(Color.WHITE);
+		rl_Time.setBounds(10 - (renderPanel.getWidth() / 2), 11 - (renderPanel.getHeight() / 2),
 				renderPanel.getWidth() - 10, 14);
-		renderPanel.add(r_Time);
+		renderPanel.add(rl_Time);
 
-		r_Timestep = new JLabel("Timestep: " + Vars.time);
-		r_Timestep.setForeground(Color.WHITE);
-		r_Timestep.setBounds(10 - (renderPanel.getWidth() / 2),
-				27 - (renderPanel.getHeight() / 2),
+		rl_Timestep = new JLabel("Timestep: " + Vars.time);
+		rl_Timestep.setForeground(Color.WHITE);
+		rl_Timestep.setBounds(10 - (renderPanel.getWidth() / 2), 27 - (renderPanel.getHeight() / 2),
 				renderPanel.getWidth() - 10, 14);
-		renderPanel.add(r_Timestep);
+		renderPanel.add(rl_Timestep);
 
-		r_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
-		r_Objects.setForeground(Color.WHITE);
-		r_Objects.setBounds(10 - (renderPanel.getWidth() / 2),
-				43 - (renderPanel.getHeight() / 2),
+		rl_Objects = new JLabel("Objects: " + Vars.activeObjects.size());
+		rl_Objects.setForeground(Color.WHITE);
+		rl_Objects.setBounds(10 - (renderPanel.getWidth() / 2), 43 - (renderPanel.getHeight() / 2),
 				renderPanel.getWidth() - 10, 14);
-		renderPanel.add(r_Objects);
+		renderPanel.add(rl_Objects);
 
-		l_massstab = new JLabel("Ma\u00DFstab 1:1");
-		l_massstab.setForeground(Color.WHITE);
-		l_massstab.setBounds(10 - (renderPanel.getWidth() / 2),
-				59 - (renderPanel.getHeight() / 2),
+		rl_massstab = new JLabel("Ma\u00DFstab 1:1");
+		rl_massstab.setForeground(Color.WHITE);
+		rl_massstab.setBounds(10 - (renderPanel.getWidth() / 2), 59 - (renderPanel.getHeight() / 2),
 				renderPanel.getWidth() - 10, 14);
-		renderPanel.add(l_massstab);
+		renderPanel.add(rl_massstab);
 
 		// MenuBar:
 		setUpMenuBar();
@@ -391,7 +356,7 @@ public class MainFrame extends JFrame implements Runnable {
 		controlPanel.add(l_mass);
 		controlPanel.add(l_xVelocity);
 		controlPanel.add(l_yVelocity);
-		controlPanel.add(l_Timestep);
+		controlPanel.add(l_timestep);
 		controlPanel.add(b_nextStep);
 		controlPanel.add(t_steps);
 		controlPanel.add(l_steps);
@@ -411,20 +376,17 @@ public class MainFrame extends JFrame implements Runnable {
 		lblName.setBounds(10, 461, 65, 14);
 		controlPanel.add(lblName);
 
-		t_nameField = new X0InputField(true)
-		{
+		t_nameField = new X0InputField(true) {
 			@Override
-			public void update()
-			{
-				Vars.preset_Name = this.getStringValue(); 
+			public void update() {
+				Vars.preset_Name = this.getStringValue();
 				Vars.logger.info("Updated name to " + Vars.preset_Name);
 			}
 		};
-		
+
 		t_nameField.setText(Vars.preset_Name + "");
 
 		t_nameField.setBounds(85, 458, 103, 20);
-
 
 		controlPanel.add(t_nameField);
 		t_nameField.setColumns(10);
@@ -455,12 +417,12 @@ public class MainFrame extends JFrame implements Runnable {
 		return getClass().getResourceAsStream("/demofiles/" + name);
 	}
 
-	private void initMasterPanel() {
+	private void populateMasterPanel() {
 		masterPanel.add(controlPanel);
 		masterPanel.add(renderPanel);
 	}
 
-	private void initRenderPanel() {
+	private void populateRenderPanel() {
 		renderPanel.addMouseWheelListener(new MouseWheelListener() {
 
 			@Override
@@ -488,14 +450,11 @@ public class MainFrame extends JFrame implements Runnable {
 				double d = lastMouseWheelState;
 
 				Vars.scaling_ZoomFactor = 1 / d;
-				t_massstabInput.setText(String.format("%.0f",
-						(1 / Vars.scaling_ZoomFactor)));
+				t_massstabInput.setText(String.format("%.0f", (1 / Vars.scaling_ZoomFactor)));
 
 			}
 		});
-		renderPanel.setBounds(218, 11, 846, 648);
-		renderPanel.setIgnoreRepaint(true);
-		renderPanel.setFocusable(false);
+
 		renderPanel.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -531,15 +490,11 @@ public class MainFrame extends JFrame implements Runnable {
 
 					double fac = (int) (1 / Vars.scaling_ZoomFactor);
 
-					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos
-							.getX()));
-					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos
-							.getY()));
+					int deltaX = (int) ((mouseReleasePos.getX() - mouseClickPos.getX()));
+					int deltaY = (int) ((mouseReleasePos.getY() - mouseClickPos.getY()));
 
-					Vars.scaling_Delta.setX(Vars.scaling_Delta.getX() + deltaX
-							* fac);
-					Vars.scaling_Delta.setY(Vars.scaling_Delta.getY() + deltaY
-							* fac);
+					Vars.scaling_Delta.setX(Vars.scaling_Delta.getX() + deltaX * fac);
+					Vars.scaling_Delta.setY(Vars.scaling_Delta.getY() + deltaY * fac);
 
 				}
 			}
@@ -588,17 +543,12 @@ public class MainFrame extends JFrame implements Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"x0 Gravity Simulator version "
-										+ Vars.version
-										+ "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
+				JOptionPane.showMessageDialog(null, "x0 Gravity Simulator version " + Vars.version
+						+ "\n developed by Daniel 'Xer0' Englisch \n http://xeroserver.org/");
 			}
 		});
 
-		JMenuItem mntmReloadLastFile = new JMenuItem(
-				"Reload Configuration (Strg-R)");
+		JMenuItem mntmReloadLastFile = new JMenuItem("Reload Configuration (Strg-R)");
 		mntmReloadLastFile.addActionListener(new ActionListener() {
 
 			@Override
@@ -665,8 +615,7 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				FileManager
-						.loadConfigFromInputStream(getDemoInputStream("3orbits.x0"));
+				FileManager.loadConfigFromInputStream(getDemoInputStream("3orbits.x0"));
 			}
 		});
 
@@ -678,8 +627,7 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				FileManager
-						.loadConfigFromInputStream(getDemoInputStream("2elliptic.x0"));
+				FileManager.loadConfigFromInputStream(getDemoInputStream("2elliptic.x0"));
 
 			}
 		});
@@ -693,8 +641,7 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				FileManager
-						.loadConfigFromInputStream(getDemoInputStream("2equalmass.x0"));
+				FileManager.loadConfigFromInputStream(getDemoInputStream("2equalmass.x0"));
 
 			}
 		});
@@ -706,8 +653,7 @@ public class MainFrame extends JFrame implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				FileManager
-						.loadConfigFromInputStream(getDemoInputStream("2differentmass.x0"));
+				FileManager.loadConfigFromInputStream(getDemoInputStream("2differentmass.x0"));
 
 			}
 		});

@@ -67,8 +67,7 @@ public class Obj {
 
 	}
 
-	public Obj(double x, double y, double vx, double vy, double mass,
-			String name) {
+	public Obj(double x, double y, double vx, double vy, double mass, String name) {
 		super();
 
 		this.position = new Vec2D(x, y);
@@ -90,9 +89,8 @@ public class Obj {
 
 	@Override
 	public String toString() {
-		return "Obj [position=" + position + ", velocity=" + velocity
-				+ ", acceleration=" + acceleration + ", mass=" + mass
-				+ ", name=" + name + "]";
+		return "Obj [position=" + position + ", velocity=" + velocity + ", acceleration=" + acceleration + ", mass="
+				+ mass + ", name=" + name + "]";
 	}
 
 	public void setPosition(Vec2D position) {

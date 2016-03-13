@@ -13,14 +13,11 @@ public class Render {
 
 	public static void renderFrame(Graphics2D g) {
 
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
 		// Render Origin at Center of screen:
-		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2,
-				Vars.mainFrame.renderPanel.getHeight() / 2);
+		g.translate(Vars.mainFrame.renderPanel.getWidth() / 2, Vars.mainFrame.renderPanel.getHeight() / 2);
 
 		renderPath(g);
 
@@ -34,10 +31,8 @@ public class Render {
 
 			g.setColor(obj.getColor());
 
-			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta
-					.getX()) * Vars.scaling_ZoomFactor);
-			int y = (int) ((obj.getPosition().getY() + Vars.scaling_Delta
-					.getY()) * Vars.scaling_ZoomFactor);
+			int x = (int) ((obj.getPosition().getX() + Vars.scaling_Delta.getX()) * Vars.scaling_ZoomFactor);
+			int y = (int) ((obj.getPosition().getY() + Vars.scaling_Delta.getY()) * Vars.scaling_ZoomFactor);
 
 			// Fixed Radius:
 			int radius = 25;
@@ -53,8 +48,7 @@ public class Render {
 
 			if (Vars.mainFrame.cb_showNames.isSelected()) {
 				g.setColor(Color.WHITE);
-				g.drawString(obj.getName(), r_x - obj.getName().length(),
-						r_y - 10);
+				g.drawString(obj.getName(), r_x - obj.getName().length(), r_y - 10);
 			}
 
 		}
@@ -75,8 +69,7 @@ public class Render {
 						Point p1 = obj.points.get(i);
 						Point p2 = obj.points.get(i /* + 1 */);
 
-						g.drawLine((p1.getX()), (p1.getY()), (p2.getX()),
-								(p2.getY()));
+						g.drawLine((p1.getX()), (p1.getY()), (p2.getX()), (p2.getY()));
 
 					} catch (Exception exx) {
 					}

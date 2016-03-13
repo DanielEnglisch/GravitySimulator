@@ -14,7 +14,7 @@ public class Vars {
 	public static String version = "1.4";
 
 	public static Logger logger = new Logger("GravitySimulator", Logger.NORMAL);
-	
+
 	public static boolean renderRequest = false;
 
 	public static boolean isActive = false;

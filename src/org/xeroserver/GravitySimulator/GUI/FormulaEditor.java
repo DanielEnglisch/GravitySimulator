@@ -19,8 +19,7 @@ public class FormulaEditor extends JFrame {
 
 	@SuppressWarnings("serial")
 	public FormulaEditor() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				MainFrame.class.getResource("/img/gravsim64.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/img/gravsim64.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 228, 128);
 		this.setTitle("Edit Formula");
@@ -30,20 +29,16 @@ public class FormulaEditor extends JFrame {
 		contentPane.setLayout(null);
 		this.setResizable(false);
 
-		txt_G = new X0InputField(new int[]{X0InputField.DOUBLE},true)
-				{
-					@Override
-					public void update()
-					{
-						Vars.G = this.getDoubleValue();
-						Vars.logger.info("Updated G to " + Vars.G);
-					}
-				};
-				
+		txt_G = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+			@Override
+			public void update() {
+				Vars.G = this.getDoubleValue();
+				Vars.logger.info("Updated G to " + Vars.G);
+			}
+		};
+
 		txt_G.setText(Vars.G + "");
-		
-		
-		
+
 		txt_G.setBounds(60, 11, 108, 20);
 		contentPane.add(txt_G);
 		txt_G.setColumns(10);
@@ -52,19 +47,14 @@ public class FormulaEditor extends JFrame {
 		lblG.setBounds(21, 14, 29, 14);
 		contentPane.add(lblG);
 
-		
-		txt_R = new X0InputField(new int[]{X0InputField.DOUBLE},true)
-		{
+		txt_R = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
 			@Override
-			public void update()
-			{
+			public void update() {
 				Vars.rExponent = this.getDoubleValue();
 				Vars.logger.info("Updated R-Exponent to " + Vars.rExponent);
 			}
 		};
 		txt_R.setText(Vars.rExponent + "");
-		
-		
 
 		txt_R.setBounds(60, 42, 108, 20);
 		contentPane.add(txt_R);

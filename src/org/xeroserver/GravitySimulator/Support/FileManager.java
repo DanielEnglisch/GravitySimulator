@@ -58,41 +58,33 @@ public class FileManager {
 	public static void parseLine(String line) {
 		String inText = line;
 
-		if (inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase(
-				"scZ")) {
+		if (inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ")) {
 
 			double d = Double.parseDouble(inText.split(":")[1]);
 
 			Vars.scaling_ZoomFactor = d;
 			Vars.mainFrame.lastMouseWheelState = (int) (1 / d);
-			Vars.mainFrame.l_massstab.setText("Scale = 1:"
-					+ (int) (1 / Vars.scaling_ZoomFactor));
-			Vars.mainFrame.t_massstabInput.setText(""
-					+ (int) (1 / Vars.scaling_ZoomFactor));
+			Vars.mainFrame.rl_massstab.setText("Scale = 1:" + (int) (1 / Vars.scaling_ZoomFactor));
+			Vars.mainFrame.t_massstabInput.setText("" + (int) (1 / Vars.scaling_ZoomFactor));
 
-		} else if (inText.substring(0, Math.min(inText.length(), 4))
-				.equalsIgnoreCase("scDX")) {
+		} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDX")) {
 
 			Vars.scaling_Delta.setX(Double.parseDouble(inText.split(":")[1]));
 
-		} else if (inText.substring(0, Math.min(inText.length(), 4))
-				.equalsIgnoreCase("scDY")) {
+		} else if (inText.substring(0, Math.min(inText.length(), 4)).equalsIgnoreCase("scDY")) {
 			Vars.scaling_Delta.setY(Double.parseDouble(inText.split(":")[1]));
 
-		} else if (inText.substring(0, Math.min(inText.length(), 8))
-				.equalsIgnoreCase("timestep")) {
+		} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("timestep")) {
 			Vars.timeStep = Double.parseDouble(inText.split(":")[1]);
 			Vars.mainFrame.t_timestep.setText(Vars.timeStep + "");
 
-		} else if (inText.substring(0, Math.min(inText.length(), 8))
-				.equalsIgnoreCase("pathsize")) {
+		} else if (inText.substring(0, Math.min(inText.length(), 8)).equalsIgnoreCase("pathsize")) {
 
 			Vars.pathSize = Integer.parseInt(inText.split(":")[1]);
 
 			Vars.mainFrame.t_pathSize.setText("" + Vars.pathSize);
 
-		} else if (inText.substring(0, Math.min(inText.length(), 2))
-				.equalsIgnoreCase("o:")) {
+		} else if (inText.substring(0, Math.min(inText.length(), 2)).equalsIgnoreCase("o:")) {
 			// Object:
 
 			inText = inText.substring(2);
@@ -104,9 +96,7 @@ public class FileManager {
 			Vars.bufferedObjects.add(o);
 
 		} else {
-			JOptionPane.showMessageDialog(null,
-					"There was an error parsing the file!\nUnknown argurment: "
-							+ inText);
+			JOptionPane.showMessageDialog(null, "There was an error parsing the file!\nUnknown argurment: " + inText);
 
 		}
 
@@ -179,10 +169,8 @@ public class FileManager {
 			out.write("pathsize:" + Vars.pathSize + "\n");
 
 			for (Obj o : Vars.activeObjects) {
-				out.write("o:x," + o.getPosition().getX() + "#y,"
-						+ o.getPosition().getY() + "#vx,"
-						+ o.getVelocity().getX() + "#vy,"
-						+ o.getVelocity().getY() + "#m," + o.getMass());
+				out.write("o:x," + o.getPosition().getX() + "#y," + o.getPosition().getY() + "#vx,"
+						+ o.getVelocity().getX() + "#vy," + o.getVelocity().getY() + "#m," + o.getMass());
 				if (!o.getName().equals("")) {
 					out.write("#n," + o.getName());
 				}
@@ -193,8 +181,7 @@ public class FileManager {
 			out.close();
 
 			if (res == JFileChooser.APPROVE_OPTION) {
-				JOptionPane.showMessageDialog(null,
-						"Successfully saved configuration!");
+				JOptionPane.showMessageDialog(null, "Successfully saved configuration!");
 			}
 
 		} catch (Exception e) {

@@ -9,19 +9,15 @@ import org.xeroserver.GravitySimulator.Support.Vars;
 import org.xeroserver.x0_Library.net.AppUpdater;
 
 public class Core {
-	
-	
 
 	public static void main(String[] args) throws InterruptedException {
-		
-		//Updater:
-		AppUpdater up = new AppUpdater	(	"http://xeroserver.org/api/gravsim/cs_gravsim.php",
-											"http://xeroserver.org/api/gravsim/GravitySimulator.jar",
-											"GravitySimulator.jar"
-										);
+
+		// Updater:
+		AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/cs_gravsim.php",
+				"http://xeroserver.org/api/gravsim/GravitySimulator.jar", "GravitySimulator.jar");
 		up.checkForUpdate();
-		
-						// Ladet und startet die GUI
+
+		// Ladet und startet die GUI
 		Vars.mainFrame = new MainFrame();
 		new Thread(Vars.mainFrame).start();
 
@@ -97,7 +93,7 @@ public class Core {
 		Vars.scaling_ZoomFactor = 0.001;
 		Vars.mainFrame.lastMouseWheelState = 1000;
 		Vars.scaling_Delta = new Vec2D(0, 0);
-		Vars.mainFrame.l_massstab.setText("Scale = 1:1000m");
+		Vars.mainFrame.rl_massstab.setText("Scale = 1:1000m");
 		Vars.mainFrame.t_massstabInput.setText("1000");
 		// -----------------
 
@@ -118,8 +114,7 @@ public class Core {
 
 		Vars.mainFrame.b_StartStop.setText("Start Simulation");
 		Vars.mainFrame.b_nextStep.setEnabled(true);
-		Vars.mainFrame.r_Time.setText("Time: "
-				+ String.format("%.5f", Vars.time));
+		Vars.mainFrame.rl_Time.setText("Time: " + String.format("%.5f", Vars.time));
 
 		Vars.mainFrame.mouseClickPos = new Vec2D(0, 0);
 		Vars.mainFrame.mouseReleasePos = new Vec2D(0, 0);
@@ -127,14 +122,11 @@ public class Core {
 	}
 
 	public static void updateGUIVars() {
-		Vars.mainFrame.r_Time.setText("Time: " + fmt(Vars.time) + "s");
-		Vars.mainFrame.r_Timestep.setText("Timestep: " + fmt(Vars.timeStep)
-				+ "s");
+		Vars.mainFrame.rl_Time.setText("Time: " + fmt(Vars.time) + "s");
+		Vars.mainFrame.rl_Timestep.setText("Timestep: " + fmt(Vars.timeStep) + "s");
 
-		Vars.mainFrame.r_Objects.setText("Objects: "
-				+ Vars.activeObjects.size());
-		Vars.mainFrame.l_massstab.setText("Scale = 1:"
-				+ String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) + "m");
+		Vars.mainFrame.rl_Objects.setText("Objects: " + Vars.activeObjects.size());
+		Vars.mainFrame.rl_massstab.setText("Scale = 1:" + String.format("%.0f", (1 / Vars.scaling_ZoomFactor)) + "m");
 
 	}
 
