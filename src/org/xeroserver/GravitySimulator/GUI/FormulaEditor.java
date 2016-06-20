@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.xeroserver.GravitySimulator.Support.Vars;
-import org.xeroserver.x0_Library.GUI.X0InputField;
+import org.xeroserver.x0library.gui.X0InputField;
 
 public class FormulaEditor extends JFrame {
 

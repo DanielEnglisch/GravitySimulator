@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.xeroserver.GravitySimulator.GUI.MainFrame;
 import org.xeroserver.GravitySimulator.Objects.Obj;
 import org.xeroserver.GravitySimulator.Objects.Vec2D;
-import org.xeroserver.x0_Library.Log.Logger;
+import org.xeroserver.x0library.log.Logger;
 
 public class Vars {
 
