@@ -13,8 +13,7 @@ public class Core {
 	public static void main(String[] args) throws InterruptedException {
 
 		// Updater:
-		//AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/cs_gravsim.php","http://xeroserver.org/api/gravsim/GravitySimulator.jar", "GravitySimulator.jar");
-		AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/cs_gravsim.php","https://github.com/DanielEnglisch/GravitySimulator/raw/master/build/GravitySimulator.jar", "GravitySimulator.jar");
+		AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/cs_gravsim.php","http://xeroserver.org/api/gravsim/GravitySimulator.jar", "GravitySimulator.jar");
 
 		up.checkForUpdate();
 
