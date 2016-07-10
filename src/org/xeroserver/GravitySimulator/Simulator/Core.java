@@ -13,9 +13,10 @@ public class Core {
 	public static void main(String[] args) throws InterruptedException {
 
 		// Updater:
-		AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/cs_gravsim.php","http://xeroserver.org/api/gravsim/GravitySimulator.jar", "GravitySimulator.jar");
+		AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/updater.php");
 
-		up.checkForUpdate();
+		if(up.isUpdateAvailable())
+			up.showUpdateDialog();
 
 		// Ladet und startet die GUI
 		Vars.mainFrame = new MainFrame();
