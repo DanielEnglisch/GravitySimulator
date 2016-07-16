@@ -19,10 +19,14 @@ public class FileManager {
 		Vars.isResetRequested = true;
 
 		try {
+			@SuppressWarnings("resource")
 			BufferedReader in = new BufferedReader(new FileReader(f));
 
 			while (in.ready()) {
-				parseLine(in.readLine());
+				if (!parseLine(in.readLine())) {
+					JOptionPane.showMessageDialog(null, "There was an error parsing the file!");
+					return;
+				}
 			}
 
 			in.close();
@@ -55,7 +59,7 @@ public class FileManager {
 		}
 	}
 
-	public static void parseLine(String line) {
+	public static boolean parseLine(String line) {
 		String inText = line;
 
 		if (inText.substring(0, Math.min(inText.length(), 3)).equalsIgnoreCase("scZ")) {
@@ -96,9 +100,11 @@ public class FileManager {
 			Vars.bufferedObjects.add(o);
 
 		} else {
-			JOptionPane.showMessageDialog(null, "There was an error parsing the file!\nUnknown argurment: " + inText);
+			return false;
 
 		}
+
+		return true;
 
 	}
 

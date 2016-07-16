@@ -11,7 +11,7 @@ import org.xeroserver.x0library.log.Logger;
 public class Vars {
 
 	public static MainFrame mainFrame = null;
-	public static String version = "1.51b";
+	public static String version = "1.52";
 
 	public static Logger logger = new Logger("GravitySimulator", Logger.NORMAL);
 
