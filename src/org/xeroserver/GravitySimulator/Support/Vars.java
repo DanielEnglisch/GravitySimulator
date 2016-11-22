@@ -13,7 +13,7 @@ public class Vars {
 	public static MainFrame mainFrame = null;
 	public static String version = "1.52";
 
-	public static Logger logger = new Logger("GravitySimulator", Logger.NORMAL);
+	public static Logger logger = new Logger("GravitySimulator");
 
 	public static boolean renderRequest = false;
 
