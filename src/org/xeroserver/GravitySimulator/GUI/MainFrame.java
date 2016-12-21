@@ -30,7 +30,7 @@ import org.xeroserver.GravitySimulator.Objects.Vec2D;
 import org.xeroserver.GravitySimulator.Support.FileManager;
 import org.xeroserver.GravitySimulator.Support.GUIEvents;
 import org.xeroserver.GravitySimulator.Support.Vars;
-import org.xeroserver.x0library.gui.X0InputField;
+import org.xeroserver.x0library.gui.InputField;
 
 public class MainFrame extends JFrame implements Runnable {
 
@@ -42,16 +42,16 @@ public class MainFrame extends JFrame implements Runnable {
 	public JPanel renderPanel;
 
 	// t - Text Field
-	public X0InputField t_steps;
-	public X0InputField t_pathSize;
-	public X0InputField t_timestep;
-	public X0InputField t_massstabInput;
-	private X0InputField t_xPos;
-	private X0InputField t_yPos;
-	private X0InputField t_mass;
-	private X0InputField t_xVelocity;
-	private X0InputField t_yVelocity;
-	private X0InputField t_nameField;
+	public InputField t_steps;
+	public InputField t_pathSize;
+	public InputField t_timestep;
+	public InputField t_massstabInput;
+	private InputField t_xPos;
+	private InputField t_yPos;
+	private InputField t_mass;
+	private InputField t_xVelocity;
+	private InputField t_yVelocity;
+	private InputField t_nameField;
 
 	// rl - Render Label
 	public JLabel rl_massstab;
@@ -129,7 +129,7 @@ public class MainFrame extends JFrame implements Runnable {
 		l_newObject.setFont(new Font("Tahoma", Font.BOLD, 11));
 		l_newObject.setBounds(10, 338, 178, 14);
 
-		t_mass = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+		t_mass = new InputField(true, InputField.DOUBLE) {
 			@Override
 			public void update() {
 				Vars.preset_Mass = this.getDoubleValue();
@@ -142,7 +142,7 @@ public class MainFrame extends JFrame implements Runnable {
 		t_mass.setBounds(85, 363, 103, 20);
 		t_mass.setColumns(10);
 
-		t_xVelocity = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+		t_xVelocity = new InputField(true, InputField.DOUBLE) {
 			@Override
 			public void update() {
 				Vars.preset_Velocity.setX(this.getDoubleValue());
@@ -154,7 +154,7 @@ public class MainFrame extends JFrame implements Runnable {
 
 		t_xVelocity.setBounds(85, 394, 103, 20);
 
-		t_yVelocity = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+		t_yVelocity = new InputField(true, InputField.DOUBLE) {
 			@Override
 			public void update() {
 				Vars.preset_Velocity.setY(this.getDoubleValue());
@@ -199,7 +199,7 @@ public class MainFrame extends JFrame implements Runnable {
 		l_steps.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		l_steps.setBounds(10, 179, 49, 14);
 
-		t_steps = new X0InputField(new int[] { X0InputField.INT, X0InputField.NOT_ZERO, X0InputField.POSITIVE }, true) {
+		t_steps = new InputField(true, InputField.INT, InputField.NOT_ZERO, InputField.POSITIVE) {
 			@Override
 			public void update() {
 				Vars.steps = this.getIntegerValue();
@@ -221,7 +221,7 @@ public class MainFrame extends JFrame implements Runnable {
 		l_pathsize.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		l_pathsize.setBounds(10, 134, 65, 16);
 
-		t_pathSize = new X0InputField(new int[] { X0InputField.INT, X0InputField.POSITIVE }, true) {
+		t_pathSize = new InputField(true, InputField.INT, InputField.POSITIVE) {
 			@Override
 			public void update() {
 				Vars.pathSize = this.getIntegerValue();
@@ -233,7 +233,7 @@ public class MainFrame extends JFrame implements Runnable {
 		t_pathSize.setBounds(85, 133, 103, 20);
 		t_pathSize.setColumns(10);
 
-		t_timestep = new X0InputField(new int[] { X0InputField.DOUBLE, X0InputField.NOT_ZERO }, true) {
+		t_timestep = new InputField(true, InputField.DOUBLE, InputField.NOT_ZERO) {
 			@Override
 			public void update() {
 				Vars.timeStep = this.getDoubleValue();
@@ -250,7 +250,7 @@ public class MainFrame extends JFrame implements Runnable {
 		cb_showNames.setBackground(Color.WHITE);
 		cb_showNames.setBounds(10, 268, 178, 25);
 
-		t_yPos = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+		t_yPos = new InputField(true, InputField.DOUBLE) {
 			@Override
 			public void update() {
 				Vars.preset_Position.setY(this.getDoubleValue());
@@ -263,7 +263,7 @@ public class MainFrame extends JFrame implements Runnable {
 		t_yPos.setBounds(85, 530, 103, 20);
 		t_yPos.setColumns(10);
 
-		t_xPos = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+		t_xPos = new InputField(true, InputField.DOUBLE) {
 			@Override
 			public void update() {
 				Vars.preset_Position.setX(this.getDoubleValue());
@@ -294,8 +294,7 @@ public class MainFrame extends JFrame implements Runnable {
 		});
 		btnPlaceObject.setBounds(10, 561, 178, 30);
 
-		t_massstabInput = new X0InputField(
-				new int[] { X0InputField.DOUBLE, X0InputField.NOT_ZERO, X0InputField.POSITIVE }, true) {
+		t_massstabInput = new InputField(true, InputField.DOUBLE, InputField.NOT_ZERO, InputField.POSITIVE) {
 			@Override
 			public void update() {
 
@@ -376,7 +375,7 @@ public class MainFrame extends JFrame implements Runnable {
 		lblName.setBounds(10, 461, 65, 14);
 		controlPanel.add(lblName);
 
-		t_nameField = new X0InputField(true) {
+		t_nameField = new InputField(true) {
 			@Override
 			public void update() {
 				Vars.preset_Name = this.getStringValue();

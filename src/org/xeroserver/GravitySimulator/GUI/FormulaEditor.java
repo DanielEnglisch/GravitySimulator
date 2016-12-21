@@ -8,14 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.xeroserver.GravitySimulator.Support.Vars;
-import org.xeroserver.x0library.gui.X0InputField;
+import org.xeroserver.x0library.gui.InputField;
 
 public class FormulaEditor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private X0InputField txt_G;
-	private X0InputField txt_R;
+	private InputField txt_G;
+	private InputField txt_R;
 
 	@SuppressWarnings("serial")
 	public FormulaEditor() {
@@ -29,7 +29,7 @@ public class FormulaEditor extends JFrame {
 		contentPane.setLayout(null);
 		this.setResizable(false);
 
-		txt_G = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+		txt_G = new InputField(true, InputField.DOUBLE) {
 			@Override
 			public void update() {
 				Vars.G = this.getDoubleValue();
@@ -47,7 +47,7 @@ public class FormulaEditor extends JFrame {
 		lblG.setBounds(21, 14, 29, 14);
 		contentPane.add(lblG);
 
-		txt_R = new X0InputField(new int[] { X0InputField.DOUBLE }, true) {
+		txt_R = new InputField(true, InputField.DOUBLE) {
 			@Override
 			public void update() {
 				Vars.rExponent = this.getDoubleValue();
