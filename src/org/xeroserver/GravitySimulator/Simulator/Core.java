@@ -6,29 +6,28 @@ import org.xeroserver.GravitySimulator.GUI.MainFrame;
 import org.xeroserver.GravitySimulator.Objects.Obj;
 import org.xeroserver.GravitySimulator.Objects.Vec2D;
 import org.xeroserver.GravitySimulator.Support.Vars;
-import org.xeroserver.x0library.net.AppUpdater;
 
 public class Core {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		new Thread() {
-
-			@Override
-			public void run() {
-
-				// Updater:
-				AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/updater.php");
-
-				if (up.isUpdateAvailable()) {
-					up.showUpdateDialog("GravitySimulator Updater",
-							"An update for GravitySimulator is available to download! Do you want to update?",
-							"Update successfully applied! Please restart the program.",
-							"An error occured during the update! If GravitySimulator refuses to run, please redownload it from xeroserver.org!");
-				}
-			}
-
-		}.start();
+//		new Thread() {
+//
+//			@Override
+//			public void run() {
+//
+//				// Updater:
+//				AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/updater.php");
+//
+//				if (up.isUpdateAvailable()) {
+//					up.showUpdateDialog("GravitySimulator Updater",
+//							"An update for GravitySimulator is available to download! Do you want to update?",
+//							"Update successfully applied! Please restart the program.",
+//							"An error occured during the update! If GravitySimulator refuses to run, please redownload it from xeroserver.org!");
+//				}
+//			}
+//
+//		}.start();
 
 		// Ladet und startet die GUI
 		Vars.mainFrame = new MainFrame();
