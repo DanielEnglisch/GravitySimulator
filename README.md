@@ -1,4 +1,4 @@
 # Gravity Simulator
 
 ## Download
-Please visit the official project page [here](http://xeroserver.org/gravitysimulator.php).
+Please visit the release page [here](https://github.com/DanielEnglisch/GravitySimulator/releases/latest).
