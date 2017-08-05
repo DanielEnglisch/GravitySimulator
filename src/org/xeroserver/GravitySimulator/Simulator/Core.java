@@ -11,32 +11,13 @@ public class Core {
 
 	public static void main(String[] args) throws InterruptedException {
 
-//		new Thread() {
-//
-//			@Override
-//			public void run() {
-//
-//				// Updater:
-//				AppUpdater up = new AppUpdater("http://xeroserver.org/api/gravsim/updater.php");
-//
-//				if (up.isUpdateAvailable()) {
-//					up.showUpdateDialog("GravitySimulator Updater",
-//							"An update for GravitySimulator is available to download! Do you want to update?",
-//							"Update successfully applied! Please restart the program.",
-//							"An error occured during the update! If GravitySimulator refuses to run, please redownload it from xeroserver.org!");
-//				}
-//			}
-//
-//		}.start();
-
-		// Ladet und startet die GUI
 		Vars.mainFrame = new MainFrame();
 		new Thread(Vars.mainFrame).start();
 
 		resetSimulation();
 
 		Vars.logger.info("GravitySimulator initialized!");
-
+				    
 		// Hauptschleife
 		while (true) {
 
